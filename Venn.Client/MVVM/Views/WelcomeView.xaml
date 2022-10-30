@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="Venn.Client.MVVM.Views.WelcomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewmodel="clr-namespace:Venn.Client.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodel:WelcomeViewModel}"
+             xmlns:local="clr-namespace:Venn.Client.MVVM.Views"
+             mc:Ignorable="d" 
+             Background="#36393F"
+             d:DesignHeight="625" d:DesignWidth="1200">
+    
+    <StackPanel 
+        Orientation="Vertical" 
+        VerticalAlignment="Center"
+        Margin="0 0 0 50">
+        
+        <Label
+            Content="Welcome To Venn!"
+            HorizontalAlignment="Center"
+            FontFamily="Microsoft YaHei UI"
+            FontWeight="Bold"
+            FontSize="50"
+            Foreground="#FFFFFF"/>
+        
+        <Rectangle 
+            Fill="#B13333"
+            Height="3"
+            Width="800"
+            Margin="30 15"/>
+
+        <Button
+            Command="{Binding ToCreateTeamViewCommand}"
+            Background="Transparent"
+            Foreground="#B13333"
+            BorderThickness="0"
+            Content="Create Team"
+            HorizontalAlignment="Center"
+            FontFamily="Microsoft YaHei UI"
+            FontWeight="Bold"
+            FontSize="20"
+            Padding="0"
+            Margin="0 20"/>
+        
+        <Button
+            Command="{Binding ToLoginViewCommand}"
+            Background="Transparent"
+            Foreground="#B13333"
+            BorderThickness="0"
+            Content="Log In"
+            HorizontalAlignment="Center"
+            FontFamily="Microsoft YaHei UI"
+            FontWeight="Bold"
+            FontSize="20"
+            Padding="0"
+            Margin="0 10"/>
+
+    </StackPanel>
+</UserControl>
