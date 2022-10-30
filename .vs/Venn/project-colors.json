@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "739a7da0-f8c2-462b-b292-69ce2a033015": {
+      "ProjectGuid": "739a7da0-f8c2-462b-b292-69ce2a033015",
+      "DisplayName": "Venn.Data",
+      "ColorIndex": 0
+    },
+    "2bdf52c8-35bb-4bc1-b863-bb9a74a3486a": {
+      "ProjectGuid": "2bdf52c8-35bb-4bc1-b863-bb9a74a3486a",
+      "DisplayName": "Venn.Client",
+      "ColorIndex": 1
+    },
+    "0a586542-5efe-4a5a-b43a-e029efaa1b20": {
+      "ProjectGuid": "0a586542-5efe-4a5a-b43a-e029efaa1b20",
+      "DisplayName": "Venn.Server",
+      "ColorIndex": 2
+    },
+    "12e29cdf-2f5f-4d26-abf5-9dc95cb93ca3": {
+      "ProjectGuid": "12e29cdf-2f5f-4d26-abf5-9dc95cb93ca3",
+      "DisplayName": "Venn.Models",
+      "ColorIndex": 3
+    },
+    "28efa853-250f-4ecb-a18f-7d1f0d7793f1": {
+      "ProjectGuid": "28efa853-250f-4ecb-a18f-7d1f0d7793f1",
+      "DisplayName": "Venn.Data",
+      "ColorIndex": 4
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "b80b8940-5e8d-49be-aa9d-f871fbe72656": {
+      "ProjectGuid": "b80b8940-5e8d-49be-aa9d-f871fbe72656",
+      "DisplayName": "Venn.Client",
+      "ColorIndex": 5
+    }
+  },
+  "NextColorIndex": 6
+}
