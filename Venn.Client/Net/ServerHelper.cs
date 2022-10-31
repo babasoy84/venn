@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -13,7 +14,7 @@ namespace Venn.Client.Net
 {
     public class ServerHelper
     {
-        TcpClient client;
+        public TcpClient client;
 
         public ServerHelper()
         {
@@ -55,5 +56,7 @@ namespace Venn.Client.Net
             }
             return false;
         }
+
+        
     }
 }

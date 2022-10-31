@@ -115,6 +115,15 @@ namespace Venn.Client.MVVM.ViewModels
                     EmailErrorText = null;
                     PasswordErrorText = null;
                     var user = JsonSerializer.Deserialize<User>(str.Split('$')[1]);
+                    App.Container.GetInstance<User>().Id = user.Id;
+                    App.Container.GetInstance<User>().ImageSource = user.ImageSource;
+                    App.Container.GetInstance<User>().Email = user.Email;
+                    App.Container.GetInstance<User>().Username = user.Username;
+                    App.Container.GetInstance<User>().Password = user.Password;
+                    App.Container.GetInstance<User>().DateOfBirth = user.DateOfBirth;
+                    App.Container.GetInstance<User>().Messages = user.Messages;
+                    App.Container.GetInstance<User>().Rooms = user.Rooms;
+                    App.Container.GetInstance<ChatViewModel>().mainEvent.Set();
                     NavigationService.NavigateTo<ChatViewModel>();
                 }
             }

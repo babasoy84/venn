@@ -13,8 +13,7 @@
         ResizeMode="CanResizeWithGrip"
         Title="Venn" 
         Background="#36393F"
-        Height="650" Width="1200"
-        MinWidth="500" MinHeight="630">
+        Height="650" Width="1200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>

@@ -68,6 +68,18 @@ namespace Venn.Server
                                     client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
                                     client.User = user;
                                     Console.WriteLine($"[{DateTime.Now}]: Client has logined");
+                                    foreach (var client in clients)
+                                    {
+                                        var contacts = new ObservableCollection<User>();
+                                        clients.ForEach(c =>
+                                        {
+                                            if (c.User.Id != client.User.Id)
+                                            {
+                                                contacts.Add(c.User);
+                                            }
+                                        });
+                                        client.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+                                    }
                                 }
                                 else
                                 {
@@ -113,6 +125,7 @@ namespace Venn.Server
                             }
                         }
                     }
+                    clients.Remove(client);
                 });
             }
         }
