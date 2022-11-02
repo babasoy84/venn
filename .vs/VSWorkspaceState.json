@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Venn.Client",
+    "\\Venn.Client\\MVVM",
+    "\\Venn.Client\\MVVM\\ViewModels",
+    "\\Venn.Server"
   ],
   "SelectedNode": "\\Venn.sln",
   "PreviewInSolutionExplorer": false
