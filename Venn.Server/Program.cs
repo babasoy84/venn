@@ -37,17 +37,18 @@ namespace Venn.Server
             users = new ObservableCollection<User>(userRepo.GetAll());
             rooms = new ObservableCollection<Room>(roomRepo.GetAll());
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.100.56"), 53685);
+            listener = new TcpListener(IPAddress.Parse("192.168.146.1"), 27001);
             listener.Start();
             Console.WriteLine($"[{DateTime.Now}]: Listener has started");
 
             while (true)
             {
-                var client = new Client(listener.AcceptTcpClient());
+                var newClient = new Client(listener.AcceptTcpClient());
                 Console.WriteLine($"[{DateTime.Now}]: Client has connected");
-                clients.Add(client);
+                clients.Add(newClient);
                 Task.Run(() =>
                 {
+                    var client = newClient;
                     while (client.TcpClient.Connected)
                     {
                         var ns = client.TcpClient.GetStream();
@@ -68,17 +69,21 @@ namespace Venn.Server
                                     client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
                                     client.User = user;
                                     Console.WriteLine($"[{DateTime.Now}]: Client has logined");
-                                    foreach (var client in clients)
+                                    foreach (var cl in clients)
                                     {
-                                        var contacts = new ObservableCollection<User>();
-                                        clients.ForEach(c =>
+                                        ObservableCollection<User> contacts;
+                                        lock (new object())
                                         {
-                                            if (c.User.Id != client.User.Id)
+                                            contacts = new ObservableCollection<User>();
+                                            clients.ForEach(c =>
                                             {
-                                                contacts.Add(c.User);
-                                            }
-                                        });
-                                        client.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+                                                if (c.User.Id != cl.User.Id)
+                                                {
+                                                    contacts.Add(c.User);
+                                                }
+                                            });
+                                        }
+                                        cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
                                     }
                                 }
                                 else
@@ -125,7 +130,25 @@ namespace Venn.Server
                             }
                         }
                     }
-                    clients.Remove(client);
+                    lock (new object())
+                    {
+                        clients.Remove(client);
+                    }
+                    foreach (var cl in clients)
+                    {
+                        lock (new object())
+                        {
+                            var contacts = new ObservableCollection<User>();
+                            clients.ForEach(c =>
+                            {
+                                if (c.User.Id != cl.User.Id)
+                                {
+                                    contacts.Add(c.User);
+                                }
+                            });
+                            cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+                        }
+                    }
                 });
             }
         }

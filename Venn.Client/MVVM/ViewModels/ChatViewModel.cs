@@ -24,7 +24,18 @@ namespace Venn.Client.MVVM.ViewModels
 
         public ServerHelper Server { get; set; }
 
-        public ObservableCollection<User> Contacts { get; set; }
+        private ObservableCollection<User> contacts;
+
+        public ObservableCollection<User> Contacts
+        {
+            get { return contacts; }
+            set
+            {
+                contacts = value;
+                NotifyPropertyChanged("Contacts");
+            }
+        }
+
 
         public ChatViewModel()
         {
@@ -33,9 +44,9 @@ namespace Venn.Client.MVVM.ViewModels
             mainEvent = new AutoResetEvent(false);
             Task.Run(() =>
             {
+                mainEvent.WaitOne();
                 while (true)
                 {
-                    mainEvent.WaitOne();
                     var ns = Server.client.GetStream();
                     var bytes = new byte[4096];
                     var length = ns.Read(bytes, 0, bytes.Length);

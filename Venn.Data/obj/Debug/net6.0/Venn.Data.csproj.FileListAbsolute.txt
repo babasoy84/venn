@@ -49,3 +49,20 @@ C:\Users\babas\Documents\Projects\Network Programming\Venn\Venn.Data\obj\Debug\n
 C:\Users\babas\Documents\Projects\Network Programming\Venn\Venn.Data\obj\Debug\net6.0\ref\Venn.Data.dll
 C:\Users\babas\Documents\Projects\Network Programming\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.pdb
 C:\Users\babas\Documents\Projects\Network Programming\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.genruntimeconfig.cache
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\bin\Debug\net6.0\Venn.Data.deps.json
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\bin\Debug\net6.0\Venn.Data.runtimeconfig.json
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\bin\Debug\net6.0\Venn.Data.dll
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\bin\Debug\net6.0\Venn.Data.pdb
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\bin\Debug\net6.0\Venn.Models.dll
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\bin\Debug\net6.0\Venn.Models.pdb
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.csproj.AssemblyReference.cache
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.AssemblyInfoInputs.cache
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.AssemblyInfo.cs
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.csproj.CoreCompileInputs.cache
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.csproj.CopyComplete
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.dll
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\refint\Venn.Data.dll
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.pdb
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\Venn.Data.genruntimeconfig.cache
+C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Data\obj\Debug\net6.0\ref\Venn.Data.dll

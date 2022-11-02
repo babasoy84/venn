@@ -30,7 +30,8 @@
                    Margin="8, 0, 0, 0"/>
 
             <ListView ItemsSource="{Binding Contacts, 
-                UpdateSourceTrigger=PropertyChanged}"
+                UpdateSourceTrigger=PropertyChanged,
+                Mode=TwoWay}"
                       Background="Transparent"
                       BorderThickness="0"
                       Grid.Row="1"

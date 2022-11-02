@@ -21,7 +21,7 @@
 
                             <Ellipse Width="30" Height="30">
                                 <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{Binding ImageSource}"/>
+                                    <ImageBrush ImageSource="{Binding ImageSource, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
 
