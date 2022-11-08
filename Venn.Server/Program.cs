@@ -1,9 +1,11 @@
-﻿using SimpleInjector;
+﻿using Microsoft.AspNetCore.Components;
+using SimpleInjector;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using Venn.Data;
 using Venn.Data.Repos;
 using Venn.Models.Models.Concretes;
@@ -26,6 +28,8 @@ namespace Venn.Server
 
         static ObservableCollection<Room> rooms;
 
+        private static Dispatcher dispatcher = Dispatcher.CreateDefault();
+
         static void Main(string[] args)
         {
             container = new Container();
@@ -37,14 +41,15 @@ namespace Venn.Server
             users = new ObservableCollection<User>(userRepo.GetAll());
             rooms = new ObservableCollection<Room>(roomRepo.GetAll());
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("10.2.25.33"), 27001);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.56"), 51753);
             listener.Start();
             Console.WriteLine($"[{DateTime.Now}]: Listener has started");
 
             while (true)
             {
                 var newClient = new Client(listener.AcceptTcpClient());
-                Console.WriteLine($"[{newClient.TcpClient.Client.RemoteEndPoint}]: Client has connected");
+                var ip = newClient.TcpClient.Client.RemoteEndPoint.ToString().Split(':')[0];
+                Console.WriteLine($"[{ip}]: Client has connected");
                 clients.Add(newClient);
                 Task.Run(() =>
                 {
@@ -61,22 +66,21 @@ namespace Venn.Server
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine($"[{client.TcpClient.Client.RemoteEndPoint}]: Client has disconnected");
-                            lock (new object())
-                            {
-                                clients.Remove(client);
-                            }
+                            Console.WriteLine($"[{ip}]: Client has disconnected");
                             foreach (var cl in clients)
                             {
-                                var contacts = new ObservableCollection<User>();
-                                clients.ForEach(c =>
+                                if (cl.User != null)
                                 {
-                                    if (c.User.Id != cl.User.Id)
+                                    var contacts = new ObservableCollection<User>();
+                                    foreach (var c in clients)
                                     {
-                                        contacts.Add(c.User);
+                                        if (c.User != null && c.User.Id != client.User.Id)
+                                        {
+                                            contacts.Add(c.User);
+                                        }
                                     }
-                                });
-                                cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+                                    cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+                                }
                             }
                             break;
                         }
@@ -94,35 +98,35 @@ namespace Venn.Server
                                     var r = $"success${JsonSerializer.Serialize(user)}";
                                     client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
                                     client.User = user;
-                                    Console.WriteLine($"[{client.TcpClient.Client.RemoteEndPoint}]: Client has logined");
+                                    Console.WriteLine($"[{ip}]: Client has logined");
                                     foreach (var cl in clients)
                                     {
                                         if (cl.User != null)
                                         {
                                             var contacts = new ObservableCollection<User>();
-                                            clients.ForEach(c =>
+                                            foreach (var c in clients)
                                             {
-                                                if (c.User.Id != cl.User.Id)
+                                                if (c.User != null && c.User.Id != client.User.Id)
                                                 {
-                                                    contacts.Add(c.User);
+                                                    contacts.Add(c.User); 
                                                 }
-                                            });
+                                            }
                                             cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
-                                        }                                    
+                                        }
                                     }
                                 }
                                 else
                                 {
                                     var r = "password$Sorry, your password was incorrect.";
                                     client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
-                                    Console.WriteLine($"[{client.TcpClient.Client.RemoteEndPoint}]: Client login failed");
+                                    Console.WriteLine($"[{ip}]: Client login failed");
                                 }
                             }
                             else
                             {
                                 var r = "email$The email you entered isn’t connected to an account";
                                 client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
-                                Console.WriteLine($"[{client.TcpClient.Client.RemoteEndPoint}]: Client login failed");
+                                Console.WriteLine($"[{ip}]: Client login failed");
                             }
                         }
                         else if (command == "create")
@@ -146,12 +150,12 @@ namespace Venn.Server
                                     users = new ObservableCollection<User>(userRepo.GetAll());
                                 }
                                 client.TcpClient.Client.Send(Encoding.UTF8.GetBytes("true"));
-                                Console.WriteLine($"[{client.TcpClient.Client.RemoteEndPoint}]: Client has created user");
+                                Console.WriteLine($"[{ip}]: Client has created user");
                             }
                             else
                             {
                                 client.TcpClient.Client.Send(Encoding.UTF8.GetBytes("false"));
-                                Console.WriteLine($"[{client.TcpClient.Client.RemoteEndPoint}]: Client create user failed");
+                                Console.WriteLine($"[{ip}]: Client create user failed");
                             }
                         }
                     }

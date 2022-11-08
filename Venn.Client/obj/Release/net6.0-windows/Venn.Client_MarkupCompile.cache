@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Client\obj\Release\net6.0-windows\
+C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\obj\Release\net6.0-windows\
 Venn.Client
 none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
-C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Client\App.xaml
+C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\App.xaml
 6-162195961
 
 17153837128
-224-317159481
+227554573490
 MVVM\Views\ChatView.xaml;MVVM\Views\CreateTeamView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ContactCard.xaml;
 
 True

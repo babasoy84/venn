@@ -12,7 +12,7 @@ namespace Venn.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=STHQ0129-15;Initial Catalog=VennDb;User ID=admin;Password=admin;");
+            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=VennDb;Integrated Security=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Client\obj\Debug\net6.0-windows\
-Venn.Client
+C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\obj\Debug\net6.0-windows\
+Venn.Client_51tqtoss_wpftmp
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\Baba_ja84\Source\Repos\babasoy84\Venn\Venn.Client\App.xaml
+TRACE;RELEASE;NET;NET6_0;NETCOREAPP
+C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\App.xaml
 6-162195961
 
-17153837128
-224-1406320886
+241089694699
+454-1611955634
 MVVM\Views\ChatView.xaml;MVVM\Views\CreateTeamView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ContactCard.xaml;
 
-False
+True
 
