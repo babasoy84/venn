@@ -49,11 +49,10 @@ namespace Venn.Server
             rooms = new ObservableCollection<Room>(roomRepo.GetAll());
             messages = new ObservableCollection<Message>(messageRepo.GetAll());
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.100.84"), 51753);
+            listener = new TcpListener(IPAddress.Parse("10.2.26.65"), 27001);
 
             JsonSerializerOptions options = new()
             {
-                NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
                 WriteIndented = true
             };
@@ -184,9 +183,9 @@ namespace Venn.Server
                             userRepo.Update(client.User);
                             userRepo.SaveChanges();
                             users = new ObservableCollection<User>(userRepo.GetAll());
-                            foreach (var cl in clients)
+                            for (int i = 0; i < clients.Count(); i++)
                             {
-                                cl.User = users.FirstOrDefault(u => u.Id == cl.User.Id);
+                                clients[i].User = users.FirstOrDefault(u => u.Id == clients[i].User.Id);
                             }
                             foreach (var cl in clients)
                             {

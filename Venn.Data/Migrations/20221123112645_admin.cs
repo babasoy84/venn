@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Venn.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class admin : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

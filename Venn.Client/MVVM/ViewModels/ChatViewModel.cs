@@ -89,7 +89,6 @@ namespace Venn.Client.MVVM.ViewModels
         {
             options = new()
             {
-                NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
                 WriteIndented = true
             };
@@ -163,6 +162,8 @@ namespace Venn.Client.MVVM.ViewModels
             Message.ToUserId = SelectedContact.Id;
             Message.Data = Encoding.UTF8.GetBytes(Text);
             Message.SendingTime = DateTime.Now;
+
+            Text = "";
 
             User.Messages.Add(Message);
 
