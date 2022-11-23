@@ -34,7 +34,7 @@ namespace Venn.Models.Models.Concretes
 
         public override string ToString()
         {
-            if (MessageType == "string")
+            if (MessageType == "text")
             {
                 return Encoding.UTF8.GetString(Data);
             }

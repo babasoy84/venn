@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Venn.Client</id>
+    <version>1.0.0</version>
+    <authors>Venn.Client</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0-windows7.0">
+        <dependency id="Venn.Data" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Venn.Server" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="MaterialDesignColors" version="2.0.6" exclude="Build,Analyzers" />
+        <dependency id="MaterialDesignThemes" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore" version="6.0.8" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="6.0.8" exclude="Build,Analyzers" />
+        <dependency id="MvvmLightLibs" version="5.4.1.1" exclude="Build,Analyzers" />
+        <dependency id="SimpleInjector" version="5.4.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net6.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WPF" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="C:\Users\babas\source\repos\babasoy84\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Client.runtimeconfig.json" target="lib\net6.0-windows7.0\Venn.Client.runtimeconfig.json" />
+    <file src="C:\Users\babas\source\repos\babasoy84\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Client.dll" target="lib\net6.0-windows7.0\Venn.Client.dll" />
+  </files>
+</package>

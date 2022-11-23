@@ -39,7 +39,13 @@
     <Page Update="MVVM\Views\WelcomeView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\ChatItem.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\ContactCard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\MessageBox.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

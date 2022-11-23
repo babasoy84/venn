@@ -397,3 +397,5 @@ C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\obj\Debug\net6.0-windows\
 C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.AspNetCore.Authorization.dll
 C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.AspNetCore.Components.dll
 C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.AspNetCore.Metadata.dll
+C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\ChatItem.baml
+C:\Users\babas\Source\Repos\babasoy84\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\MessageBox.baml

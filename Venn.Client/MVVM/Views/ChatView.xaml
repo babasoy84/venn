@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewmodel="clr-namespace:Venn.Client.MVVM.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DataContext="{d:DesignInstance Type=viewmodel:ChatViewModel}"
              xmlns:local="clr-namespace:Venn.Client.MVVM.Views"
              mc:Ignorable="d" 
@@ -23,39 +24,138 @@
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
 
-            <Label Content="Contacts"
-                   VerticalAlignment="Center"
-                   FontWeight="Medium"
-                   Foreground="Gray"
-                   Margin="8, 0, 0, 0"/>
+            <Label 
+                Content="Contacts"
+                VerticalAlignment="Center"
+                FontWeight="Medium"
+                Foreground="Gray"
+                Margin="8, 0, 0, 0"/>
 
-            <ListView ItemsSource="{Binding Contacts, 
+            <ListView 
+                ItemsSource="{
+                Binding Contacts, 
                 UpdateSourceTrigger=PropertyChanged,
                 Mode=TwoWay}"
-                      Background="Transparent"
-                      BorderThickness="0"
-                      Grid.Row="1"
-                      ItemContainerStyle="{StaticResource ContactCard}"/>
+                SelectedItem="{
+                Binding SelectedContact,
+                UpdateSourceTrigger=PropertyChanged,
+                Mode=TwoWay}"
+                Background="Transparent"
+                BorderThickness="0"
+                Grid.Row="1"
+                ItemContainerStyle="{StaticResource ContactCard}"/>
 
-            <StackPanel Grid.Row="2"
-                        Orientation="Horizontal"
-                        Background="#292b2f">
-                
+            <StackPanel 
+                Grid.Row="2"
+                Orientation="Horizontal"
+                Background="#292b2f">
 
-                <Ellipse Margin="18, 0, 0, 0" Width="30" Height="30">
+
+                <Ellipse 
+                    Margin="18, 0, 0, 0" 
+                    Width="30" 
+                    Height="30">
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="{Binding User.ImageSource,
+                        <ImageBrush 
+                            ImageSource="{
+                            Binding User.ImageSource,
                             UpdateSourceTrigger=PropertyChanged}"/>
                     </Ellipse.Fill>
                 </Ellipse>
 
-                <Label Content="{Binding User.Username}"
-                       Foreground="White"
-                       FontWeight="SemiBold"
-                       VerticalAlignment="Center"/>
+                <Label 
+                    Content="{Binding User.Username}"
+                    Foreground="White"
+                    FontWeight="SemiBold"
+                    VerticalAlignment="Center"/>
 
             </StackPanel>
+        </Grid>
 
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Border 
+                BorderBrush="#2F3136"
+                BorderThickness="0, 0, 0, 2">
+                <Grid 
+                    HorizontalAlignment="Stretch"
+                    Margin="8">
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+
+                        <Ellipse 
+                            Margin="18, 0, 0, 0" 
+                            Width="30" 
+                            Height="30">
+                            <Ellipse.Fill>
+                                <ImageBrush 
+                                    ImageSource="{
+                                    Binding SelectedContact.ImageSource,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+
+                        <Label
+                            Content="{
+                            Binding SelectedContact.Username,
+                            UpdateSourceTrigger=PropertyChanged,
+                            Mode=OneWay}"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Margin="5, 0, 5, 0"
+                            VerticalAlignment="Center"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <ListView
+                ItemsSource="{
+                Binding Messages,
+                UpdateSourceTrigger=PropertyChanged,
+                Mode=TwoWay}"
+                ItemContainerStyle="{StaticResource ChatItem}"
+                Background="Transparent"
+                BorderThickness="0"
+                Grid.Row="1"
+                Margin="8, 0, 0, 0"/>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox
+                    BorderThickness="0"
+                    Style="{StaticResource MessageBox}"
+                    Height="50"
+                    Grid.ColumnSpan="2"/>
+
+                <Button 
+                    Command="{Binding SendMessageCommand}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Grid.Column="1"
+                    Width="20"
+                    Height="20"
+                    Padding="0"
+                    Foreground="DarkGray"
+                    Margin="5, 5, 16, 0">
+                    <materialDesign:PackIcon 
+                        Kind="Send"
+                        Width="20"
+                        Height="20"/>
+                </Button>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

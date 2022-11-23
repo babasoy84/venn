@@ -6,8 +6,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Venn.Client.Net;
 using Venn.Client.Services;
@@ -114,7 +116,15 @@ namespace Venn.Client.MVVM.ViewModels
                 {
                     EmailErrorText = null;
                     PasswordErrorText = null;
-                    var user = JsonSerializer.Deserialize<User>(str.Split('$')[1]);
+
+                    JsonSerializerOptions options = new()
+                    {
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
+                        ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                        WriteIndented = true
+                    };
+
+                    var user = JsonSerializer.Deserialize<User>(str.Split('$')[1], options);
                     App.Container.GetInstance<User>().Id = user.Id;
                     App.Container.GetInstance<User>().ImageSource = user.ImageSource;
                     App.Container.GetInstance<User>().Email = user.Email;

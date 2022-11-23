@@ -66,7 +66,7 @@ namespace Venn.Client.MVVM.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Venn.Client;V1.0.0.0;component/mvvm/views/createteamview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Venn.Client;component/mvvm/views/createteamview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\MVVM\Views\CreateTeamView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using Venn.Data;
 using Venn.Data.Repos;
@@ -24,9 +25,13 @@ namespace Venn.Server
 
         static IRepository<Room> roomRepo;
 
+        static IRepository<Message> messageRepo;
+
         static ObservableCollection<User> users;
 
         static ObservableCollection<Room> rooms;
+
+        static ObservableCollection<Message> messages;
 
         private static Dispatcher dispatcher = Dispatcher.CreateDefault();
 
@@ -36,12 +41,23 @@ namespace Venn.Server
             container.RegisterSingleton<VennDbContext>();
             container.RegisterSingleton<IRepository<User>, Repository<User>>();
             container.RegisterSingleton<IRepository<Room>, Repository<Room>>();
+            container.RegisterSingleton<IRepository<Message>, Repository<Message>>();
             userRepo = container.GetInstance<IRepository<User>>();
             roomRepo = container.GetInstance<IRepository<Room>>();
+            messageRepo = container.GetInstance<IRepository<Message>>();
             users = new ObservableCollection<User>(userRepo.GetAll());
             rooms = new ObservableCollection<Room>(roomRepo.GetAll());
+            messages = new ObservableCollection<Message>(messageRepo.GetAll());
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.100.56"), 51753);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.84"), 51753);
+
+            JsonSerializerOptions options = new()
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+
             listener.Start();
             Console.WriteLine($"[{DateTime.Now}]: Listener has started");
 
@@ -50,10 +66,10 @@ namespace Venn.Server
                 var newClient = new Client(listener.AcceptTcpClient());
                 var ip = newClient.TcpClient.Client.RemoteEndPoint.ToString().Split(':')[0];
                 Console.WriteLine($"[{ip}]: Client has connected");
-                clients.Add(newClient);
                 Task.Run(() =>
                 {
-                    var client = newClient;
+                    var client = new Client(newClient.TcpClient);
+                    clients.Add(client);
                     while (client.TcpClient.Connected)
                     {
                         string str;
@@ -67,6 +83,7 @@ namespace Venn.Server
                         catch (Exception)
                         {
                             Console.WriteLine($"[{ip}]: Client has disconnected");
+                            clients.Remove(client);
                             foreach (var cl in clients)
                             {
                                 if (cl.User != null)
@@ -74,12 +91,12 @@ namespace Venn.Server
                                     var contacts = new ObservableCollection<User>();
                                     foreach (var c in clients)
                                     {
-                                        if (c.User != null && c.User.Id != client.User.Id)
+                                        if (c.User != null && c.User.Id != cl.User.Id)
                                         {
                                             contacts.Add(c.User);
                                         }
                                     }
-                                    cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+                                    cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts, options)}"));
                                 }
                             }
                             break;
@@ -95,7 +112,7 @@ namespace Venn.Server
                             {
                                 if (user.Password == password)
                                 {
-                                    var r = $"success${JsonSerializer.Serialize(user)}";
+                                    var r = $"success${JsonSerializer.Serialize(user, options)}";
                                     client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
                                     client.User = user;
                                     Console.WriteLine($"[{ip}]: Client has logined");
@@ -106,12 +123,12 @@ namespace Venn.Server
                                             var contacts = new ObservableCollection<User>();
                                             foreach (var c in clients)
                                             {
-                                                if (c.User != null && c.User.Id != client.User.Id)
+                                                if (c.User != null && c.User.Id != cl.User.Id)
                                                 {
                                                     contacts.Add(c.User); 
                                                 }
                                             }
-                                            cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+                                            cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts, options)}"));
                                         }
                                     }
                                 }
@@ -156,6 +173,35 @@ namespace Venn.Server
                             {
                                 client.TcpClient.Client.Send(Encoding.UTF8.GetBytes("false"));
                                 Console.WriteLine($"[{ip}]: Client create user failed");
+                            }
+                        }
+                        else if (command == "message")
+                        {
+                            var message = JsonSerializer.Deserialize<Message>(str.Split('$')[1]);
+                            client.User.Messages.Add(message);
+                            messageRepo.Add(message);
+                            messageRepo.SaveChanges();
+                            userRepo.Update(client.User);
+                            userRepo.SaveChanges();
+                            users = new ObservableCollection<User>(userRepo.GetAll());
+                            foreach (var cl in clients)
+                            {
+                                cl.User = users.FirstOrDefault(u => u.Id == cl.User.Id);
+                            }
+                            foreach (var cl in clients)
+                            {
+                                if (cl.User != null)
+                                {
+                                    var contacts = new ObservableCollection<User>();
+                                    foreach (var c in clients)
+                                    {
+                                        if (c.User != null && c.User.Id != cl.User.Id)
+                                        {
+                                            contacts.Add(c.User);
+                                        }
+                                    }
+                                    cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+                                }
                             }
                         }
                     }

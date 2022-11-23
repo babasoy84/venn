@@ -89,7 +89,7 @@ namespace Venn.Client.MVVM.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Venn.Client;V1.0.0.0;component/mvvm/views/mainview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Venn.Client;component/mvvm/views/mainview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\MVVM\Views\MainView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
