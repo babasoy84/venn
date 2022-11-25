@@ -25,18 +25,36 @@ namespace Venn.Client.Net
         {
             if (!client.Connected)
             {
-                client.Connect(IPAddress.Parse("10.2.26.65"), 27001);
+                client.Connect(IPAddress.Parse("192.168.100.84"), 52400);
             }
         }
 
         public string Login(string email, string password)
         {
-            var str = "login$" + email + "$" + password;
-            client.Client.Send(Encoding.UTF8.GetBytes(str));
+            var r = "login$" + email + "$" + password;
+            client.Client.Send(Encoding.UTF8.GetBytes(r));
             var ns = client.GetStream();
-            var bytes = new byte[4096];
+            var bytes = new byte[ushort.MaxValue - 28];
             var length = ns.Read(bytes, 0, bytes.Length);
-            return Encoding.Default.GetString(bytes, 0, length);
+            var str = Encoding.Default.GetString(bytes, 0, length);
+            if (str[0] == '<')
+            {
+                while (true)
+                {
+                    ns = client.GetStream();
+                    bytes = new byte[ushort.MaxValue - 28];
+                    length = ns.Read(bytes, 0, bytes.Length);
+                    var s = Encoding.Default.GetString(bytes, 0, length);
+                    str += s;
+                    if (s.Last() == '>')
+                    {
+                        str.Remove(0, 1);
+                        str.Remove(str.Length - 1, 1);
+                        break;
+                    }
+                }
+            }
+            return str;
         }
 
         public bool CreateTeam(User user)

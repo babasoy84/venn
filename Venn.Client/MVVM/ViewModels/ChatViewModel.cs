@@ -104,9 +104,26 @@ namespace Venn.Client.MVVM.ViewModels
                 while (true)
                 {
                     var ns = Server.client.GetStream();
-                    var bytes = new byte[4096];
+                    var bytes = new byte[ushort.MaxValue - 28];
                     var length = ns.Read(bytes, 0, bytes.Length);
                     var str = Encoding.Default.GetString(bytes, 0, length);
+                    if (str[0] == '<')
+                    {
+                        while (true)
+                        {
+                            ns = Server.client.GetStream();
+                            bytes = new byte[ushort.MaxValue - 28];
+                            length = ns.Read(bytes, 0, bytes.Length);
+                            var s = Encoding.Default.GetString(bytes, 0, length);
+                            str += s;
+                            if (s.Last() == '>')
+                            {
+                                str.Remove(0, 1);
+                                str.Remove(str.Length - 1, 1);
+                                break;
+                            }
+                        }
+                    }
                     var command = str.Split('$')[0];
                     if (command == "contacts")
                     {

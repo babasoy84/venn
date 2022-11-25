@@ -15,6 +15,8 @@ namespace Venn.Server
 {
     class Program
     {
+        static int maxValue = ushort.MaxValue - 28;
+
         static Container container;
 
         static List<Client> clients;
@@ -49,7 +51,7 @@ namespace Venn.Server
             rooms = new ObservableCollection<Room>(roomRepo.GetAll());
             messages = new ObservableCollection<Message>(messageRepo.GetAll());
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("10.2.26.65"), 27001);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.84"), 52400);
 
             JsonSerializerOptions options = new()
             {
@@ -75,7 +77,7 @@ namespace Venn.Server
                         try
                         {
                             var ns = client.TcpClient.GetStream();
-                            var bytes = new byte[4096];
+                            var bytes = new byte[maxValue];
                             var length = ns.Read(bytes, 0, bytes.Length);
                             str = Encoding.Default.GetString(bytes, 0, length);
                         }
@@ -95,7 +97,35 @@ namespace Venn.Server
                                             contacts.Add(c.User);
                                         }
                                     }
-                                    cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts, options)}"));
+
+                                    var r = $"contacts${JsonSerializer.Serialize(contacts, options)}";
+
+                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                    {
+                                        r = $"<{r}>";
+                                        var data = Encoding.UTF8.GetBytes(r);
+                                        var skipCount = 0;
+                                        var bytesLen = data.Length;
+
+                                        while (skipCount + maxValue <= bytesLen)
+                                        {
+                                            cl.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(maxValue)
+                                                .ToArray());
+                                            skipCount += maxValue;
+                                        }
+
+                                        if (skipCount != bytesLen)
+                                            cl.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(bytesLen - skipCount)
+                                                .ToArray());
+                                    }
+                                    else
+                                    {
+                                        cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                    }
                                 }
                             }
                             break;
@@ -112,7 +142,34 @@ namespace Venn.Server
                                 if (user.Password == password)
                                 {
                                     var r = $"success${JsonSerializer.Serialize(user, options)}";
-                                    client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+
+                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                    {
+                                        r = $"<{r}>";
+                                        var data = Encoding.UTF8.GetBytes(r);
+                                        var skipCount = 0;
+                                        var bytesLen = data.Length;
+
+                                        while (skipCount + maxValue <= bytesLen)
+                                        {
+                                            client.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(maxValue)
+                                                .ToArray());
+                                            skipCount += maxValue;
+                                        }
+
+                                        if (skipCount != bytesLen)
+                                            client.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(bytesLen - skipCount)
+                                                .ToArray());
+                                    }
+                                    else
+                                    {
+                                        client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                    }
+                                    
                                     client.User = user;
                                     Console.WriteLine($"[{ip}]: Client has logined");
                                     foreach (var cl in clients)
@@ -127,7 +184,35 @@ namespace Venn.Server
                                                     contacts.Add(c.User); 
                                                 }
                                             }
-                                            cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts, options)}"));
+
+                                            r = $"contacts${JsonSerializer.Serialize(contacts, options)}";
+
+                                            if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                            {
+                                                r = $"<{r}>";
+                                                var data = Encoding.UTF8.GetBytes(r);
+                                                var skipCount = 0;
+                                                var bytesLen = data.Length;
+
+                                                while (skipCount + maxValue <= bytesLen)
+                                                {
+                                                    cl.TcpClient.Client.Send(data
+                                                        .Skip(skipCount)
+                                                        .Take(maxValue)
+                                                        .ToArray());
+                                                    skipCount += maxValue;
+                                                }
+
+                                                if (skipCount != bytesLen)
+                                                    cl.TcpClient.Client.Send(data
+                                                        .Skip(skipCount)
+                                                        .Take(bytesLen - skipCount)
+                                                        .ToArray());
+                                            }
+                                            else
+                                            {
+                                                cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                            }
                                         }
                                     }
                                 }
@@ -199,7 +284,35 @@ namespace Venn.Server
                                             contacts.Add(c.User);
                                         }
                                     }
-                                    cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes($"contacts${JsonSerializer.Serialize(contacts)}"));
+
+                                    var r = $"contacts${JsonSerializer.Serialize(contacts, options)}";
+
+                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                    {
+                                        r = $"<{r}>";
+                                        var data = Encoding.UTF8.GetBytes(r);
+                                        var skipCount = 0;
+                                        var bytesLen = data.Length;
+
+                                        while (skipCount + maxValue <= bytesLen)
+                                        {
+                                            cl.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(maxValue)
+                                                .ToArray());
+                                            skipCount += maxValue;
+                                        }
+
+                                        if (skipCount != bytesLen)
+                                            cl.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(bytesLen - skipCount)
+                                                .ToArray());
+                                    }
+                                    else
+                                    {
+                                        cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                    }
                                 }
                             }
                         }

@@ -123,7 +123,6 @@ namespace Venn.Client.MVVM.ViewModels
                         WriteIndented = true
                     };
 
-                    MessageBox.Show(str.Split('$')[1]);
                     var user = JsonSerializer.Deserialize<User>(str.Split('$')[1], options);
                     App.Container.GetInstance<User>().Id = user.Id;
                     App.Container.GetInstance<User>().ImageSource = user.ImageSource;
