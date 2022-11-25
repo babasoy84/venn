@@ -34,6 +34,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         private User selectedContact;
 
+        private int selectedContactIndex;
+
         private JsonSerializerOptions options;
 
         private string text;
@@ -67,6 +69,16 @@ namespace Venn.Client.MVVM.ViewModels
                 selectedContact = value;
                 NotifyPropertyChanged("SelectedContact");
                 UpdateMessages();
+            }
+        }
+
+        public int SelectedContactIndex
+        {
+            get { return selectedContactIndex; }
+            set
+            {
+                selectedContactIndex = value;
+                NotifyPropertyChanged("SelectedContactIndex");
             }
         }
 
@@ -127,6 +139,11 @@ namespace Venn.Client.MVVM.ViewModels
                     var command = str.Split('$')[0];
                     if (command == "contacts")
                     {
+                        int ind = -1;
+
+                        if (SelectedContactIndex != null)
+                            ind = SelectedContactIndex;
+
                         lock (this)
                         {
                             dispatcher.Invoke(() => Contacts.Clear());
@@ -135,6 +152,9 @@ namespace Venn.Client.MVVM.ViewModels
                                 dispatcher.Invoke(() => Contacts.Add(contact));
                             }
                         }
+
+                        if (ind >= 0 && ind < Contacts.Count())
+                            SelectedContactIndex = ind;
                     }
                 }
             });

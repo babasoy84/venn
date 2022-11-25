@@ -40,6 +40,10 @@
                 Binding SelectedContact,
                 UpdateSourceTrigger=PropertyChanged,
                 Mode=TwoWay}"
+                SelectedIndex="{
+                Binding SelectedContactIndex,
+                UpdateSourceTrigger=PropertyChanged,
+                Mode=TwoWay}"
                 Background="Transparent"
                 BorderThickness="0"
                 Grid.Row="1"
