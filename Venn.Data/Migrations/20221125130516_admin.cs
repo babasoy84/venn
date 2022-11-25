@@ -47,6 +47,8 @@ namespace Venn.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FromUserId = table.Column<int>(type: "int", nullable: false),
+                    FromUserImageSource = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FromUserUsername = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ToUserId = table.Column<int>(type: "int", nullable: true),
                     ToRoomId = table.Column<int>(type: "int", nullable: true),
                     Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),

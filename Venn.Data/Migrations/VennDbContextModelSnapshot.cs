@@ -52,6 +52,14 @@ namespace Venn.Data.Migrations
                     b.Property<int>("FromUserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("FromUserImageSource")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FromUserUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MessageType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

@@ -169,6 +169,8 @@ namespace Venn.Client.MVVM.ViewModels
                     Messages.Add(msg);
                 }
             }
+            else
+                Messages.Clear();
         }
 
         public void SendMessage()
@@ -176,6 +178,8 @@ namespace Venn.Client.MVVM.ViewModels
             var Message = new Message();
             Message.MessageType = "text";
             Message.FromUserId = User.Id;
+            Message.FromUserImageSource = User.ImageSource;
+            Message.FromUserUsername = User.Username;
             Message.ToUserId = SelectedContact.Id;
             Message.Data = Encoding.UTF8.GetBytes(Text);
             Message.SendingTime = DateTime.Now;

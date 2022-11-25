@@ -11,6 +11,10 @@ namespace Venn.Models.Models.Concretes
     {
         public int FromUserId { get; set; }
 
+        public string FromUserImageSource { get; set; }
+
+        public string FromUserUsername { get; set; }
+
         public int? ToUserId { get; set; }
 
         public int? ToRoomId { get; set; }

@@ -9,13 +9,13 @@
                         <Ellipse Width="30" Height="30"
                                  Margin="10, 0, 0, -5">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="{Binding FromUser.ImageSource}"/>
+                                <ImageBrush ImageSource="{Binding FromUserImageSource}"/>
                             </Ellipse.Fill>
                         </Ellipse>
 
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding FromUser.Username}"
+                                <Label Content="{Binding FromUserUsername}"
                                    Foreground="#B13333"
                                    FontWeight="SemiBold"
                                    VerticalAlignment="Center"

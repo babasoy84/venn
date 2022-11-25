@@ -51,7 +51,7 @@ namespace Venn.Server
             rooms = new ObservableCollection<Room>(roomRepo.GetAll());
             messages = new ObservableCollection<Message>(messageRepo.GetAll());
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.100.84"), 52400);
+            listener = new TcpListener(IPAddress.Parse("10.2.26.65"), 27001);
 
             JsonSerializerOptions options = new()
             {

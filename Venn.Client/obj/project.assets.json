@@ -2498,19 +2498,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\babas\\.nuget\\packages\\": {}
+    "C:\\Users\\Baba_ja84\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Client\\Venn.Client.csproj",
+      "projectUniqueName": "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Client\\Venn.Client.csproj",
       "projectName": "Venn.Client",
-      "projectPath": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Client\\Venn.Client.csproj",
-      "packagesPath": "C:\\Users\\babas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Client\\obj\\",
+      "projectPath": "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Client\\Venn.Client.csproj",
+      "packagesPath": "C:\\Users\\Baba_ja84\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Client\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\babas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Baba_ja84\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2524,11 +2529,11 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Data\\Venn.Data.csproj": {
-              "projectPath": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Data\\Venn.Data.csproj"
+            "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Data\\Venn.Data.csproj": {
+              "projectPath": "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Data\\Venn.Data.csproj"
             },
-            "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Server\\Venn.Server.csproj": {
-              "projectPath": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Server\\Venn.Server.csproj"
+            "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Server\\Venn.Server.csproj": {
+              "projectPath": "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Server\\Venn.Server.csproj"
             }
           }
         }
@@ -2592,7 +2597,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   },

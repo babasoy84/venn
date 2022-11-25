@@ -12,7 +12,7 @@ using Venn.Data;
 namespace Venn.Data.Migrations
 {
     [DbContext(typeof(VennDbContext))]
-    [Migration("20221123112645_admin")]
+    [Migration("20221125130516_admin")]
     partial class admin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,14 @@ namespace Venn.Data.Migrations
 
                     b.Property<int>("FromUserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("FromUserImageSource")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FromUserUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MessageType")
                         .IsRequired()
