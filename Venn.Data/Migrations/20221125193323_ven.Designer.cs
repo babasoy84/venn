@@ -12,8 +12,8 @@ using Venn.Data;
 namespace Venn.Data.Migrations
 {
     [DbContext(typeof(VennDbContext))]
-    [Migration("20221125130516_admin")]
-    partial class admin
+    [Migration("20221125193323_ven")]
+    partial class ven
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,6 +74,9 @@ namespace Venn.Data.Migrations
 
                     b.Property<int?>("ToUserId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isSelf")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

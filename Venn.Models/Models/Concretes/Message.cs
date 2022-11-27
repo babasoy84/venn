@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Threading.Tasks;
 using Venn.Models.Models.Abstracts;
 
@@ -25,6 +26,8 @@ namespace Venn.Models.Models.Concretes
 
         public DateTime SendingTime { get; set; }
 
+        public bool IsSelf { get; set; } = true;
+
         public User FromUser { get; set; }
 
         public User? ToUser { get; set; }
@@ -33,7 +36,7 @@ namespace Venn.Models.Models.Concretes
 
         public Message()
         {
-
+            
         }
 
         public override string ToString()

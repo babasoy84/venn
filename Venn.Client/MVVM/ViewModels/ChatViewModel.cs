@@ -130,8 +130,8 @@ namespace Venn.Client.MVVM.ViewModels
                             str += s;
                             if (s.Last() == '>')
                             {
-                                str.Remove(0, 1);
-                                str.Remove(str.Length - 1, 1);
+                                str = str.Remove(0, 1);
+                                str = str.Remove(str.Length - 1, 1); 
                                 break;
                             }
                         }
@@ -175,11 +175,13 @@ namespace Venn.Client.MVVM.ViewModels
                 var lst = new List<Message>();
                 foreach (var msg in User.Messages.Where(m => m.ToUserId == SelectedContact.Id))
                 {
+                    msg.IsSelf = true;
                     lst.Add(msg);
                 }
 
                 foreach (var msg in SelectedContact.Messages.Where(m => m.ToUserId == User.Id))
                 {
+                    msg.IsSelf = false;
                     lst.Add(msg);
                 }
 
@@ -203,6 +205,7 @@ namespace Venn.Client.MVVM.ViewModels
             Message.ToUserId = SelectedContact.Id;
             Message.Data = Encoding.UTF8.GetBytes(Text);
             Message.SendingTime = DateTime.Now;
+            Message.IsSelf = true;
 
             Text = "";
 

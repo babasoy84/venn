@@ -49,31 +49,57 @@
                 Grid.Row="1"
                 ItemContainerStyle="{StaticResource ContactCard}"/>
 
-            <StackPanel 
+            <Grid 
                 Grid.Row="2"
-                Orientation="Horizontal"
                 Background="#292b2f">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="35"/>
+                </Grid.ColumnDefinitions>
 
+                <StackPanel Orientation="Horizontal">
 
-                <Ellipse 
-                    Margin="18, 0, 0, 0" 
-                    Width="30" 
-                    Height="30">
-                    <Ellipse.Fill>
-                        <ImageBrush 
+                    <Ellipse 
+                        Margin="18, 0, 0, 0" 
+                        Width="30" 
+                        Height="30">
+                        <Ellipse.Fill>
+                            <ImageBrush 
                             ImageSource="{
                             Binding User.ImageSource,
                             UpdateSourceTrigger=PropertyChanged}"/>
-                    </Ellipse.Fill>
-                </Ellipse>
+                        </Ellipse.Fill>
+                    </Ellipse>
 
-                <Label 
-                    Content="{Binding User.Username}"
-                    Foreground="White"
-                    FontWeight="SemiBold"
-                    VerticalAlignment="Center"/>
+                    <Label 
+                        Content="{Binding User.Username}"
+                        Foreground="White"
+                        FontWeight="SemiBold"
+                        VerticalAlignment="Center"/>
 
-            </StackPanel>
+                </StackPanel>
+
+                <Button 
+                    Command="{Binding SettingsCommand}"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Width="20"
+                    Height="20"
+                    Padding="0"
+                    Foreground="DarkGray">
+                    <materialDesign:PackIcon 
+                        Kind="Settings"
+                        Width="20"
+                        Height="20"/>
+                </Button>
+
+            </Grid>
+
+            
+
         </Grid>
 
         <Grid Grid.Column="1">

@@ -25,7 +25,7 @@ namespace Venn.Client.Net
         {
             if (!client.Connected)
             {
-                client.Connect(IPAddress.Parse("10.2.26.65"), 27001);
+                client.Connect(IPAddress.Parse("192.168.100.84"), 52400);
             }
         }
 
@@ -48,8 +48,8 @@ namespace Venn.Client.Net
                     str += s;
                     if (s.Last() == '>')
                     {
-                        str.Remove(0, 1);
-                        str.Remove(str.Length - 1, 1);
+                        str = str.Remove(0, 1);
+                        str = str.Remove(str.Length - 1, 1);
                         break;
                     }
                 }

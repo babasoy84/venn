@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Venn.Data.Migrations
 {
-    public partial class admin : Migration
+    public partial class ven : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,7 +53,8 @@ namespace Venn.Data.Migrations
                     ToRoomId = table.Column<int>(type: "int", nullable: true),
                     Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     MessageType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SendingTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    SendingTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isSelf = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

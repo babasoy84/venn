@@ -73,6 +73,9 @@ namespace Venn.Data.Migrations
                     b.Property<int?>("ToUserId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isSelf")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FromUserId");

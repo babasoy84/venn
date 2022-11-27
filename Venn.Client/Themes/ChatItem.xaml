@@ -42,9 +42,46 @@
         <Style.Resources>
             <ControlTemplate x:Key="CustomRow">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding this}"
+                    <Label Content="{Binding}"
                            Foreground="White"
                            Margin="40, -2, 0, 2"/>
+                </StackPanel>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="SelfRow">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            
+                            <Label Content="{Binding SendingTime}"
+                                   Foreground="#44474D"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   VerticalAlignment="Center"/>
+                            
+                            <Label Content="{Binding FromUserUsername}"
+                                   Foreground="DeepSkyBlue"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Margin="0, 0, -5, 0"/>
+                            
+                        </StackPanel>
+
+                        <Label Content="{Binding}"
+                               Foreground="White"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"/>
+                    </StackPanel>
+
+                    <Ellipse Width="30" Height="30"
+                                 Margin="10, -5, 0, 0">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding FromUserImageSource}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
                 </StackPanel>
             </ControlTemplate>
         </Style.Resources>
@@ -54,8 +91,8 @@
                 <Setter Property="Template" Value="{StaticResource CustomRow}"/>
             </DataTrigger>
 
-            <DataTrigger Binding="{Binding MessageType}" Value="image">
-                <Setter Property="Template" Value="{StaticResource CustomRow}"/>
+            <DataTrigger Binding="{Binding IsSelf}" Value="True">
+                <Setter Property="Template" Value="{StaticResource SelfRow}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>

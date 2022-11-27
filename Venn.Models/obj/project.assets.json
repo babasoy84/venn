@@ -2312,24 +2312,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Baba_ja84\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\babas\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Models\\Venn.Models.csproj",
+      "projectUniqueName": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Models\\Venn.Models.csproj",
       "projectName": "Venn.Models",
-      "projectPath": "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Models\\Venn.Models.csproj",
-      "packagesPath": "C:\\Users\\Baba_ja84\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Baba_ja84\\Source\\Repos\\Venn\\Venn.Models\\obj\\",
+      "projectPath": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Models\\Venn.Models.csproj",
+      "packagesPath": "C:\\Users\\babas\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Models\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Baba_ja84\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\babas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2401,7 +2396,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   },

@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Venn.Client",
-    "\\Venn.Client\\MVVM",
-    "\\Venn.Client\\MVVM\\Views"
+    "\\Venn.Models",
+    "\\Venn.Models\\Models",
+    "\\Venn.Models\\Models\\Concretes"
   ],
   "SelectedNode": "\\Venn.sln",
   "PreviewInSolutionExplorer": false
