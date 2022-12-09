@@ -197,25 +197,28 @@ namespace Venn.Client.MVVM.ViewModels
 
         public void SendMessage()
         {
-            var Message = new Message();
-            Message.MessageType = "text";
-            Message.FromUserId = User.Id;
-            Message.FromUserImageSource = User.ImageSource;
-            Message.FromUserUsername = User.Username;
-            Message.ToUserId = SelectedContact.Id;
-            Message.Data = Encoding.UTF8.GetBytes(Text);
-            Message.SendingTime = DateTime.Now;
-            Message.IsSelf = true;
+            if (!string.IsNullOrWhiteSpace(Text) && SelectedContact != null)
+            {
+                var Message = new Message();
+                Message.MessageType = "text";
+                Message.FromUserId = User.Id;
+                Message.FromUserImageSource = User.ImageSource;
+                Message.FromUserUsername = User.Username;
+                Message.ToUserId = SelectedContact.Id;
+                Message.Data = Encoding.UTF8.GetBytes(Text);
+                Message.SendingTime = DateTime.Now;
+                Message.IsSelf = true;
+
+                User.Messages.Add(Message);
+
+                var str = $"message${JsonSerializer.Serialize(Message)}";
+
+                Server.client.Client.Send(Encoding.UTF8.GetBytes(str));
+
+                UpdateMessages();
+            }
 
             Text = "";
-
-            User.Messages.Add(Message);
-
-            var str = $"message${JsonSerializer.Serialize(Message)}";
-
-            Server.client.Client.Send(Encoding.UTF8.GetBytes(str));
-
-            UpdateMessages();
         }
     }
 }

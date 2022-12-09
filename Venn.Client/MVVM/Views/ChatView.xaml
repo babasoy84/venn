@@ -90,15 +90,29 @@
                     Height="20"
                     Padding="0"
                     Foreground="DarkGray">
-                    <materialDesign:PackIcon 
-                        Kind="Settings"
-                        Width="20"
-                        Height="20"/>
+                    <Menu
+                        IsMainMenu="True">
+                        <MenuItem 
+                                Header="Settings"
+                                Foreground="DarkGray"
+                                FontWeight="SemiBold"
+                                Background="#292b2f">
+                            <MenuItem 
+                                    Header="Add Group"
+                                    Icon="{materialDesign:PackIcon Kind=Plus}"/>
+                            <MenuItem 
+                                    Header="Upload Photo"
+                                    Icon="{materialDesign:PackIcon Kind=Upload}"/>
+                            <MenuItem 
+                                    Header="Log Out"
+                                    Icon="{materialDesign:PackIcon Kind=Logout}"/>
+                        </MenuItem>
+                    </Menu>
                 </Button>
 
             </Grid>
 
-            
+
 
         </Grid>
 
