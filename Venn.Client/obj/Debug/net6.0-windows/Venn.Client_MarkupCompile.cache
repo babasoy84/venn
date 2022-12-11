@@ -5,16 +5,16 @@ winexe
 C#
 .cs
 C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\
-Venn.Client_npu354dq_wpftmp
+Venn.Client
 none
 false
-TRACE;RELEASE;NET;NET6_0;NETCOREAPP
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\babas\Source\Repos\Venn\Venn.Client\App.xaml
 860162990
 
-24-339727567
-454-666842528
+17153837128
+227-1513665029
 MVVM\Views\ChatView.xaml;MVVM\Views\CreateTeamView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ChatItem.xaml;Themes\ContactCard.xaml;Themes\MessageBox.xaml;
 
-True
+False
 

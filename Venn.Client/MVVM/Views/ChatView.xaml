@@ -86,17 +86,22 @@
                     VerticalAlignment="Center"
                     Background="Transparent"
                     BorderThickness="0"
-                    Width="20"
-                    Height="20"
+                    Width="17"
+                    Height="17"
                     Padding="0"
+                    Margin="0"
                     Foreground="DarkGray">
                     <Menu
+                        Margin="0"
+                        Padding="0"
                         IsMainMenu="True">
-                        <MenuItem 
-                                Header="Settings"
-                                Foreground="DarkGray"
-                                FontWeight="SemiBold"
-                                Background="#292b2f">
+                        <MenuItem
+                            VerticalAlignment="Center"
+                            Padding="0"
+                            Header="{materialDesign:PackIcon Kind=Settings}"
+                            Foreground="DarkGray"
+                            FontWeight="SemiBold"
+                            Background="#292b2f" Width="34">
                             <MenuItem 
                                     Header="Add Group"
                                     Icon="{materialDesign:PackIcon Kind=Plus}"/>

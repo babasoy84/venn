@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "Venn.Data/1.0.0": {
         "dependencies": {
+          "MaterialDesignColors": "2.0.6",
           "MaterialDesignThemes": "4.5.0",
           "Microsoft.EntityFrameworkCore": "6.0.8",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.8",
@@ -551,6 +552,7 @@
       },
       "Venn.Models/1.0.0": {
         "dependencies": {
+          "MaterialDesignColors": "2.0.6",
           "MaterialDesignThemes": "4.5.0",
           "Microsoft.EntityFrameworkCore": "6.0.8",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.8",
