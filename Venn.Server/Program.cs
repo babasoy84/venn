@@ -95,7 +95,7 @@ namespace Venn.Server
                                         if (c.User != null && c.User.Id != cl.User.Id)
                                         {
                                             contacts.Add(c.User);
-                                        }
+                                        } 
                                     }
 
                                     var r = $"contacts${JsonSerializer.Serialize(contacts, options)}";

@@ -30,6 +30,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         private ObservableCollection<User> contacts;
 
+        private ObservableCollection<User> users;
+
         private ObservableCollection<Message> messages;
 
         private User selectedContact;
@@ -40,6 +42,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         private string text;
 
+        private string friendName;
+
 
         public ObservableCollection<User> Contacts
         {
@@ -48,6 +52,16 @@ namespace Venn.Client.MVVM.ViewModels
             {
                 contacts = value;
                 NotifyPropertyChanged("Contacts");
+            }
+        }
+
+        public ObservableCollection<User> Users
+        {
+            get { return users; }
+            set
+            {
+                users = value;
+                NotifyPropertyChanged("Users");
             }
         }
 
@@ -89,6 +103,16 @@ namespace Venn.Client.MVVM.ViewModels
             {
                 text = value;
                 NotifyPropertyChanged("Text");
+            }
+        }
+
+        public string FriendName
+        {
+            get { return friendName; }
+            set
+            {
+                friendName = value;
+                NotifyPropertyChanged("FriendName");
             }
         }
 
@@ -185,6 +209,7 @@ namespace Venn.Client.MVVM.ViewModels
                     lst.Add(msg);
                 }
 
+                lst.Sort((x, y) => DateTime.Compare(x.SendingTime, y.SendingTime));
                 Messages.Clear();
                 foreach (var msg in lst.OrderBy(m => m.SendingTime).ToList())
                 {
@@ -193,6 +218,16 @@ namespace Venn.Client.MVVM.ViewModels
             }
             else
                 Messages.Clear();
+        }
+
+        public void UpdateUsers()
+        {
+            if (!string.IsNullOrWhiteSpace(FriendName))
+            {
+                
+            }
+            else
+                Users.Clear();
         }
 
         public void SendMessage()

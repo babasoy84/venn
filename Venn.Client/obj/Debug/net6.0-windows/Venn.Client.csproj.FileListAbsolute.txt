@@ -569,3 +569,4 @@ C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\Venn.Clien
 C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\ref\Venn.Client.dll
 C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\Venn.Client.pdb
 C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\Venn.Client.genruntimeconfig.cache
+C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\FriendCard.baml

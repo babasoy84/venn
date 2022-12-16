@@ -10,28 +10,97 @@
              mc:Ignorable="d" 
              Background="#36393F"
              d:DesignHeight="625" d:DesignWidth="1200">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+    <materialDesign:DialogHost CloseOnClickAway="True">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel
+                Width="500"
+                Orientation="Vertical"
+                Background="#2F3136">
 
-        <Grid Background="#2F3136">
+                <materialDesign:ColorZone
+                    CornerRadius="5"
+                    Mode="Standard"
+                    Padding="8 4 8 4"
+                    Panel.ZIndex="1"
+                    Margin="10"
+                    Background="#3e4147"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                    <Border CornerRadius="8" Background="#3e4147">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
-                <RowDefinition Height="60"/>
-            </Grid.RowDefinitions>
+                        <Grid>
+                            <TextBox 
+                                Height="50"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                HorizontalContentAlignment="Stretch"
+                                Name="MessageBox"
+                                Background="Transparent"
+                                TextWrapping="Wrap"
+                                BorderThickness="0"
+                                Foreground="Gray"
+                                CaretBrush="Gray"
+                                Margin="8, 0, 8, 0"
+                                Text="{Binding FriendName, 
+                                Mode=TwoWay, 
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Label 
+                            <TextBlock
+                                IsHitTestVisible="False"
+                                Text="Find Friend..."
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Margin="10, 0, 0, 0"
+                                Foreground="DarkGray">
+
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=MessageBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+
+                            </TextBlock>
+                        </Grid>
+
+                    </Border>
+                </materialDesign:ColorZone>
+                <ListView 
+                    ItemsSource="{
+                    Binding Users, 
+                    UpdateSourceTrigger=PropertyChanged,
+                    Mode=TwoWay}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Grid.Row="1"
+                    ItemContainerStyle="{StaticResource FriendCard}"/>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Background="#2F3136">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <Label 
                 Content="Contacts"
                 VerticalAlignment="Center"
                 FontWeight="Medium"
                 Foreground="Gray"
                 Margin="8, 0, 0, 0"/>
 
-            <ListView 
+                <ListView 
                 ItemsSource="{
                 Binding Contacts, 
                 UpdateSourceTrigger=PropertyChanged,
@@ -49,37 +118,37 @@
                 Grid.Row="1"
                 ItemContainerStyle="{StaticResource ContactCard}"/>
 
-            <Grid 
+                <Grid 
                 Grid.Row="2"
                 Background="#292b2f">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="35"/>
-                </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="35"/>
+                    </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
 
-                    <Ellipse 
+                        <Ellipse 
                         Margin="18, 0, 0, 0" 
                         Width="30" 
                         Height="30">
-                        <Ellipse.Fill>
-                            <ImageBrush 
+                            <Ellipse.Fill>
+                                <ImageBrush 
                             ImageSource="{
                             Binding User.ImageSource,
                             UpdateSourceTrigger=PropertyChanged}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
+                            </Ellipse.Fill>
+                        </Ellipse>
 
-                    <Label 
+                        <Label 
                         Content="{Binding User.Username}"
                         Foreground="White"
                         FontWeight="SemiBold"
                         VerticalAlignment="Center"/>
 
-                </StackPanel>
+                    </StackPanel>
 
-                <Button 
+                    <Button 
                     Command="{Binding SettingsCommand}"
                     Grid.Column="1"
                     HorizontalAlignment="Left"
@@ -91,67 +160,71 @@
                     Padding="0"
                     Margin="0"
                     Foreground="DarkGray">
-                    <Menu
+                        <Menu
                         Margin="0"
                         Padding="0"
                         IsMainMenu="True">
-                        <MenuItem
+                            <MenuItem
                             VerticalAlignment="Center"
                             Padding="0"
-                            Header="{materialDesign:PackIcon Kind=Settings}"
+                            Header="{materialDesign:PackIcon Kind=DotsVertical}"
                             Foreground="DarkGray"
                             FontWeight="SemiBold"
                             Background="#292b2f" Width="34">
-                            <MenuItem 
+                                <MenuItem 
                                     Header="Add Group"
                                     Icon="{materialDesign:PackIcon Kind=Plus}"/>
-                            <MenuItem 
+                                <MenuItem 
+                                    Header="Find Friend"
+                                    Icon="{materialDesign:PackIcon Kind=AccountSearch}"
+                                    Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"/>
+                                <MenuItem 
                                     Header="Upload Photo"
                                     Icon="{materialDesign:PackIcon Kind=Upload}"/>
-                            <MenuItem 
+                                <MenuItem 
                                     Header="Log Out"
                                     Icon="{materialDesign:PackIcon Kind=Logout}"/>
-                        </MenuItem>
-                    </Menu>
-                </Button>
+                            </MenuItem>
+                        </Menu>
+                    </Button>
+
+                </Grid>
+
+
 
             </Grid>
 
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
 
-
-        </Grid>
-
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
-                <RowDefinition Height="70"/>
-            </Grid.RowDefinitions>
-
-            <Border 
+                <Border 
                 BorderBrush="#2F3136"
                 BorderThickness="0, 0, 0, 2">
-                <Grid 
+                    <Grid 
                     HorizontalAlignment="Stretch"
                     Margin="8">
 
-                    <StackPanel
+                        <StackPanel
                         Orientation="Horizontal"
                         HorizontalAlignment="Left">
 
-                        <Ellipse 
+                            <Ellipse 
                             Margin="18, 0, 0, 0" 
                             Width="30" 
                             Height="30">
-                            <Ellipse.Fill>
-                                <ImageBrush 
+                                <Ellipse.Fill>
+                                    <ImageBrush 
                                     ImageSource="{
                                     Binding SelectedContact.ImageSource,
                                     UpdateSourceTrigger=PropertyChanged}"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                                </Ellipse.Fill>
+                            </Ellipse>
 
-                        <Label
+                            <Label
                             Content="{
                             Binding SelectedContact.Username,
                             UpdateSourceTrigger=PropertyChanged,
@@ -161,12 +234,12 @@
                             Margin="5, 0, 5, 0"
                             VerticalAlignment="Center"/>
 
-                    </StackPanel>
+                        </StackPanel>
 
-                </Grid>
-            </Border>
+                    </Grid>
+                </Border>
 
-            <ListView
+                <ListView
                 ItemsSource="{
                 Binding Messages,
                 UpdateSourceTrigger=PropertyChanged,
@@ -177,19 +250,19 @@
                 Grid.Row="1"
                 Margin="8, 0, 0, 0"/>
 
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="90"/>
-                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBox
+                    <TextBox
                     BorderThickness="0"
                     Style="{StaticResource MessageBox}"
                     Height="50"
                     Grid.ColumnSpan="2"/>
 
-                <Button 
+                    <Button 
                     Command="{Binding SendMessageCommand}"
                     Background="Transparent"
                     BorderThickness="0"
@@ -199,12 +272,13 @@
                     Padding="0"
                     Foreground="DarkGray"
                     Margin="5, 5, 16, 0">
-                    <materialDesign:PackIcon 
+                        <materialDesign:PackIcon 
                         Kind="Send"
                         Width="20"
                         Height="20"/>
-                </Button>
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
 </UserControl>

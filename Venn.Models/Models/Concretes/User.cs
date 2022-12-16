@@ -32,7 +32,12 @@ namespace Venn.Models.Models.Concretes
 
         public override string ToString()
         {
-            return Username;
+            string str = "#";
+            if (Id < 10) str = $"#000{Id}";
+            else if (Id < 100) str = $"#00{Id}";
+            else if (Id < 1000) str = $"#0{Id}";
+            else str = $"#{Id}";
+            return str;
         }
     }
 }
