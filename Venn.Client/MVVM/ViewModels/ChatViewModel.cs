@@ -28,8 +28,6 @@ namespace Venn.Client.MVVM.ViewModels
 
         public ServerHelper Server { get; set; }
 
-        private ObservableCollection<User> contacts;
-
         private ObservableCollection<User> users;
 
         private ObservableCollection<Message> messages;
@@ -44,16 +42,6 @@ namespace Venn.Client.MVVM.ViewModels
 
         private string friendName;
 
-
-        public ObservableCollection<User> Contacts
-        {
-            get { return contacts; }
-            set
-            {
-                contacts = value;
-                NotifyPropertyChanged("Contacts");
-            }
-        }
 
         public ObservableCollection<User> Users
         {
@@ -113,6 +101,7 @@ namespace Venn.Client.MVVM.ViewModels
             {
                 friendName = value;
                 NotifyPropertyChanged("FriendName");
+                FindFriend();
             }
         }
 
@@ -130,7 +119,7 @@ namespace Venn.Client.MVVM.ViewModels
             };
             User = App.Container.GetInstance<User>();
             Server = App.Container.GetInstance<ServerHelper>();
-            Contacts = new ObservableCollection<User>();
+            Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
             SendMessageCommand = new RelayCommand(SendMessage);
             mainEvent = new AutoResetEvent(false);
@@ -161,24 +150,16 @@ namespace Venn.Client.MVVM.ViewModels
                         }
                     }
                     var command = str.Split('$')[0];
-                    if (command == "contacts")
+                    if (command == "users")
                     {
-                        int ind = -1;
-
-                        if (SelectedContactIndex != null)
-                            ind = SelectedContactIndex;
-
                         lock (this)
                         {
-                            dispatcher.Invoke(() => Contacts.Clear());
-                            foreach (var contact in JsonSerializer.Deserialize<ObservableCollection<User>>(str.Split('$')[1], options))
+                            dispatcher.Invoke(() => Users.Clear());
+                            foreach (var user in JsonSerializer.Deserialize<ObservableCollection<User>>(str.Split('$')[1], options))
                             {
-                                dispatcher.Invoke(() => Contacts.Add(contact));
+                                dispatcher.Invoke(() => Users.Add(user));
                             }
                         }
-
-                        if (ind >= 0 && ind < Contacts.Count())
-                            SelectedContactIndex = ind;
                     }
                 }
             });
@@ -220,11 +201,13 @@ namespace Venn.Client.MVVM.ViewModels
                 Messages.Clear();
         }
 
-        public void UpdateUsers()
+        public void FindFriend()
         {
             if (!string.IsNullOrWhiteSpace(FriendName))
             {
-                
+                var str = $"users${FriendName}";
+
+                Server.client.Client.Send(Encoding.UTF8.GetBytes(str));
             }
             else
                 Users.Clear();
@@ -237,8 +220,6 @@ namespace Venn.Client.MVVM.ViewModels
                 var Message = new Message();
                 Message.MessageType = "text";
                 Message.FromUserId = User.Id;
-                Message.FromUserImageSource = User.ImageSource;
-                Message.FromUserUsername = User.Username;
                 Message.ToUserId = SelectedContact.Id;
                 Message.Data = Encoding.UTF8.GetBytes(Text);
                 Message.SendingTime = DateTime.Now;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using SimpleInjector;
 using System.Collections.ObjectModel;
 using System.Net;
@@ -25,15 +26,11 @@ namespace Venn.Server
 
         static IRepository<User> userRepo;
 
-        static IRepository<Room> roomRepo;
-
         static IRepository<Message> messageRepo;
 
-        static ObservableCollection<User> users;
+        static IRepository<Notification> notificationRepo;
 
-        static ObservableCollection<Room> rooms;
-
-        static ObservableCollection<Message> messages;
+        static IRepository<Friendship> friendshipRepo;
 
         private static Dispatcher dispatcher = Dispatcher.CreateDefault();
 
@@ -42,16 +39,15 @@ namespace Venn.Server
             container = new Container();
             container.RegisterSingleton<VennDbContext>();
             container.RegisterSingleton<IRepository<User>, Repository<User>>();
-            container.RegisterSingleton<IRepository<Room>, Repository<Room>>();
             container.RegisterSingleton<IRepository<Message>, Repository<Message>>();
+            container.RegisterSingleton<IRepository<Notification>, Repository<Notification>>();
+            container.RegisterSingleton<IRepository<Friendship>, Repository<Friendship>>();
             userRepo = container.GetInstance<IRepository<User>>();
-            roomRepo = container.GetInstance<IRepository<Room>>();
             messageRepo = container.GetInstance<IRepository<Message>>();
-            users = new ObservableCollection<User>(userRepo.GetAll());
-            rooms = new ObservableCollection<Room>(roomRepo.GetAll());
-            messages = new ObservableCollection<Message>(messageRepo.GetAll());
+            notificationRepo = container.GetInstance<IRepository<Notification>>();
+            friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.100.94"), 52400);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.175"), 50910);
 
             JsonSerializerOptions options = new()
             {
@@ -59,7 +55,7 @@ namespace Venn.Server
                 WriteIndented = true
             };
 
-            listener.Start();
+             listener.Start();
             Console.WriteLine($"[{DateTime.Now}]: Listener has started");
 
             while (true)
@@ -85,49 +81,6 @@ namespace Venn.Server
                         {
                             Console.WriteLine($"[{ip}]: Client has disconnected");
                             clients.Remove(client);
-                            foreach (var cl in clients)
-                            {
-                                if (cl.User != null)
-                                {
-                                    var contacts = new ObservableCollection<User>();
-                                    foreach (var c in clients)
-                                    {
-                                        if (c.User != null && c.User.Id != cl.User.Id)
-                                        {
-                                            contacts.Add(c.User);
-                                        } 
-                                    }
-
-                                    var r = $"contacts${JsonSerializer.Serialize(contacts, options)}";
-
-                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
-                                    {
-                                        r = $"<{r}>";
-                                        var data = Encoding.UTF8.GetBytes(r);
-                                        var skipCount = 0;
-                                        var bytesLen = data.Length;
-
-                                        while (skipCount + maxValue <= bytesLen)
-                                        {
-                                            cl.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(maxValue)
-                                                .ToArray());
-                                            skipCount += maxValue;
-                                        }
-
-                                        if (skipCount != bytesLen)
-                                            cl.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(bytesLen - skipCount)
-                                                .ToArray());
-                                    }
-                                    else
-                                    {
-                                        cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
-                                    }
-                                }
-                            }
                             break;
                         }
 
@@ -136,7 +89,7 @@ namespace Venn.Server
                         {
                             var email = str.Split('$')[1];
                             var password = str.Split('$')[2];
-                            var user = users.FirstOrDefault(u => u.Email == email);
+                            var user = userRepo.GetAll().FirstOrDefault(u => u.Email == email);
                             if (user != null)
                             {
                                 if (user.Password == password)
@@ -172,49 +125,6 @@ namespace Venn.Server
                                     
                                     client.User = user;
                                     Console.WriteLine($"[{ip}]: Client has logined");
-                                    foreach (var cl in clients)
-                                    {
-                                        if (cl.User != null)
-                                        {
-                                            var contacts = new ObservableCollection<User>();
-                                            foreach (var c in clients)
-                                            {
-                                                if (c.User != null && c.User.Id != cl.User.Id)
-                                                {
-                                                    contacts.Add(c.User); 
-                                                }
-                                            }
-
-                                            r = $"contacts${JsonSerializer.Serialize(contacts, options)}";
-
-                                            if (Encoding.UTF8.GetBytes(r).Length > maxValue)
-                                            {
-                                                r = $"<{r}>";
-                                                var data = Encoding.UTF8.GetBytes(r);
-                                                var skipCount = 0;
-                                                var bytesLen = data.Length;
-
-                                                while (skipCount + maxValue <= bytesLen)
-                                                {
-                                                    cl.TcpClient.Client.Send(data
-                                                        .Skip(skipCount)
-                                                        .Take(maxValue)
-                                                        .ToArray());
-                                                    skipCount += maxValue;
-                                                }
-
-                                                if (skipCount != bytesLen)
-                                                    cl.TcpClient.Client.Send(data
-                                                        .Skip(skipCount)
-                                                        .Take(bytesLen - skipCount)
-                                                        .ToArray());
-                                            }
-                                            else
-                                            {
-                                                cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
-                                            }
-                                        }
-                                    }
                                 }
                                 else
                                 {
@@ -234,7 +144,7 @@ namespace Venn.Server
                         {
                             bool b = true;
                             var user = JsonSerializer.Deserialize<User>(str.Split('$')[1]);
-                            foreach (var u in users)
+                            foreach (var u in userRepo.GetAll())
                             {
                                 if (u.Email == user.Email)
                                 {
@@ -248,7 +158,6 @@ namespace Venn.Server
                                 {
                                     userRepo.Add(user);
                                     userRepo.SaveChanges();
-                                    users = new ObservableCollection<User>(userRepo.GetAll());
                                 }
                                 client.TcpClient.Client.Send(Encoding.UTF8.GetBytes("true"));
                                 Console.WriteLine($"[{ip}]: Client has created user");
@@ -267,53 +176,43 @@ namespace Venn.Server
                             messageRepo.SaveChanges();
                             userRepo.Update(client.User);
                             userRepo.SaveChanges();
-                            users = new ObservableCollection<User>(userRepo.GetAll());
-                            for (int i = 0; i < clients.Count(); i++)
+                        }
+                        else if (command == "users")
+                        {
+                            var friend = str.Split('$')[1];
+                            var userList = new List<User>();
+                            foreach (var u in userRepo.GetAll().Include("Contacts").Where(u => u.Username.Contains(friend)))
                             {
-                                clients[i].User = users.FirstOrDefault(u => u.Id == clients[i].User.Id);
+                                userList.Add(u);
                             }
-                            foreach (var cl in clients)
+
+                            var r = $"users${JsonSerializer.Serialize(userList, options)}";
+
+                            if (Encoding.UTF8.GetBytes(r).Length > maxValue)
                             {
-                                if (cl.User != null)
+                                r = $"<{r}>";
+                                var data = Encoding.UTF8.GetBytes(r);
+                                var skipCount = 0;
+                                var bytesLen = data.Length;
+
+                                while (skipCount + maxValue <= bytesLen)
                                 {
-                                    var contacts = new ObservableCollection<User>();
-                                    foreach (var c in clients)
-                                    {
-                                        if (c.User != null && c.User.Id != cl.User.Id)
-                                        {
-                                            contacts.Add(c.User);
-                                        }
-                                    }
-
-                                    var r = $"contacts${JsonSerializer.Serialize(contacts, options)}";
-
-                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
-                                    {
-                                        r = $"<{r}>";
-                                        var data = Encoding.UTF8.GetBytes(r);
-                                        var skipCount = 0;
-                                        var bytesLen = data.Length;
-
-                                        while (skipCount + maxValue <= bytesLen)
-                                        {
-                                            cl.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(maxValue)
-                                                .ToArray());
-                                            skipCount += maxValue;
-                                        }
-
-                                        if (skipCount != bytesLen)
-                                            cl.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(bytesLen - skipCount)
-                                                .ToArray());
-                                    }
-                                    else
-                                    {
-                                        cl.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
-                                    }
+                                    client.TcpClient.Client.Send(data
+                                        .Skip(skipCount)
+                                        .Take(maxValue)
+                                        .ToArray());
+                                    skipCount += maxValue;
                                 }
+
+                                if (skipCount != bytesLen)
+                                    client.TcpClient.Client.Send(data
+                                        .Skip(skipCount)
+                                        .Take(bytesLen - skipCount)
+                                        .ToArray());
+                            }
+                            else
+                            {
+                                client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
                             }
                         }
                     }

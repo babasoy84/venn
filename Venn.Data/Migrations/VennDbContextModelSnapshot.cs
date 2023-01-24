@@ -22,19 +22,27 @@ namespace Venn.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("RoomUser", b =>
+            modelBuilder.Entity("Venn.Models.Models.Concretes.Friendship", b =>
                 {
-                    b.Property<int>("RoomsId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("User1Id")
                         .HasColumnType("int");
 
-                    b.HasKey("RoomsId", "UsersId");
+                    b.Property<int>("User2Id")
+                        .HasColumnType("int");
 
-                    b.HasIndex("UsersId");
+                    b.HasKey("Id");
 
-                    b.ToTable("RoomUser");
+                    b.HasIndex("User1Id");
+
+                    b.HasIndex("User2Id");
+
+                    b.ToTable("Friendship");
                 });
 
             modelBuilder.Entity("Venn.Models.Models.Concretes.Message", b =>
@@ -52,13 +60,8 @@ namespace Venn.Data.Migrations
                     b.Property<int>("FromUserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FromUserImageSource")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FromUserUsername")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsSelf")
+                        .HasColumnType("bit");
 
                     b.Property<string>("MessageType")
                         .IsRequired()
@@ -67,27 +70,19 @@ namespace Venn.Data.Migrations
                     b.Property<DateTime>("SendingTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ToRoomId")
+                    b.Property<int>("ToUserId")
                         .HasColumnType("int");
-
-                    b.Property<int?>("ToUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isSelf")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FromUserId");
-
-                    b.HasIndex("ToRoomId");
 
                     b.HasIndex("ToUserId");
 
                     b.ToTable("Message");
                 });
 
-            modelBuilder.Entity("Venn.Models.Models.Concretes.Room", b =>
+            modelBuilder.Entity("Venn.Models.Models.Concretes.Notification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,16 +90,26 @@ namespace Venn.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ImageSource")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FromUserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<DateTime>("SendingTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ToUserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Room");
+                    b.HasIndex("FromUserId");
+
+                    b.HasIndex("ToUserId");
+
+                    b.ToTable("Notification");
                 });
 
             modelBuilder.Entity("Venn.Models.Models.Concretes.User", b =>
@@ -138,19 +143,23 @@ namespace Venn.Data.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("RoomUser", b =>
+            modelBuilder.Entity("Venn.Models.Models.Concretes.Friendship", b =>
                 {
-                    b.HasOne("Venn.Models.Models.Concretes.Room", null)
+                    b.HasOne("Venn.Models.Models.Concretes.User", "User1")
+                        .WithMany("Contacts")
+                        .HasForeignKey("User1Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Venn.Models.Models.Concretes.User", "User2")
                         .WithMany()
-                        .HasForeignKey("RoomsId")
+                        .HasForeignKey("User2Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Venn.Models.Models.Concretes.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("User1");
+
+                    b.Navigation("User2");
                 });
 
             modelBuilder.Entity("Venn.Models.Models.Concretes.Message", b =>
@@ -158,32 +167,46 @@ namespace Venn.Data.Migrations
                     b.HasOne("Venn.Models.Models.Concretes.User", "FromUser")
                         .WithMany("Messages")
                         .HasForeignKey("FromUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Venn.Models.Models.Concretes.Room", "ToRoom")
-                        .WithMany("Messages")
-                        .HasForeignKey("ToRoomId");
 
                     b.HasOne("Venn.Models.Models.Concretes.User", "ToUser")
                         .WithMany()
-                        .HasForeignKey("ToUserId");
+                        .HasForeignKey("ToUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("FromUser");
-
-                    b.Navigation("ToRoom");
 
                     b.Navigation("ToUser");
                 });
 
-            modelBuilder.Entity("Venn.Models.Models.Concretes.Room", b =>
+            modelBuilder.Entity("Venn.Models.Models.Concretes.Notification", b =>
                 {
-                    b.Navigation("Messages");
+                    b.HasOne("Venn.Models.Models.Concretes.User", "FromUser")
+                        .WithMany("Notifications")
+                        .HasForeignKey("FromUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Venn.Models.Models.Concretes.User", "ToUser")
+                        .WithMany()
+                        .HasForeignKey("ToUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FromUser");
+
+                    b.Navigation("ToUser");
                 });
 
             modelBuilder.Entity("Venn.Models.Models.Concretes.User", b =>
                 {
+                    b.Navigation("Contacts");
+
                     b.Navigation("Messages");
+
+                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

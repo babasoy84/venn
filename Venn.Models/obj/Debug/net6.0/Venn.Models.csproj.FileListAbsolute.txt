@@ -85,7 +85,6 @@ C:\Users\Baba_ja84\Source\Repos\Venn\Venn.Models\obj\Debug\net6.0\ref\Venn.Model
 C:\Users\babas\Source\Repos\Venn\Venn.Models\bin\Debug\net6.0\Venn.Models.deps.json
 C:\Users\babas\Source\Repos\Venn\Venn.Models\bin\Debug\net6.0\Venn.Models.runtimeconfig.json
 C:\Users\babas\Source\Repos\Venn\Venn.Models\bin\Debug\net6.0\Venn.Models.dll
-C:\Users\babas\Source\Repos\Venn\Venn.Models\bin\Debug\net6.0\ref\Venn.Models.dll
 C:\Users\babas\Source\Repos\Venn\Venn.Models\bin\Debug\net6.0\Venn.Models.pdb
 C:\Users\babas\Source\Repos\Venn\Venn.Models\obj\Debug\net6.0\Venn.Models.csproj.AssemblyReference.cache
 C:\Users\babas\Source\Repos\Venn\Venn.Models\obj\Debug\net6.0\Venn.Models.GeneratedMSBuildEditorConfig.editorconfig
@@ -96,3 +95,4 @@ C:\Users\babas\Source\Repos\Venn\Venn.Models\obj\Debug\net6.0\Venn.Models.dll
 C:\Users\babas\Source\Repos\Venn\Venn.Models\obj\Debug\net6.0\ref\Venn.Models.dll
 C:\Users\babas\Source\Repos\Venn\Venn.Models\obj\Debug\net6.0\Venn.Models.pdb
 C:\Users\babas\Source\Repos\Venn\Venn.Models\obj\Debug\net6.0\Venn.Models.genruntimeconfig.cache
+C:\Users\babas\Source\Repos\Venn\Venn.Models\obj\Debug\net6.0\refint\Venn.Models.dll

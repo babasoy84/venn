@@ -130,8 +130,9 @@ namespace Venn.Client.MVVM.ViewModels
                     App.Container.GetInstance<User>().Username = user.Username;
                     App.Container.GetInstance<User>().Password = user.Password;
                     App.Container.GetInstance<User>().DateOfBirth = user.DateOfBirth;
+                    App.Container.GetInstance<User>().Contacts = user.Contacts;
                     App.Container.GetInstance<User>().Messages = user.Messages;
-                    App.Container.GetInstance<User>().Rooms = user.Rooms;
+                    App.Container.GetInstance<User>().Notifications = user.Notifications;
                     App.Container.GetInstance<ChatViewModel>().mainEvent.Set();
                     NavigationService.NavigateTo<ChatViewModel>();
                 }

@@ -5,20 +5,18 @@ using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
 using Venn.Models.Models.Abstracts;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 namespace Venn.Models.Models.Concretes
 {
     public class Message : Entity
     {
+        [ForeignKey("FromUser")]
         public int FromUserId { get; set; }
 
-        public string FromUserImageSource { get; set; }
-
-        public string FromUserUsername { get; set; }
-
-        public int? ToUserId { get; set; }
-
-        public int? ToRoomId { get; set; }
+        [ForeignKey("ToUser")]
+        public int ToUserId { get; set; }
 
         public byte[] Data { get; set; }
 
@@ -28,11 +26,11 @@ namespace Venn.Models.Models.Concretes
 
         public bool IsSelf { get; set; } = true;
 
-        public User FromUser { get; set; }
+        [IgnoreDataMember]
+        public virtual User FromUser { get; set; }
 
-        public User? ToUser { get; set; }
-
-        public Room? ToRoom { get; set; }
+        [IgnoreDataMember]
+        public virtual User ToUser { get; set; }
 
         public Message()
         {

@@ -491,7 +491,6 @@ C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Clien
 C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Client.deps.json
 C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Client.runtimeconfig.json
 C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Client.dll
-C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\ref\Venn.Client.dll
 C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Client.pdb
 C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Humanizer.dll
 C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\MaterialDesignColors.dll
@@ -570,3 +569,16 @@ C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\ref\Venn.C
 C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\Venn.Client.pdb
 C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\Venn.Client.genruntimeconfig.cache
 C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\FriendCard.baml
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\CommonServiceLocator.dll
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.CodeAnalysis.dll
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\debian-x64\native\libuv.so
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\fedora-x64\native\libuv.so
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\opensuse-x64\native\libuv.so
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\osx\native\libuv.dylib
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\rhel-x64\native\libuv.so
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\win7-arm\native\libuv.dll
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\win7-x64\native\libuv.dll
+C:\Users\babas\Source\Repos\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\win7-x86\native\libuv.dll
+C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\refint\Venn.Client.dll

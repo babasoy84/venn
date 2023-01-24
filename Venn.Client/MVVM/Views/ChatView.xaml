@@ -70,7 +70,7 @@
                 </materialDesign:ColorZone>
                 <ListView 
                     ItemsSource="{
-                    Binding Users, 
+                    Binding Users,  
                     UpdateSourceTrigger=PropertyChanged,
                     Mode=TwoWay}"
                     Background="Transparent"
@@ -102,7 +102,7 @@
 
                 <ListView 
                 ItemsSource="{
-                Binding Contacts, 
+                Binding User.Contacts, 
                 UpdateSourceTrigger=PropertyChanged,
                 Mode=TwoWay}"
                 SelectedItem="{

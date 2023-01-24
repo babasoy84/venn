@@ -21,14 +21,14 @@
 
                             <Ellipse Width="30" Height="30">
                                 <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{Binding ImageSource, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ImageBrush ImageSource="{Binding User2.ImageSource, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
 
                             <StackPanel>
-                                <Label Content="{Binding Username}"
+                                <Label Content="{Binding User2.Username}"
                                        Foreground="White"/>
-                                <Label Content="{Binding Messages.Last}"
+                                <Label Content="{Binding User2.Messages.Last}"
                                        Foreground="Gray"
                                        FontSize="10"/>
                             </StackPanel>
