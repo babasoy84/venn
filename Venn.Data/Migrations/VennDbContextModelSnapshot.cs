@@ -184,15 +184,15 @@ namespace Venn.Data.Migrations
             modelBuilder.Entity("Venn.Models.Models.Concretes.Notification", b =>
                 {
                     b.HasOne("Venn.Models.Models.Concretes.User", "FromUser")
-                        .WithMany("Notifications")
+                        .WithMany()
                         .HasForeignKey("FromUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Venn.Models.Models.Concretes.User", "ToUser")
-                        .WithMany()
+                        .WithMany("Notifications")
                         .HasForeignKey("ToUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("FromUser");

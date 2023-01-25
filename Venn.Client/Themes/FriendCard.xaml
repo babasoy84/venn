@@ -35,7 +35,9 @@
                                 Background="DeepSkyBlue"
                                 Foreground="White"
                                 BorderThickness="0"
-                                Content="Add Friend"/>
+                                Content="Add Friend"
+                                CommandParameter="{Binding Id}"
+                                Command="{Binding DataContext.SendFriendshipCommand, RelativeSource={RelativeSource AncestorType=ListView}}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>

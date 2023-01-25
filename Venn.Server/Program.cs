@@ -47,7 +47,7 @@ namespace Venn.Server
             notificationRepo = container.GetInstance<IRepository<Notification>>();
             friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.100.175"), 50910);
+            listener = new TcpListener(IPAddress.Parse("192.168.56.1"), 27001);
 
             JsonSerializerOptions options = new()
             {
@@ -94,34 +94,7 @@ namespace Venn.Server
                             {
                                 if (user.Password == password)
                                 {
-                                    var r = $"success${JsonSerializer.Serialize(user, options)}";
-
-                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
-                                    {
-                                        r = $"<{r}>";
-                                        var data = Encoding.UTF8.GetBytes(r);
-                                        var skipCount = 0;
-                                        var bytesLen = data.Length;
-
-                                        while (skipCount + maxValue <= bytesLen)
-                                        {
-                                            client.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(maxValue)
-                                                .ToArray());
-                                            skipCount += maxValue;
-                                        }
-
-                                        if (skipCount != bytesLen)
-                                            client.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(bytesLen - skipCount)
-                                                .ToArray());
-                                    }
-                                    else
-                                    {
-                                        client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
-                                    }
+                                    
                                     
                                     client.User = user;
                                     Console.WriteLine($"[{ip}]: Client has logined");
@@ -174,16 +147,17 @@ namespace Venn.Server
                             client.User.Messages.Add(message);
                             messageRepo.Add(message);
                             messageRepo.SaveChanges();
-                            userRepo.Update(client.User);
-                            userRepo.SaveChanges();
                         }
                         else if (command == "users")
                         {
                             var friend = str.Split('$')[1];
                             var userList = new List<User>();
-                            foreach (var u in userRepo.GetAll().Include("Contacts").Where(u => u.Username.Contains(friend)))
+                            foreach (var u in userRepo.GetAll().Include("Contacts"))
                             {
-                                userList.Add(u);
+                                if ((u.Username.Contains(friend) || u.ToString().Contains(friend)) && u.Id != client.User.Id)
+                                {
+                                    userList.Add(u);
+                                }
                             }
 
                             var r = $"users${JsonSerializer.Serialize(userList, options)}";
@@ -213,6 +187,49 @@ namespace Venn.Server
                             else
                             {
                                 client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                            }
+                        }
+                        else if (command == "noti")
+                        {
+                            var noti = JsonSerializer.Deserialize<Notification>(str.Split('$')[1]);
+                            client.User.Notifications.Add(noti);
+                            notificationRepo.Add(noti);
+                            notificationRepo.SaveChanges();
+
+                            foreach (var c in clients)
+                            {
+                                if (c.User.Id == noti.ToUserId)
+                                {
+                                    var r = $"noti${JsonSerializer.Serialize(noti, options)}";
+
+                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                    {
+                                        r = $"<{r}>";
+                                        var data = Encoding.UTF8.GetBytes(r);
+                                        var skipCount = 0;
+                                        var bytesLen = data.Length;
+
+                                        while (skipCount + maxValue <= bytesLen)
+                                        {
+                                            c.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(maxValue)
+                                                .ToArray());
+                                            skipCount += maxValue;
+                                        }
+
+                                        if (skipCount != bytesLen)
+                                            c.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(bytesLen - skipCount)
+                                                .ToArray());
+                                    }
+                                    else
+                                    {
+                                        c.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }

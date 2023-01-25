@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using Venn.Client.Net;
 using Venn.Models.Models.Concretes;
@@ -110,6 +111,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand SendMessageCommand { get; set; }
 
+        public RelayCommand<int> SendFriendshipCommand { get; set; }
+
         public ChatViewModel()
         {
             options = new()
@@ -122,6 +125,7 @@ namespace Venn.Client.MVVM.ViewModels
             Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
             SendMessageCommand = new RelayCommand(SendMessage);
+            SendFriendshipCommand = new RelayCommand<int>(SendFriendship);
             mainEvent = new AutoResetEvent(false);
             Task.Run(() =>
             {
@@ -160,6 +164,11 @@ namespace Venn.Client.MVVM.ViewModels
                                 dispatcher.Invoke(() => Users.Add(user));
                             }
                         }
+                    }
+                    else if (command == "noti")
+                    {
+                        var noti = JsonSerializer.Deserialize<Notification>(str.Split("$")[1]);
+                        User.Notifications.Add(noti);
                     }
                 }
             });
@@ -235,6 +244,23 @@ namespace Venn.Client.MVVM.ViewModels
             }
 
             Text = "";
+        }
+
+        public void SendFriendship(int id)
+        {
+            var noti = new Notification()
+            {
+                FromUserId = User.Id,
+                ToUserId = id,
+                Text = $"{User.Username} sent you a friend request",
+                SendingTime = DateTime.Now,
+                FromUser = User,
+                ToUser = Users.FirstOrDefault(u => u.Id == id)
+            };
+
+            var str = $"noti${JsonSerializer.Serialize(noti)}";
+
+            Server.client.Client.Send(Encoding.UTF8.GetBytes(str));
         }
     }
 }
