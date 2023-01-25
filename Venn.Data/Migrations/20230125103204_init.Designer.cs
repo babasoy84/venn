@@ -12,7 +12,7 @@ using Venn.Data;
 namespace Venn.Data.Migrations
 {
     [DbContext(typeof(VennDbContext))]
-    [Migration("20230124093019_init")]
+    [Migration("20230125103204_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
