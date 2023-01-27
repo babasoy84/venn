@@ -47,7 +47,7 @@ namespace Venn.Server
             notificationRepo = container.GetInstance<IRepository<Notification>>();
             friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.56.1"), 27001);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.175"), 51015);
 
             JsonSerializerOptions options = new()
             {
@@ -94,8 +94,35 @@ namespace Venn.Server
                             {
                                 if (user.Password == password)
                                 {
-                                    
-                                    
+                                    var r = $"succes${JsonSerializer.Serialize(user, options)}";
+
+                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                    {
+                                        r = $"<{r}>";
+                                        var data = Encoding.UTF8.GetBytes(r);
+                                        var skipCount = 0;
+                                        var bytesLen = data.Length;
+
+                                        while (skipCount + maxValue <= bytesLen)
+                                        {
+                                            client.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(maxValue)
+                                                .ToArray());
+                                            skipCount += maxValue;
+                                        }
+
+                                        if (skipCount != bytesLen)
+                                            client.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(bytesLen - skipCount)
+                                                .ToArray());
+                                    }
+                                    else
+                                    {
+                                        client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                    }
+
                                     client.User = user;
                                     Console.WriteLine($"[{ip}]: Client has logined");
                                 }

@@ -172,8 +172,8 @@
                             FontWeight="SemiBold"
                             Background="#292b2f" Width="34">
                                 <MenuItem 
-                                    Header="Add Group"
-                                    Icon="{materialDesign:PackIcon Kind=Plus}"/>
+                                    Header="Notifications"
+                                    Icon="{materialDesign:PackIcon Kind=Notifications}"/>
                                 <MenuItem 
                                     Header="Find Friend"
                                     Icon="{materialDesign:PackIcon Kind=AccountSearch}"
@@ -183,14 +183,13 @@
                                     Icon="{materialDesign:PackIcon Kind=Upload}"/>
                                 <MenuItem 
                                     Header="Log Out"
-                                    Icon="{materialDesign:PackIcon Kind=Logout}"/>
+                                    Icon="{materialDesign:PackIcon Kind=Logout}"
+                                    Command="{Binding LogoutCommand}"/>
                             </MenuItem>
                         </Menu>
                     </Button>
 
                 </Grid>
-
-
 
             </Grid>
 
@@ -200,7 +199,7 @@
                     <RowDefinition/>
                     <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-
+                
                 <Border 
                 BorderBrush="#2F3136"
                 BorderThickness="0, 0, 0, 2">
@@ -279,6 +278,19 @@
                     </Button>
                 </Grid>
             </Grid>
+
+            <Popup Placement="AbsolutePoint" Height="250" IsOpen="True" Visibility="Visible">
+                <ListView 
+                    ItemsSource="{
+                    Binding User.Notifications,  
+                    UpdateSourceTrigger=PropertyChanged,
+                    Mode=TwoWay}"
+                    Background="Green"
+                    BorderThickness="0"
+                    Grid.Row="1"
+                    ItemContainerStyle="{StaticResource NotificationCard}"/>
+            </Popup>
+            
         </Grid>
     </materialDesign:DialogHost>
 </UserControl>

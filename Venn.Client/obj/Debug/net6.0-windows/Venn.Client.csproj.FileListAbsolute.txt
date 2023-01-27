@@ -601,3 +601,4 @@ C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\Chat
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\ContactCard.baml
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\FriendCard.baml
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\MessageBox.baml
+C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\NotificationCard.baml

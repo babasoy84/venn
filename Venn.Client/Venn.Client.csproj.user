@@ -51,5 +51,8 @@
     <Page Update="Themes\MessageBox.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\NotificationCard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

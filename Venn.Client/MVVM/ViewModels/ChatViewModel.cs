@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Venn.Client.Net;
+using Venn.Client.Services;
 using Venn.Models.Models.Concretes;
 
 namespace Venn.Client.MVVM.ViewModels
@@ -28,6 +29,9 @@ namespace Venn.Client.MVVM.ViewModels
 
 
         public ServerHelper Server { get; set; }
+
+        public INavigationService NavigationService { get; set; }
+
 
         private ObservableCollection<User> users;
 
@@ -113,6 +117,9 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand<int> SendFriendshipCommand { get; set; }
 
+        public RelayCommand LogoutCommand { get; set; }
+
+
         public ChatViewModel()
         {
             options = new()
@@ -122,9 +129,11 @@ namespace Venn.Client.MVVM.ViewModels
             };
             User = App.Container.GetInstance<User>();
             Server = App.Container.GetInstance<ServerHelper>();
+            NavigationService = App.Container.GetInstance<INavigationService>();
             Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
-            SendMessageCommand = new RelayCommand(SendMessage);
+            SendMessageCommand = new RelayCommand(Logout);
+            LogoutCommand = new RelayCommand(SendMessage);
             SendFriendshipCommand = new RelayCommand<int>(SendFriendship);
             mainEvent = new AutoResetEvent(false);
             Task.Run(() =>
@@ -244,6 +253,13 @@ namespace Venn.Client.MVVM.ViewModels
             }
 
             Text = "";
+        }
+
+        public void Logout()
+        {
+            mainEvent.WaitOne();
+            User = null;
+            NavigationService.NavigateTo<WelcomeViewModel>();
         }
 
         public void SendFriendship(int id)

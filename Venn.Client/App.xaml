@@ -36,6 +36,7 @@
                 <ResourceDictionary Source="./Themes/ChatItem.xaml"/>
                 <ResourceDictionary Source="./Themes/MessageBox.xaml"/>
                 <ResourceDictionary Source="./Themes/FriendCard.xaml"/>
+                <ResourceDictionary Source="./Themes/NotificationCard.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
