@@ -89,7 +89,7 @@ namespace Venn.Server
                         {
                             var email = str.Split('$')[1];
                             var password = str.Split('$')[2];
-                            var user = userRepo.GetAll().FirstOrDefault(u => u.Email == email);
+                            var user = userRepo.GetAll().Include("Notifications").Include("Contacts").Include("Messages").FirstOrDefault(u => u.Email == email);
                             if (user != null)
                             {
                                 if (user.Password == password)
@@ -179,7 +179,7 @@ namespace Venn.Server
                         {
                             var friend = str.Split('$')[1];
                             var userList = new List<User>();
-                            foreach (var u in userRepo.GetAll().Include("Contacts"))
+                           foreach (var u in userRepo.GetAll().Include("Contacts"))
                             {
                                 if ((u.Username.Contains(friend) || u.ToString().Contains(friend)) && u.Id != client.User.Id)
                                 {
@@ -218,46 +218,72 @@ namespace Venn.Server
                         }
                         else if (command == "noti")
                         {
+
+                            bool b = true;
                             var noti = JsonSerializer.Deserialize<Notification>(str.Split('$')[1]);
-                            client.User.Notifications.Add(noti);
-                            notificationRepo.Add(noti);
-                            notificationRepo.SaveChanges();
-
-                            foreach (var c in clients)
+                            foreach (var n in notificationRepo.GetAll())
                             {
-                                if (c.User.Id == noti.ToUserId)
+                                if (n.FromUserId == noti.FromUserId && n.FromUserId == noti.FromUserId)
                                 {
-                                    var r = $"noti${JsonSerializer.Serialize(noti, options)}";
-
-                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
-                                    {
-                                        r = $"<{r}>";
-                                        var data = Encoding.UTF8.GetBytes(r);
-                                        var skipCount = 0;
-                                        var bytesLen = data.Length;
-
-                                        while (skipCount + maxValue <= bytesLen)
-                                        {
-                                            c.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(maxValue)
-                                                .ToArray());
-                                            skipCount += maxValue;
-                                        }
-
-                                        if (skipCount != bytesLen)
-                                            c.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(bytesLen - skipCount)
-                                                .ToArray());
-                                    }
-                                    else
-                                    {
-                                        c.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
-                                    }
+                                    b = false;
                                     break;
                                 }
                             }
+                            if (b)
+                            {
+                                lock (new object())
+                                {
+                                    using (var context = container.GetInstance<VennDbContext>())
+                                    {
+                                        context.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT [dbo].[User] OFF");
+                                        context.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT [dbo].[Notification] ON");
+                                        notificationRepo.Add(noti);
+                                        notificationRepo.SaveChanges();
+                                        context.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT [dbo].[Notification] OFF");
+                                    }
+                                }
+                                foreach (var c in clients)
+                                {
+                                    if (c.User.Id == noti.ToUserId)
+                                    {
+                                        c.User.Notifications.Add(noti);
+                                        var r = $"noti${JsonSerializer.Serialize(noti, options)}";
+
+                                        if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                        {
+                                            r = $"<{r}>";
+                                            var data = Encoding.UTF8.GetBytes(r);
+                                            var skipCount = 0;
+                                            var bytesLen = data.Length;
+
+                                            while (skipCount + maxValue <= bytesLen)
+                                            {
+                                                c.TcpClient.Client.Send(data
+                                                    .Skip(skipCount)
+                                                    .Take(maxValue)
+                                                    .ToArray());
+                                                skipCount += maxValue;
+                                            }
+
+                                            if (skipCount != bytesLen)
+                                                c.TcpClient.Client.Send(data
+                                                    .Skip(skipCount)
+                                                    .Take(bytesLen - skipCount)
+                                                    .ToArray());
+                                        }
+                                        else
+                                        {
+                                            c.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else if (command == "logout")
+                        {
+                            client.TcpClient.Client.Send(Encoding.UTF8.GetBytes("logout"));
+                            Console.WriteLine($"[{ip}]: Client has logouted");
                         }
                     }
                 });

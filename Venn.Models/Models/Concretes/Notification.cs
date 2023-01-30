@@ -11,20 +11,16 @@ namespace Venn.Models.Models.Concretes
 {
     public class Notification : Entity
     {
-        [ForeignKey("FromUser")]
         public int FromUserId { get; set; }
 
-        [ForeignKey("ToUser")]
         public int ToUserId { get; set; }
 
         public string Text { get; set; }
 
         public DateTime SendingTime { get; set; }
 
-        [IgnoreDataMember]
         public virtual User FromUser { get; set; }
 
-        [IgnoreDataMember]
         public virtual User ToUser { get; set; }
     }
 }

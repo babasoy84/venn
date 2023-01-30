@@ -62,5 +62,7 @@ namespace Venn.Data.Repos
                 _dbSet.Update(entity);
             }
         }
+
+        public VennDbContext GetDbContext() => _context;
     }
 }

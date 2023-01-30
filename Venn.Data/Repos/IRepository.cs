@@ -19,5 +19,7 @@ namespace Venn.Data.Repos
         void Delete(T entity);
 
         void SaveChanges();
+
+        VennDbContext GetDbContext();
     }
 }

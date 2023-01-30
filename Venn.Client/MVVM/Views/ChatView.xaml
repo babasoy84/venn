@@ -10,75 +10,7 @@
              mc:Ignorable="d" 
              Background="#36393F"
              d:DesignHeight="625" d:DesignWidth="1200">
-    <materialDesign:DialogHost CloseOnClickAway="True">
-        <materialDesign:DialogHost.DialogContent>
-            <StackPanel
-                Width="500"
-                Orientation="Vertical"
-                Background="#2F3136">
-
-                <materialDesign:ColorZone
-                    CornerRadius="5"
-                    Mode="Standard"
-                    Padding="8 4 8 4"
-                    Panel.ZIndex="1"
-                    Margin="10"
-                    Background="#3e4147"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth1">
-                    <Border CornerRadius="8" Background="#3e4147">
-
-                        <Grid>
-                            <TextBox 
-                                Height="50"
-                                VerticalAlignment="Stretch"
-                                VerticalContentAlignment="Center"
-                                HorizontalContentAlignment="Stretch"
-                                Name="MessageBox"
-                                Background="Transparent"
-                                TextWrapping="Wrap"
-                                BorderThickness="0"
-                                Foreground="Gray"
-                                CaretBrush="Gray"
-                                Margin="8, 0, 8, 0"
-                                Text="{Binding FriendName, 
-                                Mode=TwoWay, 
-                                UpdateSourceTrigger=PropertyChanged}"/>
-
-                            <TextBlock
-                                IsHitTestVisible="False"
-                                Text="Find Friend..."
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left"
-                                Margin="10, 0, 0, 0"
-                                Foreground="DarkGray">
-
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=MessageBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-
-                            </TextBlock>
-                        </Grid>
-
-                    </Border>
-                </materialDesign:ColorZone>
-                <ListView 
-                    ItemsSource="{
-                    Binding Users,  
-                    UpdateSourceTrigger=PropertyChanged,
-                    Mode=TwoWay}"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Grid.Row="1"
-                    ItemContainerStyle="{StaticResource FriendCard}"/>
-            </StackPanel>
-        </materialDesign:DialogHost.DialogContent>
+    <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
@@ -173,11 +105,12 @@
                             Background="#292b2f" Width="34">
                                 <MenuItem 
                                     Header="Notifications"
-                                    Icon="{materialDesign:PackIcon Kind=Notifications}"/>
+                                    Icon="{materialDesign:PackIcon Kind=Notifications}"
+                                    Command="{Binding OpenNotificationsPopupCommand}"/>
                                 <MenuItem 
                                     Header="Find Friend"
                                     Icon="{materialDesign:PackIcon Kind=AccountSearch}"
-                                    Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"/>
+                                    Command="{Binding OpenFriendsPopupCommand}"/>
                                 <MenuItem 
                                     Header="Upload Photo"
                                     Icon="{materialDesign:PackIcon Kind=Upload}"/>
@@ -199,7 +132,7 @@
                     <RowDefinition/>
                     <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                
+
                 <Border 
                 BorderBrush="#2F3136"
                 BorderThickness="0, 0, 0, 2">
@@ -279,18 +212,102 @@
                 </Grid>
             </Grid>
 
-            <Popup Placement="AbsolutePoint" Height="250" IsOpen="True" Visibility="Visible">
-                <ListView 
+        </Grid>
+        <materialDesign:DialogHost 
+        CloseOnClickAway="True" 
+        IsOpen="{Binding FriendsPopupIsOpen, 
+        UpdateSourceTrigger=PropertyChanged, 
+        Mode=TwoWay}">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel
+                Width="500"
+                Orientation="Vertical"
+                Background="#2F3136">
+
+                    <materialDesign:ColorZone
+                    CornerRadius="5"
+                    Mode="Standard"
+                    Padding="8 4 8 4"
+                    Panel.ZIndex="1"
+                    Margin="10"
+                    Background="#3e4147"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                        <Border CornerRadius="8" Background="#3e4147">
+
+                            <Grid>
+                                <TextBox 
+                                Height="50"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                HorizontalContentAlignment="Stretch"
+                                Name="MessageBox"
+                                Background="Transparent"
+                                TextWrapping="Wrap"
+                                BorderThickness="0"
+                                Foreground="Gray"
+                                CaretBrush="Gray"
+                                Margin="8, 0, 8, 0"
+                                Text="{Binding FriendName, 
+                                Mode=TwoWay, 
+                                UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock
+                                IsHitTestVisible="False"
+                                Text="Find Friend..."
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Margin="10, 0, 0, 0"
+                                Foreground="DarkGray">
+
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=MessageBox}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+
+                                </TextBlock>
+                            </Grid>
+
+                        </Border>
+                    </materialDesign:ColorZone>
+                    <ListView 
+                    ItemsSource="{
+                    Binding Users,  
+                    UpdateSourceTrigger=PropertyChanged,
+                    Mode=TwoWay}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Grid.Row="1"
+                    ItemContainerStyle="{StaticResource FriendCard}"/>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <materialDesign:DialogHost 
+        CloseOnClickAway="True" 
+        IsOpen="{Binding NotificationsPopupIsOpen, 
+        UpdateSourceTrigger=PropertyChanged, 
+        Mode=TwoWay}">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel
+                Width="500"
+                Orientation="Vertical"
+                Background="#2F3136">
+                    <ListView 
                     ItemsSource="{
                     Binding User.Notifications,  
                     UpdateSourceTrigger=PropertyChanged,
                     Mode=TwoWay}"
-                    Background="Green"
+                    Background="Transparent"
                     BorderThickness="0"
-                    Grid.Row="1"
                     ItemContainerStyle="{StaticResource NotificationCard}"/>
-            </Popup>
-            
-        </Grid>
-    </materialDesign:DialogHost>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+    </Grid>
+    
 </UserControl>

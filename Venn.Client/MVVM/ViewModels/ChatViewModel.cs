@@ -23,7 +23,7 @@ namespace Venn.Client.MVVM.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public AutoResetEvent mainEvent;
+        public ManualResetEvent mainEvent;
 
         public User User { get; set; }
 
@@ -46,6 +46,10 @@ namespace Venn.Client.MVVM.ViewModels
         private string text;
 
         private string friendName;
+
+        private bool friendsPopupIsOpen = false;
+
+        private bool notificationsPopupIsOpen = false;
 
 
         public ObservableCollection<User> Users
@@ -110,6 +114,26 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
+        public bool FriendsPopupIsOpen
+        {
+            get { return friendsPopupIsOpen; }
+            set
+            {
+                friendsPopupIsOpen = value;
+                NotifyPropertyChanged("FriendsPopupIsOpen");
+            }
+        }
+
+        public bool NotificationsPopupIsOpen
+        {
+            get { return notificationsPopupIsOpen; }
+            set
+            {
+                notificationsPopupIsOpen = value;
+                NotifyPropertyChanged("NotificationsPopupIsOpen");
+            }
+        }
+
 
         public Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
@@ -119,6 +143,9 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand LogoutCommand { get; set; }
 
+        public RelayCommand OpenFriendsPopupCommand { get; set; }
+
+        public RelayCommand OpenNotificationsPopupCommand { get; set; }
 
         public ChatViewModel()
         {
@@ -132,15 +159,17 @@ namespace Venn.Client.MVVM.ViewModels
             NavigationService = App.Container.GetInstance<INavigationService>();
             Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
-            SendMessageCommand = new RelayCommand(Logout);
-            LogoutCommand = new RelayCommand(SendMessage);
+            SendMessageCommand = new RelayCommand(SendMessage);
+            LogoutCommand = new RelayCommand(Logout);
             SendFriendshipCommand = new RelayCommand<int>(SendFriendship);
-            mainEvent = new AutoResetEvent(false);
+            OpenFriendsPopupCommand = new RelayCommand(() => FriendsPopupIsOpen = true);
+            OpenNotificationsPopupCommand = new RelayCommand(() => NotificationsPopupIsOpen = true);
+            mainEvent = new ManualResetEvent(false);
             Task.Run(() =>
             {
-                mainEvent.WaitOne();
                 while (true)
                 {
+                    mainEvent.WaitOne();
                     var ns = Server.client.GetStream();
                     var bytes = new byte[ushort.MaxValue - 28];
                     var length = ns.Read(bytes, 0, bytes.Length);
@@ -178,6 +207,10 @@ namespace Venn.Client.MVVM.ViewModels
                     {
                         var noti = JsonSerializer.Deserialize<Notification>(str.Split("$")[1]);
                         User.Notifications.Add(noti);
+                    }
+                    else if (command == "logout")
+                    {
+                        continue;
                     }
                 }
             });
@@ -257,22 +290,22 @@ namespace Venn.Client.MVVM.ViewModels
 
         public void Logout()
         {
-            mainEvent.WaitOne();
-            User = null;
+            mainEvent.Reset();
+
+            Server.client.Client.Send(Encoding.UTF8.GetBytes("logout"));
+
             NavigationService.NavigateTo<WelcomeViewModel>();
         }
 
         public void SendFriendship(int id)
         {
-            var noti = new Notification()
-            {
-                FromUserId = User.Id,
-                ToUserId = id,
-                Text = $"{User.Username} sent you a friend request",
-                SendingTime = DateTime.Now,
-                FromUser = User,
-                ToUser = Users.FirstOrDefault(u => u.Id == id)
-            };
+            var noti = new Notification();
+            noti.FromUserId = User.Id;
+            noti.ToUserId = id;
+            noti.Text = $"[{User.Username}] sent you a friend request";
+            noti.SendingTime = DateTime.Now;
+            noti.FromUser = User;
+            noti.ToUser = Users.FirstOrDefault(u => u.Id == id);
 
             var str = $"noti${JsonSerializer.Serialize(noti)}";
 
