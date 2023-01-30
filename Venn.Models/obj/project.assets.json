@@ -8986,19 +8986,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\babas\\.nuget\\packages\\": {}
+    "C:\\Users\\Baba_ja84\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\babas\\source\\repos\\Venn\\Venn.Models\\Venn.Models.csproj",
+      "projectUniqueName": "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Models\\Venn.Models.csproj",
       "projectName": "Venn.Models",
-      "projectPath": "C:\\Users\\babas\\source\\repos\\Venn\\Venn.Models\\Venn.Models.csproj",
-      "packagesPath": "C:\\Users\\babas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\babas\\Source\\Repos\\Venn\\Venn.Models\\obj\\",
+      "projectPath": "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Models\\Venn.Models.csproj",
+      "packagesPath": "C:\\Users\\Baba_ja84\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Models\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\babas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Baba_ja84\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9066,26 +9071,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   },

@@ -47,7 +47,7 @@ namespace Venn.Server
             notificationRepo = container.GetInstance<IRepository<Notification>>();
             friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.100.175"), 51015);
+            listener = new TcpListener(IPAddress.Parse("10.2.26.66"), 27001);
 
             JsonSerializerOptions options = new()
             {
@@ -179,7 +179,7 @@ namespace Venn.Server
                         {
                             var friend = str.Split('$')[1];
                             var userList = new List<User>();
-                           foreach (var u in userRepo.GetAll().Include("Contacts"))
+                            foreach (var u in userRepo.GetAll().Include("Contacts"))
                             {
                                 if ((u.Username.Contains(friend) || u.ToString().Contains(friend)) && u.Id != client.User.Id)
                                 {
@@ -220,7 +220,7 @@ namespace Venn.Server
                         {
 
                             bool b = true;
-                            var noti = JsonSerializer.Deserialize<Notification>(str.Split('$')[1]);
+                            var noti = JsonSerializer.Deserialize<Notification>(str.Split('$')[1], options);
                             foreach (var n in notificationRepo.GetAll())
                             {
                                 if (n.FromUserId == noti.FromUserId && n.FromUserId == noti.FromUserId)
@@ -233,14 +233,11 @@ namespace Venn.Server
                             {
                                 lock (new object())
                                 {
-                                    using (var context = container.GetInstance<VennDbContext>())
-                                    {
-                                        context.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT [dbo].[User] OFF");
-                                        context.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT [dbo].[Notification] ON");
-                                        notificationRepo.Add(noti);
-                                        notificationRepo.SaveChanges();
-                                        context.Database.ExecuteSqlInterpolated($"SET IDENTITY_INSERT [dbo].[Notification] OFF");
-                                    }
+                                    var ob = noti;
+                                    ob.FromUser = null;
+                                    ob.ToUser = null;
+                                    notificationRepo.Add(ob);
+                                    notificationRepo.SaveChanges();
                                 }
                                 foreach (var c in clients)
                                 {
@@ -277,6 +274,76 @@ namespace Venn.Server
                                         }
                                         break;
                                     }
+                                }
+                            }
+                        }
+                        else if (command == "addfs")
+                        {
+                            var fs = JsonSerializer.Deserialize<Friendship>(str.Split('$')[1], options);
+                            client.User.Contacts.Add(fs);
+
+                            var b = fs;
+                            b.User1 = null;
+                            b.User2 = null;
+
+                            lock (new object())
+                            {
+                                friendshipRepo.Add(b);
+                                friendshipRepo.SaveChanges();
+                            }
+
+                            var friendship = new Friendship()
+                            {
+                                User1Id = fs.User2Id,
+                                User2Id = fs.User1Id,
+                                User1 = fs.User2,
+                                User2 = fs.User1
+                            };
+
+                            b = friendship;
+                            b.User1 = null;
+                            b.User2 = null;
+
+                            lock (new object())
+                            {
+                                friendshipRepo.Add(b);
+                                friendshipRepo.SaveChanges();
+                            }
+
+                            foreach (var c in clients)
+                            {
+                                if (c.User.Id == friendship.User1Id)
+                                {
+                                    c.User.Contacts.Add(friendship);
+                                    var r = $"addfs${JsonSerializer.Serialize(friendship, options)}";
+
+                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                    {
+                                        r = $"<{r}>";
+                                        var data = Encoding.UTF8.GetBytes(r);
+                                        var skipCount = 0;
+                                        var bytesLen = data.Length;
+
+                                        while (skipCount + maxValue <= bytesLen)
+                                        {
+                                            c.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(maxValue)
+                                                .ToArray());
+                                            skipCount += maxValue;
+                                        }
+
+                                        if (skipCount != bytesLen)
+                                            c.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(bytesLen - skipCount)
+                                                .ToArray());
+                                    }
+                                    else
+                                    {
+                                        c.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                    }
+                                    break;
                                 }
                             }
                         }

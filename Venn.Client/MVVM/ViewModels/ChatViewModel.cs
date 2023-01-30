@@ -25,6 +25,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         public ManualResetEvent mainEvent;
 
+        const int maxValue = ushort.MaxValue - 28;
+
         public User User { get; set; }
 
 
@@ -141,6 +143,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand<int> SendFriendshipCommand { get; set; }
 
+        public RelayCommand<int> AcceptFriendshipCommand { get; set; }
+
         public RelayCommand LogoutCommand { get; set; }
 
         public RelayCommand OpenFriendsPopupCommand { get; set; }
@@ -162,6 +166,7 @@ namespace Venn.Client.MVVM.ViewModels
             SendMessageCommand = new RelayCommand(SendMessage);
             LogoutCommand = new RelayCommand(Logout);
             SendFriendshipCommand = new RelayCommand<int>(SendFriendship);
+            AcceptFriendshipCommand = new RelayCommand<int>(AcceptFriendship);
             OpenFriendsPopupCommand = new RelayCommand(() => FriendsPopupIsOpen = true);
             OpenNotificationsPopupCommand = new RelayCommand(() => NotificationsPopupIsOpen = true);
             mainEvent = new ManualResetEvent(false);
@@ -205,8 +210,13 @@ namespace Venn.Client.MVVM.ViewModels
                     }
                     else if (command == "noti")
                     {
-                        var noti = JsonSerializer.Deserialize<Notification>(str.Split("$")[1]);
+                        var noti = JsonSerializer.Deserialize<Notification>(str.Split("$")[1], options);
                         User.Notifications.Add(noti);
+                    }
+                    else if (command == "addfs")
+                    {
+                        var fs = JsonSerializer.Deserialize<Friendship>(str.Split("$")[1], options);
+                        User.Contacts.Add(fs);
                     }
                     else if (command == "logout")
                     {
@@ -307,9 +317,60 @@ namespace Venn.Client.MVVM.ViewModels
             noti.FromUser = User;
             noti.ToUser = Users.FirstOrDefault(u => u.Id == id);
 
-            var str = $"noti${JsonSerializer.Serialize(noti)}";
+            var str = $"noti${JsonSerializer.Serialize(noti, options)}";
 
-            Server.client.Client.Send(Encoding.UTF8.GetBytes(str));
+            SendCommand(str);
+        }
+
+        public void AcceptFriendship(int id)
+        {
+            var noti = User.Notifications.FirstOrDefault(n => n.Id == id);
+
+            User.Notifications.Remove(noti);
+
+            var fs = new Friendship()
+            {
+                User1Id = User.Id,
+                User1 = User,
+                User2Id = noti.FromUserId,
+                User2 = noti.FromUser
+            };
+
+            User.Contacts.Add(fs);
+
+            var str = $"addfs${JsonSerializer.Serialize(fs, options)}";
+
+            SendCommand(str);
+        }
+
+        public void SendCommand(string str)
+        {
+            if (Encoding.UTF8.GetBytes(str).Length > maxValue)
+            {
+                str = $"<{str}>";
+                var data = Encoding.UTF8.GetBytes(str);
+                var skipCount = 0;
+                var bytesLen = data.Length;
+
+                while (skipCount + maxValue <= bytesLen)
+                {
+                    Server.client.Client.Send(data
+                        .Skip(skipCount)
+                        .Take(maxValue)
+                        .ToArray());
+                    skipCount += maxValue;
+                }
+
+                if (skipCount != bytesLen)
+                    Server.client.Client.Send(data
+                        .Skip(skipCount)
+                        .Take(bytesLen - skipCount)
+                        .ToArray());
+            }
+            else
+            {
+                Server.client.Client.Send(Encoding.UTF8.GetBytes(str));
+            }
         }
     }
 }

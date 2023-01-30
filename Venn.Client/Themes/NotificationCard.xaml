@@ -31,7 +31,7 @@
                                 BorderThickness="0"
                                 Content="accept"
                                 CommandParameter="{Binding Id}"
-                                Command="{Binding DataContext.SendFriendshipCommand, RelativeSource={RelativeSource AncestorType=ListView}}"/>
+                                Command="{Binding DataContext.AcceptFriendshipCommand, RelativeSource={RelativeSource AncestorType=ListView}}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
