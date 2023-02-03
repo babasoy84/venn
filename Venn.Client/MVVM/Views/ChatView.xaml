@@ -151,14 +151,14 @@
                                 <Ellipse.Fill>
                                     <ImageBrush 
                                     ImageSource="{
-                                    Binding SelectedContact.ImageSource,
+                                    Binding SelectedContact.User2.ImageSource,
                                     UpdateSourceTrigger=PropertyChanged}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
 
                             <Label
                             Content="{
-                            Binding SelectedContact.Username,
+                            Binding SelectedContact.User2.Username,
                             UpdateSourceTrigger=PropertyChanged,
                             Mode=OneWay}"
                             Foreground="White"

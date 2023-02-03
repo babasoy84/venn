@@ -15,13 +15,13 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand ToLoginViewCommand { get; set; }
 
-        public RelayCommand ToCreateTeamViewCommand { get; set; }
+        public RelayCommand ToCreateAccountViewCommand { get; set; }
 
         public WelcomeViewModel(INavigationService NavigationService)
         {
             this.NavigationService = NavigationService;
             ToLoginViewCommand = new RelayCommand(ToLoginView);
-            ToCreateTeamViewCommand = new RelayCommand(ToCreateTeamView);
+            ToCreateAccountViewCommand = new RelayCommand(ToCreateAccountView);
         }
 
         public void ToLoginView()
@@ -29,9 +29,9 @@ namespace Venn.Client.MVVM.ViewModels
             NavigationService.NavigateTo<LoginViewModel>();
         }
 
-        public void ToCreateTeamView()
+        public void ToCreateAccountView()
         {
-            NavigationService.NavigateTo<CreateTeamViewModel>();
+            NavigationService.NavigateTo<CreateAccountViewModel>();
         }
     }
 }

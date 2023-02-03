@@ -30,11 +30,11 @@
             Margin="30 15"/>
 
         <Button
-            Command="{Binding ToCreateTeamViewCommand}"
+            Command="{Binding ToCreateAccountViewCommand}"
             Background="Transparent"
             Foreground="#B13333"
             BorderThickness="0"
-            Content="Create Team"
+            Content="Create Account"
             HorizontalAlignment="Center"
             FontFamily="Microsoft YaHei UI"
             FontWeight="Bold"

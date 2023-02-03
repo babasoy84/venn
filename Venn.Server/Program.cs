@@ -47,7 +47,7 @@ namespace Venn.Server
             notificationRepo = container.GetInstance<IRepository<Notification>>();
             friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("10.2.26.66"), 27001);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.175"), 60510);
 
             JsonSerializerOptions options = new()
             {
@@ -89,7 +89,10 @@ namespace Venn.Server
                         {
                             var email = str.Split('$')[1];
                             var password = str.Split('$')[2];
-                            var user = userRepo.GetAll().Include("Notifications").Include("Contacts").Include("Messages").FirstOrDefault(u => u.Email == email);
+
+                            var user = userRepo.GetAll().Include(u => u.Notifications).Include(u => u.Contacts).ThenInclude(fs => fs.User2).ThenInclude(u => u.Messages).Include(u => u.Messages).ThenInclude(m => m.ToUser).FirstOrDefault(u => u.Email == email);
+
+
                             if (user != null)
                             {
                                 if (user.Password == password)
@@ -170,10 +173,51 @@ namespace Venn.Server
                         }
                         else if (command == "message")
                         {
-                            var message = JsonSerializer.Deserialize<Message>(str.Split('$')[1]);
-                            client.User.Messages.Add(message);
-                            messageRepo.Add(message);
-                            messageRepo.SaveChanges();
+                            var message = JsonSerializer.Deserialize<Message>(str.Split('$')[1], options);
+                            var ob = message;
+                            ob.FromUser = null;
+                            ob.ToUser = null;
+                            lock (new object())
+                            {
+                                messageRepo.Add(ob);
+                                messageRepo.SaveChanges();
+                            }
+                            foreach (var c in clients)
+                            {
+                                if (c.User.Id == message.ToUserId)
+                                {
+                                    message.IsSelf = false;
+                                    var r = $"msg${JsonSerializer.Serialize(message, options)}";
+
+                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                    {
+                                        r = $"<{r}>";
+                                        var data = Encoding.UTF8.GetBytes(r);
+                                        var skipCount = 0;
+                                        var bytesLen = data.Length;
+
+                                        while (skipCount + maxValue <= bytesLen)
+                                        {
+                                            c.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(maxValue)
+                                                .ToArray());
+                                            skipCount += maxValue;
+                                        }
+
+                                        if (skipCount != bytesLen)
+                                            c.TcpClient.Client.Send(data
+                                                .Skip(skipCount)
+                                                .Take(bytesLen - skipCount)
+                                                .ToArray());
+                                    }
+                                    else
+                                    {
+                                        c.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                    }
+                                    break;
+                                }
+                            }
                         }
                         else if (command == "users")
                         {
@@ -243,7 +287,6 @@ namespace Venn.Server
                                 {
                                     if (c.User.Id == noti.ToUserId)
                                     {
-                                        c.User.Notifications.Add(noti);
                                         var r = $"noti${JsonSerializer.Serialize(noti, options)}";
 
                                         if (Encoding.UTF8.GetBytes(r).Length > maxValue)
@@ -280,7 +323,18 @@ namespace Venn.Server
                         else if (command == "addfs")
                         {
                             var fs = JsonSerializer.Deserialize<Friendship>(str.Split('$')[1], options);
-                            client.User.Contacts.Add(fs);
+
+                            foreach (var n in notificationRepo.GetAll())
+                            {
+                                if ((n.FromUserId == fs.User1Id && n.ToUserId == fs.User2Id) || (n.FromUserId == fs.User2Id && n.ToUserId == fs.User1Id))
+                                {
+                                    lock (new object())
+                                    {
+                                        notificationRepo.Delete(n);
+                                    }
+                                    break;
+                                }
+                            }
 
                             var b = fs;
                             b.User1 = null;
@@ -314,7 +368,6 @@ namespace Venn.Server
                             {
                                 if (c.User.Id == friendship.User1Id)
                                 {
-                                    c.User.Contacts.Add(friendship);
                                     var r = $"addfs${JsonSerializer.Serialize(friendship, options)}";
 
                                     if (Encoding.UTF8.GetBytes(r).Length > maxValue)

@@ -18,7 +18,7 @@
                 <view:LoginView></view:LoginView>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewmodel:CreateTeamViewModel}">
+            <DataTemplate DataType="{x:Type viewmodel:CreateAccountViewModel}">
                 <view:CreateTeamView></view:CreateTeamView>
             </DataTemplate>
 

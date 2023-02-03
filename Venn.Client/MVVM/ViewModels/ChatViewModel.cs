@@ -39,7 +39,7 @@ namespace Venn.Client.MVVM.ViewModels
 
         private ObservableCollection<Message> messages;
 
-        private User selectedContact;
+        private Friendship selectedContact;
 
         private int selectedContactIndex;
 
@@ -74,7 +74,7 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
-        public User SelectedContact
+        public Friendship SelectedContact
         {
             get { return selectedContact; }
             set
@@ -211,12 +211,17 @@ namespace Venn.Client.MVVM.ViewModels
                     else if (command == "noti")
                     {
                         var noti = JsonSerializer.Deserialize<Notification>(str.Split("$")[1], options);
-                        User.Notifications.Add(noti);
+                        dispatcher.Invoke(() => User.Notifications.Add(noti));
                     }
                     else if (command == "addfs")
                     {
                         var fs = JsonSerializer.Deserialize<Friendship>(str.Split("$")[1], options);
-                        User.Contacts.Add(fs);
+                        dispatcher.Invoke(() => User.Contacts.Add(fs));
+                    }
+                    else if (command == "msg")
+                    {
+                        var msg = JsonSerializer.Deserialize<Message>(str.Split("$")[1], options);
+                        dispatcher.Invoke(() => Messages.Add(msg));
                     }
                     else if (command == "logout")
                     {
@@ -236,30 +241,31 @@ namespace Venn.Client.MVVM.ViewModels
 
         public void UpdateMessages()
         {
+            Messages.Clear();
             if (SelectedContact != null)
             {
                 var lst = new List<Message>();
-                foreach (var msg in User.Messages.Where(m => m.ToUserId == SelectedContact.Id))
+                foreach (var msg in User.Messages.Where(m => m.ToUserId == SelectedContact.User2.Id))
                 {
                     msg.IsSelf = true;
+                    msg.FromUser = User;
                     lst.Add(msg);
                 }
 
-                foreach (var msg in SelectedContact.Messages.Where(m => m.ToUserId == User.Id))
+                foreach (var msg in SelectedContact.User2.Messages.Where(m => m.ToUserId == User.Id))
                 {
                     msg.IsSelf = false;
+                    msg.FromUser = SelectedContact.User2;
                     lst.Add(msg);
                 }
 
                 lst.Sort((x, y) => DateTime.Compare(x.SendingTime, y.SendingTime));
-                Messages.Clear();
+                
                 foreach (var msg in lst.OrderBy(m => m.SendingTime).ToList())
                 {
                     Messages.Add(msg);
                 }
             }
-            else
-                Messages.Clear();
         }
 
         public void FindFriend()
@@ -278,21 +284,22 @@ namespace Venn.Client.MVVM.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(Text) && SelectedContact != null)
             {
-                var Message = new Message();
-                Message.MessageType = "text";
-                Message.FromUserId = User.Id;
-                Message.ToUserId = SelectedContact.Id;
-                Message.Data = Encoding.UTF8.GetBytes(Text);
-                Message.SendingTime = DateTime.Now;
-                Message.IsSelf = true;
+                var msg = new Message();
+                msg.MessageType = "text";
+                msg.FromUserId = User.Id;
+                msg.FromUser = User;
+                msg.ToUserId = SelectedContact.User2Id;
+                msg.ToUser = SelectedContact.User2;
+                msg.Data = Encoding.UTF8.GetBytes(Text);
+                msg.SendingTime = DateTime.Now;
+                msg.IsSelf = true;
 
-                User.Messages.Add(Message);
+                User.Messages.Add(msg);
+                Messages.Add(msg);
 
-                var str = $"message${JsonSerializer.Serialize(Message)}";
+                var str = $"message${JsonSerializer.Serialize(msg, options)}";
 
-                Server.client.Client.Send(Encoding.UTF8.GetBytes(str));
-
-                UpdateMessages();
+                SendCommand(str);
             }
 
             Text = "";
