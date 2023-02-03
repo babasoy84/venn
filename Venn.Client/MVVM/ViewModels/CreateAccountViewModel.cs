@@ -116,6 +116,8 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
+        public string Password { get; set; }
+
         public List<string> Months { get; set; }
 
         public List<int> Days { get; set; }
@@ -184,11 +186,10 @@ namespace Venn.Client.MVVM.ViewModels
             NavigationService.NavigateTo<WelcomeViewModel>();
         }
 
-        private void Create(object p)
+        private bool CheckValidate(object p)
         {
-            var Password = (p as PasswordBox).Password;
-            var b = true;
-
+            Password = (p as PasswordBox).Password;
+            bool b = true;
             if (string.IsNullOrWhiteSpace(Email) || !new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").IsMatch(Email))
             {
                 EmailErrorText = "Email is not valid!";
@@ -220,58 +221,61 @@ namespace Venn.Client.MVVM.ViewModels
             {
                 b = false;
             }
+            else
+            {
+                EmailErrorText = "";
+            }
 
-            if (b)
+            return b;
+        }
+
+        private void SendMail(string email)
+        {
+            using (var client = new SmtpClient("smtp.gmail.com", 587))
+            {
+                client.EnableSsl = true;
+                client.Credentials = new NetworkCredential("dma.venn@gmail.com", "Venn2023");
+
+                using (var message = new MailMessage("dma.venn@gmail.com", email))
+                {
+                    message.Subject = "Venn";
+                    message.Body = "An account has been created in Venn messenger with your email";
+
+                    client.Send(message);
+                }
+            }
+        }
+
+        private void Create(object p)
+        {
+            if (CheckValidate(p))
             {
                 try
                 {
-                    MailAddress mailAddress = new MailAddress(Email);
+                    SendMail(Email);
 
-                    try
+                    var dt = new DateTime(Year, Months.FindIndex(m => m == Month) + 1, Day);
+                    var user = new User();
+                    user.Email = Email;
+                    user.Username = Username;
+                    user.Password = Password;
+                    user.DateOfBirth = dt;
+                    if (Server.CreateTeam(user))
                     {
-                        string verificationToken = Guid.NewGuid().ToString();
-
-                        using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
-                        {
-                            smtpClient.Host = "smtp.example.com";
-                            smtpClient.Port = 587;
-                            smtpClient.EnableSsl = true;
-                            smtpClient.Credentials = new NetworkCredential("dma.venn@gmail.com", "Venn2023");
-
-                            MailMessage message = new MailMessage();
-                            message.From = new MailAddress("dma.venn@gmail.com");
-                            message.To.Add(Email);
-                            message.Subject = "Email Verification";
-                            message.Body = $"Your verification token is: {verificationToken}\nPlease reply to this email to verify your email address.";
-                        }
-
-                        var dt = new DateTime(Year, Months.FindIndex(m => m == Month) + 1, Day);
-                        var user = new User();
-                        user.Email = Email;
-                        user.Username = Username;
-                        user.Password = Password;
-                        user.DateOfBirth = dt;
-                        if (Server.CreateTeam(user))
-                        {
-                            Email = null;
-                            Username = null;
-                            (p as PasswordBox).Password = null;
-                            Day = 0;
-                            Year = 0;
-                            Month = null;
-                            NavigationService.NavigateTo<WelcomeViewModel>();
-                        }
-                        else
-                        {
-                            EmailErrorText = "This email has been used, email must be unique!";
-                        }
+                        Email = null;
+                        Username = null;
+                        (p as PasswordBox).Password = null;
+                        Day = 0;
+                        Year = 0;
+                        Month = null;
+                        NavigationService.NavigateTo<WelcomeViewModel>();
                     }
-                    catch (SmtpException ex)
+                    else
                     {
-                        throw;
+                        EmailErrorText = "This email has been used, email must be unique!";
                     }
                 }
-                catch (FormatException)
+                catch (Exception ex)
                 {
                     EmailErrorText = "No such email!";
                 }

@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="ComboBoxItemTemplate">
+        <StackPanel>
+            <TextBlock Text="{Binding}" />
+            <StackPanel.Background>
+                <SolidColorBrush Color="Black"/>
+            </StackPanel.Background>
+        </StackPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>

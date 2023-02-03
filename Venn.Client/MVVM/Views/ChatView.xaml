@@ -80,8 +80,7 @@
 
                     </StackPanel>
 
-                    <Button 
-                    Command="{Binding SettingsCommand}"
+                    <Button
                     Grid.Column="1"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"

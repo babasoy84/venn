@@ -138,9 +138,7 @@ C:\Users\babas\Documents\Step IT Academy\Network Programming\Venn\Venn.Client\ob
 C:\Users\babas\Documents\Step IT Academy\Network Programming\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\LoginView.baml
 C:\Users\babas\Documents\Step IT Academy\Network Programming\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateTeamView.g.cs
 C:\Users\babas\Documents\Step IT Academy\Network Programming\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateTeamView.baml
-C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateTeamView.g.cs
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\LoginView.g.cs
-C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateTeamView.baml
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\LoginView.baml
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Server.deps.json
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Venn.Server.runtimeconfig.json
@@ -702,3 +700,6 @@ C:\Users\babas\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Venn.Client.gen
 C:\Users\babas\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\ref\Venn.Client.dll
 C:\Users\babas\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateAccountView.g.cs
 C:\Users\babas\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateAccountView.baml
+C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateAccountView.g.cs
+C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateAccountView.baml
+C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\ComboboxTheme.baml
