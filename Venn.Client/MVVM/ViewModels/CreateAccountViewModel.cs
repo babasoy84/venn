@@ -231,18 +231,20 @@ namespace Venn.Client.MVVM.ViewModels
 
         private void SendMail(string email)
         {
-            using (var client = new SmtpClient("smtp.gmail.com", 587))
+            using (SmtpClient smtpClient = new SmtpClient())
             {
-                client.EnableSsl = true;
-                client.Credentials = new NetworkCredential("dma.venn@gmail.com", "Venn2023");
+                smtpClient.Host = "smtp.example.com";
+                smtpClient.Port = 587;
+                smtpClient.EnableSsl = true;
+                smtpClient.Credentials = new NetworkCredential("dma.venn@gmail.com", "Venn2023");
 
-                using (var message = new MailMessage("dma.venn@gmail.com", email))
-                {
-                    message.Subject = "Venn";
-                    message.Body = "An account has been created in Venn messenger with your email";
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("dma.venn@gmail.com");
+                message.To.Add(email);
+                message.Subject = "Venn";
+                message.Body = "An account has been created in Venn messenger with your email";
 
-                    client.Send(message);
-                }
+                smtpClient.Send(message);
             }
         }
 

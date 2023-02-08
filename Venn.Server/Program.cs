@@ -47,7 +47,7 @@ namespace Venn.Server
             notificationRepo = container.GetInstance<IRepository<Notification>>();
             friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("10.2.26.66"), 27001);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.175"), 60445);
 
             JsonSerializerOptions options = new()
             {
@@ -77,11 +77,28 @@ namespace Venn.Server
                             var length = ns.Read(bytes, 0, bytes.Length);
                             str = Encoding.Default.GetString(bytes, 0, length);
                         }
-                        catch (Exception)
+                        catch (Exception) 
                         {
                             Console.WriteLine($"[{ip}]: Client has disconnected");
                             clients.Remove(client);
                             break;
+                        }
+                        if (str[0] == '<')
+                        {
+                            while (true)
+                            {
+                                var ns = client.TcpClient.GetStream();
+                                var bytes = new byte[ushort.MaxValue - 28];
+                                var length = ns.Read(bytes, 0, bytes.Length);
+                                var s = Encoding.Default.GetString(bytes, 0, length);
+                                str += s;
+                                if (s.Last() == '>')
+                                {
+                                    str = str.Remove(0, 1);
+                                    str = str.Remove(str.Length - 1, 1);
+                                    break;
+                                }
+                            }
                         }
 
                         var command = str.Split('$')[0];
@@ -90,7 +107,7 @@ namespace Venn.Server
                             var email = str.Split('$')[1];
                             var password = str.Split('$')[2];
 
-                            var user = userRepo.GetAll().Include(u => u.Notifications).Include(u => u.Contacts).ThenInclude(fs => fs.User2).ThenInclude(u => u.Messages).Include(u => u.Messages).ThenInclude(m => m.ToUser).FirstOrDefault(u => u.Email == email);
+                            var user = userRepo.GetAll().Include(u => u.Notifications).ThenInclude(n => n.FromUser).Include(u => u.Contacts).ThenInclude(fs => fs.User2).ThenInclude(u => u.Messages).Include(u => u.Messages).ThenInclude(m => m.ToUser).FirstOrDefault(u => u.Email == email);
 
 
                             if (user != null)
@@ -223,11 +240,22 @@ namespace Venn.Server
                         {
                             var friend = str.Split('$')[1];
                             var userList = new List<User>();
-                            foreach (var u in userRepo.GetAll().Include("Contacts"))
+                            var user = userRepo.GetAll().Include(u => u.Contacts).ThenInclude(fs => fs.User2).FirstOrDefault(u => u.Id == client.User.Id);
+                            foreach (var u in userRepo.GetAll().Include(u => u.Contacts).ThenInclude(fs => fs.User2))
                             {
                                 if ((u.Username.Contains(friend) || u.ToString().Contains(friend)) && u.Id != client.User.Id)
                                 {
-                                    userList.Add(u);
+                                    var bs = true;
+                                    foreach (var fs in user?.Contacts)
+                                    {
+                                        if (u.Id == fs.User2.Id)
+                                        {
+                                            bs = false;
+                                            break;
+                                        }
+                                    }
+                                    if (bs)
+                                        userList.Add(u);
                                 }
                             }
 
@@ -398,6 +426,61 @@ namespace Venn.Server
                                     }
                                     break;
                                 }
+                            }
+                        }
+                        else if (command == "update")
+                        {
+                            var usr = JsonSerializer.Deserialize<User>(str.Split('$')[1], options);
+                            
+                            client.User = usr;
+
+                            foreach (var contact in usr.Contacts)
+                            {
+                                foreach (var c in clients)
+                                {
+                                    if (contact.User2.Id == c.User.Id)
+                                    {
+                                        var r = $"update${JsonSerializer.Serialize(usr, options)}";
+
+                                        if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                        {
+                                            r = $"<{r}>";
+                                            var data = Encoding.UTF8.GetBytes(r);
+                                            var skipCount = 0;
+                                            var bytesLen = data.Length;
+
+                                            while (skipCount + maxValue <= bytesLen)
+                                            {
+                                                c.TcpClient.Client.Send(data
+                                                    .Skip(skipCount)
+                                                    .Take(maxValue)
+                                                    .ToArray());
+                                                skipCount += maxValue;
+                                            }
+
+                                            if (skipCount != bytesLen)
+                                                c.TcpClient.Client.Send(data
+                                                    .Skip(skipCount)
+                                                    .Take(bytesLen - skipCount)
+                                                    .ToArray());
+                                        }
+                                        else
+                                        {
+                                            c.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+
+                            var userCopy = userRepo.Get(usr.Id);
+                            userCopy.ImageSource = usr.ImageSource;
+                            userCopy.Username = usr.Username;
+
+                            lock (new object())
+                            {
+                                userRepo.Update(userCopy);
+                                userRepo.SaveChanges();
                             }
                         }
                         else if (command == "logout")

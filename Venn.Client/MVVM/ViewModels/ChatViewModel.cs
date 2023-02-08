@@ -1,11 +1,17 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Principal;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -29,10 +35,13 @@ namespace Venn.Client.MVVM.ViewModels
 
         public User User { get; set; }
 
+        public Cloudinary Cloudinary { get; set; }
 
         public ServerHelper Server { get; set; }
 
         public INavigationService NavigationService { get; set; }
+
+        public SnackbarMessageQueue SnackbarMessageQueue { set; get; } = new(TimeSpan.FromSeconds(1));
 
 
         private ObservableCollection<User> users;
@@ -136,6 +145,26 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
+        public string ImageSource
+        {
+            get { return User.ImageSource; }
+            set
+            {
+                User.ImageSource = value;
+                NotifyPropertyChanged("ImageSource");
+            }
+        }
+
+        public string Username
+        {
+            get { return User.Username; }
+            set
+            {
+                User.Username = value;
+                NotifyPropertyChanged("Username");
+            }
+        }
+
 
         public Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
@@ -151,6 +180,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand OpenNotificationsPopupCommand { get; set; }
 
+        public RelayCommand UploadProfilPhotoCommand { get; set; }
+
         public ChatViewModel()
         {
             options = new()
@@ -158,6 +189,8 @@ namespace Venn.Client.MVVM.ViewModels
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
                 WriteIndented = true
             };
+            Account account = new Account( "dv9hubcxy", "956258466281318", "wG5We44Sc-9SThiN68YKgZ8HPbY");
+            Cloudinary = new Cloudinary(account);
             User = App.Container.GetInstance<User>();
             Server = App.Container.GetInstance<ServerHelper>();
             NavigationService = App.Container.GetInstance<INavigationService>();
@@ -167,8 +200,19 @@ namespace Venn.Client.MVVM.ViewModels
             LogoutCommand = new RelayCommand(Logout);
             SendFriendshipCommand = new RelayCommand<int>(SendFriendship);
             AcceptFriendshipCommand = new RelayCommand<int>(AcceptFriendship);
+            OpenNotificationsPopupCommand = new RelayCommand(() =>
+            {
+                if (User.Notifications.Count() == 0)
+                    SnackbarEnqueue("You have no any notifications");
+                else
+                    NotificationsPopupIsOpen = true;
+            });
             OpenFriendsPopupCommand = new RelayCommand(() => FriendsPopupIsOpen = true);
-            OpenNotificationsPopupCommand = new RelayCommand(() => NotificationsPopupIsOpen = true);
+            UploadProfilPhotoCommand = new RelayCommand(() =>
+            {
+                UploadProfilPhoto();
+                UpdatedUser();
+            });
             mainEvent = new ManualResetEvent(false);
             Task.Run(() =>
             {
@@ -191,7 +235,7 @@ namespace Venn.Client.MVVM.ViewModels
                             if (s.Last() == '>')
                             {
                                 str = str.Remove(0, 1);
-                                str = str.Remove(str.Length - 1, 1); 
+                                str = str.Remove(str.Length - 1, 1);
                                 break;
                             }
                         }
@@ -212,6 +256,7 @@ namespace Venn.Client.MVVM.ViewModels
                     {
                         var noti = JsonSerializer.Deserialize<Notification>(str.Split("$")[1], options);
                         dispatcher.Invoke(() => User.Notifications.Add(noti));
+                        SnackbarEnqueue(noti.Text);
                     }
                     else if (command == "addfs")
                     {
@@ -222,6 +267,18 @@ namespace Venn.Client.MVVM.ViewModels
                     {
                         var msg = JsonSerializer.Deserialize<Message>(str.Split("$")[1], options);
                         dispatcher.Invoke(() => Messages.Add(msg));
+                    }
+                    else if (command == "update")
+                    {
+                        var usr = JsonSerializer.Deserialize<User>(str.Split("$")[1], options);
+                        for (int i = 0; i < User.Contacts.Count(); i++)
+                        {
+                            if (User.Contacts[i].User2.Id == usr.Id)
+                            {
+                                User.Contacts[i].User2.ImageSource = usr.ImageSource;
+                                User.Contacts[i].User2.Username = usr.Username;
+                            }
+                        }
                     }
                     else if (command == "logout")
                     {
@@ -260,7 +317,7 @@ namespace Venn.Client.MVVM.ViewModels
                 }
 
                 lst.Sort((x, y) => DateTime.Compare(x.SendingTime, y.SendingTime));
-                
+
                 foreach (var msg in lst.OrderBy(m => m.SendingTime).ToList())
                 {
                     Messages.Add(msg);
@@ -309,6 +366,8 @@ namespace Venn.Client.MVVM.ViewModels
         {
             mainEvent.Reset();
 
+            Messages.Clear();
+
             Server.client.Client.Send(Encoding.UTF8.GetBytes("logout"));
 
             NavigationService.NavigateTo<WelcomeViewModel>();
@@ -327,10 +386,16 @@ namespace Venn.Client.MVVM.ViewModels
             var str = $"noti${JsonSerializer.Serialize(noti, options)}";
 
             SendCommand(str);
+
+            FriendsPopupIsOpen = false;
+
+            SnackbarEnqueue($"Your friend request has been sent to [{noti.ToUser.Username}]");
         }
 
         public void AcceptFriendship(int id)
         {
+            NotificationsPopupIsOpen = false;
+
             var noti = User.Notifications.FirstOrDefault(n => n.Id == id);
 
             User.Notifications.Remove(noti);
@@ -346,6 +411,25 @@ namespace Venn.Client.MVVM.ViewModels
             User.Contacts.Add(fs);
 
             var str = $"addfs${JsonSerializer.Serialize(fs, options)}";
+
+            SendCommand(str);
+        }
+
+        public void UploadProfilPhoto()
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+
+            if (op.ShowDialog() == true)
+                ImageSource = UploadImage(op.FileName).Uri.AbsoluteUri;
+        }
+
+        public void UpdatedUser()
+        {
+            var str = $"update${JsonSerializer.Serialize(User, options)}";
 
             SendCommand(str);
         }
@@ -377,6 +461,28 @@ namespace Venn.Client.MVVM.ViewModels
             else
             {
                 Server.client.Client.Send(Encoding.UTF8.GetBytes(str));
+            }
+        }
+
+        public void SnackbarEnqueue(string msg, string btnContent = "", Action btnAction = null, double duration = 1)
+        {
+            SnackbarMessageQueue.Enqueue(msg,
+            btnContent,
+            _ => btnAction?.Invoke(), actionArgument: null,
+            promote: false, neverConsiderToBeDuplicate: false,
+            durationOverride: TimeSpan.FromSeconds(duration));
+        }
+
+        private ImageUploadResult UploadImage(string filePath)
+        {
+            using (var stream = File.OpenRead(filePath))
+            {
+                ImageUploadParams uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(filePath, stream)
+                };
+
+                 return Cloudinary.Upload(uploadParams);
             }
         }
     }

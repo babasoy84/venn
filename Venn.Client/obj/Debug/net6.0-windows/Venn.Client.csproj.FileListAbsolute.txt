@@ -703,3 +703,9 @@ C:\Users\babas\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\Crea
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateAccountView.g.cs
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\CreateAccountView.baml
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\ComboboxTheme.baml
+C:\Users\babas\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Themes\ComboboxTheme.baml
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\CloudinaryDotNet.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.AspNetCore.Html.Abstractions.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.AspNetCore.Http.Abstractions.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Newtonsoft.Json.dll

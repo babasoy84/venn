@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,34 @@ using Venn.Models.Models.Abstracts;
 
 namespace Venn.Models.Models.Concretes
 {
-    public class User : Entity
+    public class User : Entity, INotifyPropertyChanged
     {
-        public string? ImageSource { get; set; }
-        
+        private string imageSource;
+
+        private string username;
+
+
+        public string ImageSource
+        {
+            get { return imageSource; }
+            set
+            {
+                imageSource = value;
+                NotifyPropertyChanged("ImageSource");
+            }
+        }
+
         public string Email { get; set; }
 
-        public string Username { get; set; }
+        public string Username
+        {
+            get { return username; }
+            set
+            {
+                username = value;
+                NotifyPropertyChanged("Username");
+            }
+        }
 
         public string Password { get; set; }
 
@@ -26,22 +48,25 @@ namespace Venn.Models.Models.Concretes
 
         public virtual ObservableCollection<Friendship> Contacts { get; set; }
 
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public User()
         {
-            ImageSource = "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
+            ImageSource = "http://res.cloudinary.com/dv9hubcxy/image/upload/v1675676184/poaqh7q2qfur3yvfqgrb.jpg";
             Messages = new ObservableCollection<Message>();
             Notifications = new ObservableCollection<Notification>();
             Contacts = new ObservableCollection<Friendship>();
         }
 
-        public override string ToString()
+        private void NotifyPropertyChanged(string propertyName)
         {
-            string str = "#";
-            if (Id < 10) str = $"#000{Id}";
-            else if (Id < 100) str = $"#00{Id}";
-            else if (Id < 1000) str = $"#0{Id}";
-            else str = $"#{Id}";
-            return str;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
+
+        public override string ToString() => $"#{Id:D4}";
     }
 }

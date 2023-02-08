@@ -9,13 +9,19 @@
                         <Ellipse Width="30" Height="30"
                                  Margin="10, 0, 0, -5">
                             <Ellipse.Fill>
-                                <ImageBrush ImageSource="{Binding FromUser.ImageSource}"/>
+                                <ImageBrush ImageSource="{Binding DataContext.SelectedContact.User2.ImageSource, 
+                                RelativeSource={RelativeSource AncestorType=ListView}, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Mode=TwoWay}"/>
                             </Ellipse.Fill>
                         </Ellipse>
 
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding FromUser.Username}"
+                                <Label Content="{Binding DataContext.SelectedContact.User2.Username, 
+                                RelativeSource={RelativeSource AncestorType=ListView}, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Mode=TwoWay}"
                                    Foreground="#B13333"
                                    FontWeight="SemiBold"
                                    VerticalAlignment="Center"
@@ -59,12 +65,15 @@
                                    FontWeight="SemiBold"
                                    FontSize="8"
                                    VerticalAlignment="Center"/>
-                            
-                            <Label Content="{Binding FromUser.Username}"
+
+                            <Label Content="{Binding DataContext.User.Username, 
+                                RelativeSource={RelativeSource AncestorType=ListView}, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Mode=TwoWay}"
                                    Foreground="DeepSkyBlue"
                                    FontWeight="SemiBold"
                                    VerticalAlignment="Center"
-                                   Margin="0, 0, -5, 0"/>
+                                   Margin="0, -5, 0, 0"/>
                             
                         </StackPanel>
 
@@ -76,9 +85,12 @@
                     </StackPanel>
 
                     <Ellipse Width="30" Height="30"
-                                 Margin="10, -5, 0, 0">
+                                 Margin="0, 0, 10, -5">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding FromUser.ImageSource}"/>
+                            <ImageBrush ImageSource="{Binding DataContext.User.ImageSource, 
+                                RelativeSource={RelativeSource AncestorType=ListView}, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Mode=TwoWay}"/>
                         </Ellipse.Fill>
                     </Ellipse>
 

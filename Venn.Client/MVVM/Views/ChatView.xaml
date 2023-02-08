@@ -66,14 +66,16 @@
                         Height="30">
                             <Ellipse.Fill>
                                 <ImageBrush 
-                            ImageSource="{
-                            Binding User.ImageSource,
-                            UpdateSourceTrigger=PropertyChanged}"/>
+                                    ImageSource="{ Binding ImageSource,
+                                    UpdateSourceTrigger=PropertyChanged,
+                                    Mode=TwoWay}"/>
                             </Ellipse.Fill>
                         </Ellipse>
 
                         <Label 
-                        Content="{Binding User.Username}"
+                        Content="{Binding Username,
+                            UpdateSourceTrigger=PropertyChanged,
+                            Mode=TwoWay}"
                         Foreground="White"
                         FontWeight="SemiBold"
                         VerticalAlignment="Center"/>
@@ -112,7 +114,8 @@
                                     Command="{Binding OpenFriendsPopupCommand}"/>
                                 <MenuItem 
                                     Header="Upload Photo"
-                                    Icon="{materialDesign:PackIcon Kind=Upload}"/>
+                                    Icon="{materialDesign:PackIcon Kind=Upload}"
+                                    Command="{Binding UploadProfilPhotoCommand}"/>
                                 <MenuItem 
                                     Header="Log Out"
                                     Icon="{materialDesign:PackIcon Kind=Logout}"
@@ -149,9 +152,8 @@
                             Height="30">
                                 <Ellipse.Fill>
                                     <ImageBrush 
-                                    ImageSource="{
-                                    Binding SelectedContact.User2.ImageSource,
-                                    UpdateSourceTrigger=PropertyChanged}"/>
+                                    ImageSource="{ Binding SelectedContact.User2.ImageSource,
+                                    UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
 
@@ -159,7 +161,7 @@
                             Content="{
                             Binding SelectedContact.User2.Username,
                             UpdateSourceTrigger=PropertyChanged,
-                            Mode=OneWay}"
+                            Mode=TwoWay}"
                             Foreground="White"
                             FontWeight="Bold"
                             Margin="5, 0, 5, 0"
@@ -210,6 +212,14 @@
                     </Button>
                 </Grid>
             </Grid>
+
+            <materialDesign:Snackbar
+                Grid.ColumnSpan="2"
+                Width="550"
+                Margin="4"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding SnackbarMessageQueue}" />
 
         </Grid>
         <materialDesign:DialogHost 
