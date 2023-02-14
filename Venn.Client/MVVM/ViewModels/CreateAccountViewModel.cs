@@ -221,10 +221,6 @@ namespace Venn.Client.MVVM.ViewModels
             {
                 b = false;
             }
-            else
-            {
-                EmailErrorText = "";
-            }
 
             return b;
         }
@@ -252,34 +248,25 @@ namespace Venn.Client.MVVM.ViewModels
         {
             if (CheckValidate(p))
             {
-                try
+                var dt = new DateTime(Year, Months.FindIndex(m => m == Month) + 1, Day);
+                var user = new User();
+                user.Email = Email;
+                user.Username = Username;
+                user.Password = Password;
+                user.DateOfBirth = dt;
+                if (Server.CreateTeam(user))
                 {
-                    SendMail(Email);
-
-                    var dt = new DateTime(Year, Months.FindIndex(m => m == Month) + 1, Day);
-                    var user = new User();
-                    user.Email = Email;
-                    user.Username = Username;
-                    user.Password = Password;
-                    user.DateOfBirth = dt;
-                    if (Server.CreateTeam(user))
-                    {
-                        Email = null;
-                        Username = null;
-                        (p as PasswordBox).Password = null;
-                        Day = 0;
-                        Year = 0;
-                        Month = null;
-                        NavigationService.NavigateTo<WelcomeViewModel>();
-                    }
-                    else
-                    {
-                        EmailErrorText = "This email has been used, email must be unique!";
-                    }
+                    Email = null;
+                    Username = null;
+                    (p as PasswordBox).Password = null;
+                    Day = 0;
+                    Year = 0;
+                    Month = null;
+                    NavigationService.NavigateTo<WelcomeViewModel>();
                 }
-                catch (Exception ex)
+                else
                 {
-                    EmailErrorText = "No such email!";
+                    EmailErrorText = "This email has been used, email must be unique!";
                 }
             }
         }

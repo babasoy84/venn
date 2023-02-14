@@ -53,9 +53,9 @@ namespace Venn.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte[]>("Data")
+                    b.Property<string>("Data")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FromUserId")
                         .HasColumnType("int");
@@ -128,6 +128,7 @@ namespace Venn.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageSource")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")

@@ -22,6 +22,19 @@ using System.Windows.Threading;
 using Venn.Client.Net;
 using Venn.Client.Services;
 using Venn.Models.Models.Concretes;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using System.Web;
+using System.Net;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Xml.Linq;
+using Azure;
+using System.Collections.Specialized;
+using System.Windows.Controls;
 
 namespace Venn.Client.MVVM.ViewModels
 {
@@ -43,10 +56,18 @@ namespace Venn.Client.MVVM.ViewModels
 
         public SnackbarMessageQueue SnackbarMessageQueue { set; get; } = new(TimeSpan.FromSeconds(1));
 
+        private readonly string key = "785c5eec41e94d2295a7f5bf69cc3abe";
+        private readonly string endpoint = "https://api.cognitive.microsofttranslator.com";
+        private readonly string location = "eastus";
+
 
         private ObservableCollection<User> users;
 
         private ObservableCollection<Message> messages;
+
+        private ObservableCollection<Venn.Models.Models.Concretes.Language> languages;
+
+        private Venn.Models.Models.Concretes.Language selectedLanguage;
 
         private Friendship selectedContact;
 
@@ -61,6 +82,14 @@ namespace Venn.Client.MVVM.ViewModels
         private bool friendsPopupIsOpen = false;
 
         private bool notificationsPopupIsOpen = false;
+
+        private bool openFilePopupIsOpen = false;
+
+        private BitmapSource fileIcon;
+
+        private string fileName;
+
+        private string fileSize;
 
 
         public ObservableCollection<User> Users
@@ -80,6 +109,26 @@ namespace Venn.Client.MVVM.ViewModels
             {
                 messages = value;
                 NotifyPropertyChanged("Messages");
+            }
+        }
+
+        public ObservableCollection<Venn.Models.Models.Concretes.Language> Languages
+        {
+            get { return languages; }
+            set
+            {
+                languages = value;
+                NotifyPropertyChanged("Languages");
+            }
+        }
+
+        public Venn.Models.Models.Concretes.Language SelectedLanguage
+        {
+            get { return selectedLanguage; }
+            set
+            {
+                selectedLanguage = value;
+                NotifyPropertyChanged("SelectedLanguage");
             }
         }
 
@@ -145,6 +194,46 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
+        public bool OpenFilePopupIsOpen
+        {
+            get { return openFilePopupIsOpen; }
+            set
+            {
+                openFilePopupIsOpen = value;
+                NotifyPropertyChanged("OpenFilePopupIsOpen");
+            }
+        }
+
+        public BitmapSource FileIcon
+        {
+            get { return fileIcon; }
+            set
+            {
+                fileIcon = value;
+                NotifyPropertyChanged("FileIcon");
+            }
+        }
+
+        public string FileName
+        {
+            get { return fileName; }
+            set
+            {
+                fileName = value;
+                NotifyPropertyChanged("FileName");
+            }
+        }
+
+        public string FileSize
+        {
+            get { return fileSize; }
+            set
+            {
+                fileSize = value;
+                NotifyPropertyChanged("FileSize");
+            }
+        }
+
         public string ImageSource
         {
             get { return User.ImageSource; }
@@ -165,6 +254,10 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
+        public string FileType { get; set; }
+
+        public string FilePath { get; set; }
+
 
         public Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
@@ -182,6 +275,10 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand UploadProfilPhotoCommand { get; set; }
 
+        public RelayCommand OpenFileCommand { get; set; }
+
+        public RelayCommand SendFileCommand { get; set; }
+
         public ChatViewModel()
         {
             options = new()
@@ -189,17 +286,25 @@ namespace Venn.Client.MVVM.ViewModels
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
                 WriteIndented = true
             };
-            Account account = new Account( "dv9hubcxy", "956258466281318", "wG5We44Sc-9SThiN68YKgZ8HPbY");
+            Account account = new Account("dv9hubcxy", "956258466281318", "wG5We44Sc-9SThiN68YKgZ8HPbY");
             Cloudinary = new Cloudinary(account);
             User = App.Container.GetInstance<User>();
             Server = App.Container.GetInstance<ServerHelper>();
             NavigationService = App.Container.GetInstance<INavigationService>();
+            Languages = new ObservableCollection<Venn.Models.Models.Concretes.Language>();
+            Languages.Add(new Venn.Models.Models.Concretes.Language("az", "Azerbaijani"));
+            Languages.Add(new Venn.Models.Models.Concretes.Language("en", "English"));
+            Languages.Add(new Venn.Models.Models.Concretes.Language("tr", "Turkish"));
+            Languages.Add(new Venn.Models.Models.Concretes.Language("ru", "Russian"));
+            Languages.Add(new Venn.Models.Models.Concretes.Language("es", "Spanish"));
             Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
             SendMessageCommand = new RelayCommand(SendMessage);
             LogoutCommand = new RelayCommand(Logout);
             SendFriendshipCommand = new RelayCommand<int>(SendFriendship);
             AcceptFriendshipCommand = new RelayCommand<int>(AcceptFriendship);
+            OpenFileCommand = new RelayCommand(OpenFile);
+            SendFileCommand = new RelayCommand(SendFile);
             OpenNotificationsPopupCommand = new RelayCommand(() =>
             {
                 if (User.Notifications.Count() == 0)
@@ -246,7 +351,7 @@ namespace Venn.Client.MVVM.ViewModels
                         lock (this)
                         {
                             dispatcher.Invoke(() => Users.Clear());
-                            foreach (var user in JsonSerializer.Deserialize<ObservableCollection<User>>(str.Split('$')[1], options))
+                            foreach (var user in System.Text.Json.JsonSerializer.Deserialize<ObservableCollection<User>>(str.Split('$')[1], options))
                             {
                                 dispatcher.Invoke(() => Users.Add(user));
                             }
@@ -254,23 +359,24 @@ namespace Venn.Client.MVVM.ViewModels
                     }
                     else if (command == "noti")
                     {
-                        var noti = JsonSerializer.Deserialize<Notification>(str.Split("$")[1], options);
+                        var noti = System.Text.Json.JsonSerializer.Deserialize<Notification>(str.Split("$")[1], options);
                         dispatcher.Invoke(() => User.Notifications.Add(noti));
                         SnackbarEnqueue(noti.Text);
                     }
                     else if (command == "addfs")
                     {
-                        var fs = JsonSerializer.Deserialize<Friendship>(str.Split("$")[1], options);
+                        var fs = System.Text.Json.JsonSerializer.Deserialize<Friendship>(str.Split("$")[1], options);
                         dispatcher.Invoke(() => User.Contacts.Add(fs));
                     }
                     else if (command == "msg")
                     {
-                        var msg = JsonSerializer.Deserialize<Message>(str.Split("$")[1], options);
+                        var msg = System.Text.Json.JsonSerializer.Deserialize<Message>(str.Split("$")[1], options);
                         dispatcher.Invoke(() => Messages.Add(msg));
+                        dispatcher.Invoke(() => SelectedContact.User2.Messages.Add(msg));
                     }
                     else if (command == "update")
                     {
-                        var usr = JsonSerializer.Deserialize<User>(str.Split("$")[1], options);
+                        var usr = System.Text.Json.JsonSerializer.Deserialize<User>(str.Split("$")[1], options);
                         for (int i = 0; i < User.Contacts.Count(); i++)
                         {
                             if (User.Contacts[i].User2.Id == usr.Id)
@@ -337,7 +443,7 @@ namespace Venn.Client.MVVM.ViewModels
                 Users.Clear();
         }
 
-        public void SendMessage()
+        public async void SendMessage()
         {
             if (!string.IsNullOrWhiteSpace(Text) && SelectedContact != null)
             {
@@ -347,14 +453,17 @@ namespace Venn.Client.MVVM.ViewModels
                 msg.FromUser = User;
                 msg.ToUserId = SelectedContact.User2Id;
                 msg.ToUser = SelectedContact.User2;
-                msg.Data = Encoding.UTF8.GetBytes(Text);
+                msg.Data = Text;
                 msg.SendingTime = DateTime.Now;
                 msg.IsSelf = true;
+
+                if (SelectedLanguage != null)
+                    msg.Data = await Translate();
 
                 User.Messages.Add(msg);
                 Messages.Add(msg);
 
-                var str = $"message${JsonSerializer.Serialize(msg, options)}";
+                var str = $"message${System.Text.Json.JsonSerializer.Serialize(msg, options)}";
 
                 SendCommand(str);
             }
@@ -383,7 +492,7 @@ namespace Venn.Client.MVVM.ViewModels
             noti.FromUser = User;
             noti.ToUser = Users.FirstOrDefault(u => u.Id == id);
 
-            var str = $"noti${JsonSerializer.Serialize(noti, options)}";
+            var str = $"noti${System.Text.Json.JsonSerializer.Serialize(noti, options)}";
 
             SendCommand(str);
 
@@ -410,7 +519,7 @@ namespace Venn.Client.MVVM.ViewModels
 
             User.Contacts.Add(fs);
 
-            var str = $"addfs${JsonSerializer.Serialize(fs, options)}";
+            var str = $"addfs${System.Text.Json.JsonSerializer.Serialize(fs, options)}";
 
             SendCommand(str);
         }
@@ -422,14 +531,121 @@ namespace Venn.Client.MVVM.ViewModels
             op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
               "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
               "Portable Network Graphic (*.png)|*.png";
+            op.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             if (op.ShowDialog() == true)
-                ImageSource = UploadImage(op.FileName).Uri.AbsoluteUri;
+            {
+                using (var stream = File.OpenRead(op.FileName))
+                {
+                    ImageUploadParams uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(op.FileName, stream)
+                    };
+
+                    ImageSource = Cloudinary.Upload(uploadParams).Uri.AbsoluteUri;
+                }
+            }
+        }
+
+        public void OpenFile()
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a file";
+            op.Filter = "All Files (*.*)|*.*";
+            op.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            if (op.ShowDialog() == true)
+            {
+                FilePath = op.FileName;
+
+                FileInfo fileInfo = new FileInfo(op.FileName);
+
+                long fsize = fileInfo.Length;
+
+                if ((double)fsize / 1048576 < 10)
+                {
+                    using System.Drawing.Icon sysicon = System.Drawing.Icon.ExtractAssociatedIcon(op.FileName);
+
+                    string fileExtension = Path.GetExtension(op.FileName).ToLowerInvariant();
+                    string[] imageFileExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+
+                    if (imageFileExtensions.Contains(fileExtension))
+                    {
+                        FileType = "image";
+                        FileIcon = new BitmapImage(new Uri(op.FileName, UriKind.Absolute));
+                    }
+                    else
+                    {
+                        FileType = "file";
+                        FileIcon = Imaging.CreateBitmapSourceFromHIcon(
+                              sysicon.Handle,
+                              Int32Rect.Empty,
+                              BitmapSizeOptions.FromEmptyOptions());
+                    }
+
+
+
+                    FileName = Path.GetFileName(op.FileName);
+
+                    if (fsize >= 1073741824)
+                    {
+                        FileSize = string.Format("{0:0.##} GB", (double)fsize / 1073741824);
+                    }
+                    else if (fsize >= 1048576)
+                    {
+                        FileSize = string.Format("{0:0.##} MB", (double)fsize / 1048576);
+                    }
+                    else if (fsize >= 1024)
+                    {
+                        FileSize = string.Format("{0:0.##} KB", (double)fsize / 1024);
+                    }
+                    else
+                    {
+                        FileSize = string.Format("{0} bytes", fileSize);
+                    }
+
+
+                    OpenFilePopupIsOpen = true;
+                }
+            }
+        }
+
+        public void SendFile()
+        {
+            if (SelectedContact != null)
+            {
+                var msg = new Message();
+                msg.MessageType = FileType;
+                msg.FromUserId = User.Id;
+                msg.FromUser = User;
+                msg.ToUserId = SelectedContact.User2Id;
+                msg.ToUser = SelectedContact.User2;
+                msg.SendingTime = DateTime.Now;
+                msg.IsSelf = true;
+
+                using var stream = File.OpenRead(FilePath);
+
+                RawUploadParams uploadParams = new RawUploadParams()
+                {
+                    File = new FileDescription(FilePath, stream)
+                };
+
+                msg.Data = Cloudinary.Upload(uploadParams).Uri.AbsoluteUri;
+
+                User.Messages.Add(msg);
+                Messages.Add(msg);
+
+                var str = $"message${System.Text.Json.JsonSerializer.Serialize(msg, options)}";
+
+                SendCommand(str);
+            }
+
+            OpenFilePopupIsOpen = false;
         }
 
         public void UpdatedUser()
         {
-            var str = $"update${JsonSerializer.Serialize(User, options)}";
+            var str = $"update${System.Text.Json.JsonSerializer.Serialize(User, options)}";
 
             SendCommand(str);
         }
@@ -464,6 +680,39 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
+        public async Task<string> Translate()
+        {
+            string route = $"/translate?api-version=3.0&to={SelectedLanguage.Key}";
+            string textToTranslate = Text;
+            object[] body = new object[] { new { Text = textToTranslate } };
+            var requestBody = JsonConvert.SerializeObject(body);
+
+            using (var client = new HttpClient())
+            using (var request = new HttpRequestMessage())
+            {
+                // Build the request.
+                request.Method = System.Net.Http.HttpMethod.Post;
+                request.RequestUri = new Uri(endpoint + route);
+                request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+                // location required if you're using a multi-service or regional (not global) resource. 
+                request.Headers.Add("Ocp-Apim-Subscription-Key", key);
+                request.Headers.Add("Ocp-Apim-Subscription-Region", location);
+
+                // Send the request and get response.
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                // Read response as a string.
+                string r = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the response and extract the translated text.
+                var result = JsonConvert.DeserializeObject<JArray>(r);
+
+                var translations = (JArray)result[0]["translations"];
+                var translatedText = ((JObject)translations[0])["text"].ToString();
+
+                return translatedText;
+            }
+        }
+
         public void SnackbarEnqueue(string msg, string btnContent = "", Action btnAction = null, double duration = 1)
         {
             SnackbarMessageQueue.Enqueue(msg,
@@ -471,19 +720,6 @@ namespace Venn.Client.MVVM.ViewModels
             _ => btnAction?.Invoke(), actionArgument: null,
             promote: false, neverConsiderToBeDuplicate: false,
             durationOverride: TimeSpan.FromSeconds(duration));
-        }
-
-        private ImageUploadResult UploadImage(string filePath)
-        {
-            using (var stream = File.OpenRead(filePath))
-            {
-                ImageUploadParams uploadParams = new ImageUploadParams()
-                {
-                    File = new FileDescription(filePath, stream)
-                };
-
-                 return Cloudinary.Upload(uploadParams);
-            }
         }
     }
 }

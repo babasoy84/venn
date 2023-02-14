@@ -122,8 +122,11 @@
                 Padding="15"
                 FontFamily="Microsoft YaHei UI"
                 FontSize="20"
-                materialDesign:ComboBoxAssist.ClassicMode="False"
-                Foreground="#FFFFFF"/>
+                Foreground="#FFFFFF">
+                <ComboBox.Resources>
+                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                </ComboBox.Resources>
+            </ComboBox>
 
             <ComboBox
                 SelectedItem="{Binding Day, 
@@ -139,7 +142,11 @@
                 Padding="15"
                 FontFamily="Microsoft YaHei UI"
                 FontSize="20"
-                Foreground="#FFFFFF"/>
+                Foreground="#FFFFFF">
+                <ComboBox.Resources>
+                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                </ComboBox.Resources>
+            </ComboBox>
 
             <ComboBox
                 SelectedItem="{Binding Year, 
@@ -155,7 +162,11 @@
                 Padding="15"
                 FontFamily="Microsoft YaHei UI"
                 FontSize="20"
-                Foreground="#FFFFFF"/>
+                Foreground="#FFFFFF">
+                <ComboBox.Resources>
+                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                </ComboBox.Resources>
+            </ComboBox>
         </Grid>
 
         <Button

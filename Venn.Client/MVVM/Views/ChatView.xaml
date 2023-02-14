@@ -142,9 +142,13 @@
                     HorizontalAlignment="Stretch"
                     Margin="8">
 
-                        <StackPanel
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel 
+                            Orientation="Horizontal">
 
                             <Ellipse 
                             Margin="18, 0, 0, 0" 
@@ -152,8 +156,10 @@
                             Height="30">
                                 <Ellipse.Fill>
                                     <ImageBrush 
-                                    ImageSource="{ Binding SelectedContact.User2.ImageSource,
-                                    UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    ImageSource="{ 
+                                        Binding SelectedContact.User2.ImageSource,
+                                        UpdateSourceTrigger=PropertyChanged, 
+                                        Mode=TwoWay}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
 
@@ -166,8 +172,27 @@
                             FontWeight="Bold"
                             Margin="5, 0, 5, 0"
                             VerticalAlignment="Center"/>
-
                         </StackPanel>
+
+                        <ComboBox
+                            SelectedItem="{Binding SelectedLanguage, 
+                            UpdateSourceTrigger=PropertyChanged, 
+                            Mode=TwoWay}"
+                            ItemsSource="{Binding Languages}"
+                            Grid.Column="1"
+                            Margin="15 0"
+                            Background="#FF252525"
+                            materialDesign:HintAssist.Foreground="#B13333"
+                            materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+                            materialDesign:HintAssist.Hint="Language"
+                            Padding="5"
+                            FontFamily="Microsoft YaHei UI"
+                            FontSize="15"
+                            Foreground="#FFFFFF">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                            </ComboBox.Resources>
+                        </ComboBox>
 
                     </Grid>
                 </Border>
@@ -196,7 +221,7 @@
                     Grid.ColumnSpan="2"/>
 
                     <Button 
-                    Command="{Binding SendMessageCommand}"
+                    Command="{Binding OpenFileCommand}"
                     Background="Transparent"
                     BorderThickness="0"
                     Grid.Column="1"
@@ -206,7 +231,7 @@
                     Foreground="DarkGray"
                     Margin="5, 5, 16, 0">
                         <materialDesign:PackIcon 
-                        Kind="Send"
+                        Kind="Paperclip"
                         Width="20"
                         Height="20"/>
                     </Button>
@@ -317,6 +342,60 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
+        <materialDesign:DialogHost 
+        CloseOnClickAway="True" 
+        IsOpen="{Binding OpenFilePopupIsOpen, 
+        UpdateSourceTrigger=PropertyChanged, 
+        Mode=TwoWay}">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel
+                    Width="450"
+                    Orientation="Vertical"
+                    Background="#2F3136">
+                    <Image 
+                        Source="{Binding FileIcon, 
+                        UpdateSourceTrigger=PropertyChanged, 
+                        Mode=TwoWay}"
+                        Width="310"
+                        Margin="20"/>
+
+                    <Label 
+                        Content="{Binding FileName,
+                        UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}"
+                        Margin="5"
+                        Foreground="Gray"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"/>
+
+                    <Label 
+                        Content="{Binding FileSize,
+                        UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}"
+                        Margin="5"
+                        Foreground="White"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"/>
+
+                    <Button 
+                        Command="{Binding SendFileCommand}"
+                        Height="30"
+                        Width="45"
+                        BorderThickness="0"
+                        Foreground="DarkGray"
+                        Background="#B13333"
+                        Margin="10"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Padding="0">
+                        <materialDesign:PackIcon 
+                            Kind="Send"
+                            Width="20"
+                            Height="20"/>
+                    </Button>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
-    
+
 </UserControl>

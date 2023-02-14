@@ -6,8 +6,11 @@
                 <ControlTemplate>
                     <StackPanel Orientation="Horizontal">
 
-                        <Ellipse Width="30" Height="30"
-                                 Margin="10, 0, 0, -5">
+                        <Ellipse 
+                            VerticalAlignment="Top"
+                            Width="30" 
+                            Height="30"
+                            Margin="10, 0, 0, -5">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding DataContext.SelectedContact.User2.ImageSource, 
                                 RelativeSource={RelativeSource AncestorType=ListView}, 
@@ -34,7 +37,7 @@
                                    VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <Label Content="{Binding}"
+                            <Label Content="{Binding Data}"
                                    Foreground="White"
                                    FontWeight="SemiBold"
                                    VerticalAlignment="Center"/>
@@ -46,19 +49,100 @@
         </Setter>
 
         <Style.Resources>
-            <ControlTemplate x:Key="CustomRow">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding}"
-                           Foreground="White"
-                           Margin="40, -2, 0, 2"/>
-                </StackPanel>
-            </ControlTemplate>
-
-            <ControlTemplate x:Key="SelfRow">
+            <ControlTemplate x:Key="SelfImageRow">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
                     <StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                            <Label Content="{Binding SendingTime}"
+                                   Foreground="#44474D"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   VerticalAlignment="Center"/>
+
+                            <Label Content="{Binding DataContext.User.Username, 
+                                RelativeSource={RelativeSource AncestorType=ListView}, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Mode=TwoWay}"
+                                   Foreground="DeepSkyBlue"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Margin="0, -5, 0, 0"/>
+
+                        </StackPanel>
+
+                        <Image Height="250"
+                               Margin="10"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"
+                               Source="{Binding Data}"/>
+                    </StackPanel>
+
+                    <Ellipse 
+                        VerticalAlignment="Top"
+                        Width="30" 
+                        Height="30"
+                        Margin="0, 0, 10, -5">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding DataContext.User.ImageSource, 
+                                RelativeSource={RelativeSource AncestorType=ListView}, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Mode=TwoWay}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                </StackPanel>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ImageRow">
+                <StackPanel Orientation="Horizontal">
+
+                    <Ellipse 
+                        VerticalAlignment="Top"
+                        Width="30" 
+                        Height="30"
+                        Margin="10, 0, 0, -5">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding DataContext.SelectedContact.User2.ImageSource, 
+                                RelativeSource={RelativeSource AncestorType=ListView}, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Mode=TwoWay}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <StackPanel>
                         <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding DataContext.SelectedContact.User2.Username, 
+                                RelativeSource={RelativeSource AncestorType=ListView}, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Mode=TwoWay}"
+                                   Foreground="#B13333"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Margin="0, 0, -5, 0"/>
+
+                            <Label Content="{Binding SendingTime}"
+                                   Foreground="#44474D"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Image Height="250"
+                               Margin="10"
+                               VerticalAlignment="Center"
+                               Source="{Binding Data}"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="SelfTextRow">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             
                             <Label Content="{Binding SendingTime}"
                                    Foreground="#44474D"
@@ -77,15 +161,18 @@
                             
                         </StackPanel>
 
-                        <Label Content="{Binding}"
+                        <Label Content="{Binding Data}"
                                Foreground="White"
                                FontWeight="SemiBold"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Right"/>
                     </StackPanel>
 
-                    <Ellipse Width="30" Height="30"
-                                 Margin="0, 0, 10, -5">
+                    <Ellipse 
+                        VerticalAlignment="Top"
+                        Width="30" 
+                        Height="30"
+                        Margin="0, 0, 10, -5">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding DataContext.User.ImageSource, 
                                 RelativeSource={RelativeSource AncestorType=ListView}, 
@@ -99,13 +186,29 @@
         </Style.Resources>
 
         <Style.Triggers>
-            <DataTrigger Binding="{Binding MessageType}" Value="image">
-                <Setter Property="Template" Value="{StaticResource CustomRow}"/>
-            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelf}" Value="True"/>
+                    <Condition Binding="{Binding MessageType}" Value="image"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource SelfImageRow}"/>
+            </MultiDataTrigger>
 
-            <DataTrigger Binding="{Binding IsSelf}" Value="True">
-                <Setter Property="Template" Value="{StaticResource SelfRow}"/>
-            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelf}" Value="False"/>
+                    <Condition Binding="{Binding MessageType}" Value="image"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource ImageRow}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelf}" Value="True"/>
+                    <Condition Binding="{Binding MessageType}" Value="text"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource SelfTextRow}"/>
+            </MultiDataTrigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
