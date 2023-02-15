@@ -47,7 +47,7 @@ namespace Venn.Server
             notificationRepo = container.GetInstance<IRepository<Notification>>();
             friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("10.176.6.70"), 60445);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.175"), 60445);
 
             JsonSerializerOptions options = new()
             {
@@ -108,6 +108,8 @@ namespace Venn.Server
                             var password = str.Split('$')[2];
 
                             var user = userRepo.GetAll().Include(u => u.Notifications).ThenInclude(n => n.FromUser).Include(u => u.Contacts).ThenInclude(fs => fs.User2).ThenInclude(u => u.Messages).Include(u => u.Messages).ThenInclude(m => m.ToUser).FirstOrDefault(u => u.Email == email);
+
+                            client.User = user;
 
 
                             if (user != null)
