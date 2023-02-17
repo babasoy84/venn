@@ -85,6 +85,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         private bool openFilePopupIsOpen = false;
 
+        private bool displayFilePopupIsOpen;
+
         private BitmapSource fileIcon;
 
         private string videoSource;
@@ -92,6 +94,10 @@ namespace Venn.Client.MVVM.ViewModels
         private string fileName;
 
         private string fileSize;
+
+        private Visibility videoVisibility;
+
+        private Visibility imageVisibility;
 
 
         public ObservableCollection<User> Users
@@ -206,6 +212,16 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
+        public bool DisplayFilePopupIsOpen
+        {
+            get { return displayFilePopupIsOpen; }
+            set
+            {
+                displayFilePopupIsOpen = value;
+                NotifyPropertyChanged("DisplayFilePopupIsOpen");
+            }
+        }
+
         public BitmapSource FileIcon
         {
             get { return fileIcon; }
@@ -256,6 +272,26 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
+        public Visibility VideoVisibility
+        {
+            get { return videoVisibility; }
+            set
+            {
+                videoVisibility = value;
+                NotifyPropertyChanged("VideoVisibility");
+            }
+        }
+
+        public Visibility ImageVisibility
+        {
+            get { return imageVisibility; }
+            set
+            {
+                imageVisibility = value;
+                NotifyPropertyChanged("ImageVisibility");
+            }
+        }
+
         public string Username
         {
             get { return User.Username; }
@@ -291,6 +327,10 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand SendFileCommand { get; set; }
 
+        public RelayCommand<string> DisplayImageCommand { get; set; }
+
+        public RelayCommand<string> DisplayVideoCommand { get; set; }
+
         public ChatViewModel()
         {
             options = new()
@@ -317,6 +357,8 @@ namespace Venn.Client.MVVM.ViewModels
             AcceptFriendshipCommand = new RelayCommand<int>(AcceptFriendship);
             OpenFileCommand = new RelayCommand(OpenFile);
             SendFileCommand = new RelayCommand(SendFile);
+            DisplayImageCommand = new RelayCommand<string>(DisplayImage);
+            DisplayVideoCommand = new RelayCommand<string>(DisplayVideo);
             OpenNotificationsPopupCommand = new RelayCommand(() =>
             {
                 if (User.Notifications.Count() == 0)
@@ -457,6 +499,9 @@ namespace Venn.Client.MVVM.ViewModels
 
         public async void SendMessage()
         {
+            var txt = Text;
+            Text = "";
+
             if (!string.IsNullOrWhiteSpace(Text) && SelectedContact != null)
             {
                 var msg = new Message();
@@ -465,12 +510,12 @@ namespace Venn.Client.MVVM.ViewModels
                 msg.FromUser = User;
                 msg.ToUserId = SelectedContact.User2Id;
                 msg.ToUser = SelectedContact.User2;
-                msg.Data = Text;
+                msg.Data = txt;
                 msg.SendingTime = DateTime.Now;
                 msg.IsSelf = true;
 
                 if (SelectedLanguage != null)
-                    msg.Data = await Translate();
+                    msg.Data = await Translate(txt);
 
                 User.Messages.Add(msg);
                 Messages.Add(msg);
@@ -479,8 +524,6 @@ namespace Venn.Client.MVVM.ViewModels
 
                 SendCommand(str);
             }
-
-            Text = "";
         }
 
         public void Logout()
@@ -559,7 +602,7 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
-        public void OpenFile()
+        public void OpenFile() 
         {
             OpenFileDialog op = new OpenFileDialog();
             op.Title = "Select a file";
@@ -590,11 +633,12 @@ namespace Venn.Client.MVVM.ViewModels
                     else
                     {
                         FileType = "image";
-                        VideoSource = null;
+                        ImageVisibility = Visibility.Visible;
+                        VideoVisibility = Visibility.Collapsed;
                         FileIcon = new BitmapImage(new Uri(op.FileName, UriKind.Absolute));
                     }
                 }
-                if (videoExtensions.Contains(fileExtension))
+                else if (videoExtensions.Contains(fileExtension))
                 {
                     if ((double)fsize / 1048576 > 100)
                     {
@@ -603,7 +647,8 @@ namespace Venn.Client.MVVM.ViewModels
                     else
                     {
                         FileType = "video";
-                        FileIcon = null;
+                        ImageVisibility = Visibility.Collapsed;
+                        VideoVisibility = Visibility.Visible;
                         VideoSource = op.FileName;
                     }
                 }
@@ -616,6 +661,8 @@ namespace Venn.Client.MVVM.ViewModels
                     else
                     {
                         FileType = "file";
+                        ImageVisibility = Visibility.Visible;
+                        VideoVisibility = Visibility.Collapsed;
                         FileIcon = Imaging.CreateBitmapSourceFromHIcon(
                               sysicon.Handle,
                               Int32Rect.Empty,
@@ -666,12 +713,32 @@ namespace Venn.Client.MVVM.ViewModels
 
                 using var stream = File.OpenRead(FilePath);
 
-                RawUploadParams uploadParams = new RawUploadParams()
+                if (FileType == "image")
                 {
-                    File = new FileDescription(FilePath, stream)
-                };
+                    ImageUploadParams uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(FilePath, stream)
+                    };
+                    msg.Data = Cloudinary.Upload(uploadParams).Uri.AbsoluteUri;
+                }
+                else if (FileType == "video")
+                {
+                    VideoUploadParams uploadParams = new VideoUploadParams()
+                    {
+                        File = new FileDescription(FilePath, stream)
+                    };
+                    msg.Data = Cloudinary.Upload(uploadParams).Uri.AbsoluteUri;
+                }
+                else
+                {
+                    RawUploadParams uploadParams = new RawUploadParams()
+                    {
+                        File = new FileDescription(FilePath, stream)
+                    };
+                    msg.Data = Cloudinary.Upload(uploadParams).Uri.AbsoluteUri;
+                }
 
-                msg.Data = Cloudinary.Upload(uploadParams).Uri.AbsoluteUri;
+                
 
                 User.Messages.Add(msg);
                 Messages.Add(msg);
@@ -682,6 +749,24 @@ namespace Venn.Client.MVVM.ViewModels
             }
 
             OpenFilePopupIsOpen = false;
+        }
+
+        public void DisplayImage(string imageSource)
+        {
+            ImageVisibility = Visibility.Visible;
+            VideoVisibility = Visibility.Collapsed;
+            FileIcon = new BitmapImage(new Uri(imageSource, UriKind.Absolute));
+
+            DisplayFilePopupIsOpen = true;
+        }
+
+        public void DisplayVideo(string videoSource)
+        {
+            ImageVisibility = Visibility.Collapsed;
+            VideoVisibility = Visibility.Visible;
+            VideoSource = videoSource;
+
+            DisplayFilePopupIsOpen = true;
         }
 
         public void UpdatedUser()
@@ -721,11 +806,10 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
-        public async Task<string> Translate()
+        public async Task<string> Translate(string txt)
         {
             string route = $"/translate?api-version=3.0&to={SelectedLanguage.Key}";
-            string textToTranslate = Text;
-            object[] body = new object[] { new { Text = textToTranslate } };
+            object[] body = new object[] { new { Text = txt } };
             var requestBody = JsonConvert.SerializeObject(body);
 
             using (var client = new HttpClient())

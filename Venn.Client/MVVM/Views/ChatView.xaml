@@ -353,28 +353,31 @@
                     Orientation="Vertical"
                     Background="#2F3136">
                     <Image 
+                        Visibility="{Binding ImageVisibility}"
                         Source="{Binding FileIcon, 
                         UpdateSourceTrigger=PropertyChanged, 
                         Mode=TwoWay}"
                         Width="310"
                         Margin="20"/>
 
-                    <Grid>
+                    <Grid
+                        Visibility="{Binding VideoVisibility}"
+                        Width="310"
+                        Margin="20">
                         <MediaElement 
                         Source="{Binding VideoSource, 
                         UpdateSourceTrigger=PropertyChanged, 
                         Mode=TwoWay}"
+                        UnloadedBehavior="Stop"
                         LoadedBehavior="Manual"
                         x:Name="Player"
-                        MaxWidth="310"
-                        MinHeight="150"/>
-                        <StackPanel 
-                        x:Name="ControlPanel" 
-                        Orientation="Horizontal" 
-                        Opacity="0.01" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center">
-                            <StackPanel.Resources>
+                        Width="310"/>
+                        <Grid 
+                            x:Name="ControlPanel"
+                            Opacity="0.01"
+                            VerticalAlignment="Stretch" 
+                            Width="310">
+                            <Grid.Resources>
                                 <Storyboard x:Key="MakeVisible">
                                     <DoubleAnimation 
                                     To="1.0" 
@@ -387,9 +390,9 @@
                                     Duration="0:00:0.5" 
                                     Storyboard.TargetProperty="(Viewbox.Opacity)"/>
                                 </Storyboard>
-                            </StackPanel.Resources>
-                            <StackPanel.Style>
-                                <Style TargetType="{x:Type StackPanel}">
+                            </Grid.Resources>
+                            <Grid.Style>
+                                <Style TargetType="{x:Type Grid}">
                                     <Style.Triggers>
                                         <EventTrigger  RoutedEvent="MouseEnter">
                                             <BeginStoryboard Storyboard="{StaticResource MakeVisible}"/>
@@ -399,8 +402,10 @@
                                         </EventTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </StackPanel.Style>
+                            </Grid.Style>
                             <Button 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
                                 Style="{StaticResource MaterialDesignIconForegroundButton}"
                                 IsEnabled="{
                                 Binding DataContext.ControlsEnabled, 
@@ -410,7 +415,7 @@
                                 Click="PlayButton_Click">
                                 <materialDesign:PackIcon Foreground="#B13333" Kind="Play" />
                             </Button>
-                        </StackPanel>
+                        </Grid>
                     </Grid>
 
                     <Label 
@@ -447,6 +452,84 @@
                             Width="20"
                             Height="20"/>
                     </Button>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <materialDesign:DialogHost 
+        CloseOnClickAway="True" 
+        IsOpen="{Binding DisplayFilePopupIsOpen, 
+        UpdateSourceTrigger=PropertyChanged, 
+        Mode=TwoWay}">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel
+                    Width="450"
+                    Orientation="Vertical"
+                    Background="#2F3136">
+                    <Image 
+                        Visibility="{Binding ImageVisibility}"
+                        Source="{Binding FileIcon, 
+                        UpdateSourceTrigger=PropertyChanged, 
+                        Mode=TwoWay}"
+                        Width="310"
+                        Margin="20"/>
+
+                    <Grid
+                        Visibility="{Binding VideoVisibility}"
+                        Width="310"
+                        Margin="20">
+                        <MediaElement 
+                        Source="{Binding VideoSource, 
+                        UpdateSourceTrigger=PropertyChanged, 
+                        Mode=TwoWay}"
+                        UnloadedBehavior="Stop"
+                        LoadedBehavior="Manual"
+                        x:Name="_Player"
+                        Width="310"/>
+                        <Grid 
+                            Opacity="0.01"
+                            VerticalAlignment="Stretch" 
+                            Width="310">
+                            <Grid.Resources>
+                                <Storyboard x:Key="MakeVisible">
+                                    <DoubleAnimation 
+                                    To="1.0" 
+                                    Duration="0:00:0.5" 
+                                    Storyboard.TargetProperty="(Viewbox.Opacity)"/>
+                                </Storyboard>
+                                <Storyboard x:Key="MakeInvisible">
+                                    <DoubleAnimation 
+                                    To="0.01" 
+                                    Duration="0:00:0.5" 
+                                    Storyboard.TargetProperty="(Viewbox.Opacity)"/>
+                                </Storyboard>
+                            </Grid.Resources>
+                            <Grid.Style>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Style.Triggers>
+                                        <EventTrigger  RoutedEvent="MouseEnter">
+                                            <BeginStoryboard 
+                                                Storyboard="{StaticResource MakeVisible}"/>
+                                        </EventTrigger>
+                                        <EventTrigger RoutedEvent="MouseLeave">
+                                            <BeginStoryboard 
+                                                Storyboard="{StaticResource MakeInvisible}"/>
+                                        </EventTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Button 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                IsEnabled="{
+                                Binding DataContext.ControlsEnabled, 
+                                RelativeSource={RelativeSource FindAncestor, 
+                                AncestorType=Window}}"
+                                Click="Button_Click">
+                                <materialDesign:PackIcon Foreground="#B13333" Kind="Play" />
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
