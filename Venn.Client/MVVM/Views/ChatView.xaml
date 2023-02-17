@@ -359,6 +359,60 @@
                         Width="310"
                         Margin="20"/>
 
+                    <Grid>
+                        <MediaElement 
+                        Source="{Binding VideoSource, 
+                        UpdateSourceTrigger=PropertyChanged, 
+                        Mode=TwoWay}"
+                        LoadedBehavior="Manual"
+                        x:Name="Player"
+                        MaxWidth="310"
+                        MinHeight="150"/>
+                        <StackPanel 
+                        x:Name="ControlPanel" 
+                        Orientation="Horizontal" 
+                        Opacity="0.01" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center">
+                            <StackPanel.Resources>
+                                <Storyboard x:Key="MakeVisible">
+                                    <DoubleAnimation 
+                                    To="1.0" 
+                                    Duration="0:00:0.5" 
+                                    Storyboard.TargetProperty="(Viewbox.Opacity)"/>
+                                </Storyboard>
+                                <Storyboard x:Key="MakeInvisible">
+                                    <DoubleAnimation 
+                                    To="0.01" 
+                                    Duration="0:00:0.5" 
+                                    Storyboard.TargetProperty="(Viewbox.Opacity)"/>
+                                </Storyboard>
+                            </StackPanel.Resources>
+                            <StackPanel.Style>
+                                <Style TargetType="{x:Type StackPanel}">
+                                    <Style.Triggers>
+                                        <EventTrigger  RoutedEvent="MouseEnter">
+                                            <BeginStoryboard Storyboard="{StaticResource MakeVisible}"/>
+                                        </EventTrigger>
+                                        <EventTrigger RoutedEvent="MouseLeave">
+                                            <BeginStoryboard Storyboard="{StaticResource MakeInvisible}"/>
+                                        </EventTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <Button 
+                                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                IsEnabled="{
+                                Binding DataContext.ControlsEnabled, 
+                                RelativeSource={RelativeSource FindAncestor, 
+                                AncestorType=Window}}"
+                                Name="PlayButton" 
+                                Click="PlayButton_Click">
+                                <materialDesign:PackIcon Foreground="#B13333" Kind="Play" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
                     <Label 
                         Content="{Binding FileName,
                         UpdateSourceTrigger=PropertyChanged,

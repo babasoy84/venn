@@ -13,7 +13,7 @@
         ResizeMode="CanResizeWithGrip"
         Title="Venn" 
         Background="#36393F"
-        Height="650" Width="1200">
+        Height="650" Width="1200" Icon="/MVVM/Views/logo_venn.gif">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>

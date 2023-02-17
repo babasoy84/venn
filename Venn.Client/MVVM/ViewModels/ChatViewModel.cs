@@ -87,6 +87,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         private BitmapSource fileIcon;
 
+        private string videoSource;
+
         private string fileName;
 
         private string fileSize;
@@ -211,6 +213,16 @@ namespace Venn.Client.MVVM.ViewModels
             {
                 fileIcon = value;
                 NotifyPropertyChanged("FileIcon");
+            }
+        }
+
+        public string VideoSource
+        {
+            get { return videoSource; }
+            set
+            {
+                videoSource = value;
+                NotifyPropertyChanged("VideoSource");
             }
         }
 
@@ -556,23 +568,50 @@ namespace Venn.Client.MVVM.ViewModels
 
             if (op.ShowDialog() == true)
             {
+                bool b = true;
                 FilePath = op.FileName;
 
                 FileInfo fileInfo = new FileInfo(op.FileName);
 
                 long fsize = fileInfo.Length;
 
-                if ((double)fsize / 1048576 < 10)
+                using System.Drawing.Icon sysicon = System.Drawing.Icon.ExtractAssociatedIcon(op.FileName);
+
+                string fileExtension = Path.GetExtension(op.FileName).ToLowerInvariant();
+                string[] imageFileExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+                string[] videoExtensions = { ".mp4", ".mov", ".avi", ".wmv", ".mkv" };
+
+                if (imageFileExtensions.Contains(fileExtension))
                 {
-                    using System.Drawing.Icon sysicon = System.Drawing.Icon.ExtractAssociatedIcon(op.FileName);
-
-                    string fileExtension = Path.GetExtension(op.FileName).ToLowerInvariant();
-                    string[] imageFileExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
-
-                    if (imageFileExtensions.Contains(fileExtension))
+                    if ((double)fsize / 1048576 > 10)
+                    {
+                        b = false;
+                    }
+                    else
                     {
                         FileType = "image";
+                        VideoSource = null;
                         FileIcon = new BitmapImage(new Uri(op.FileName, UriKind.Absolute));
+                    }
+                }
+                if (videoExtensions.Contains(fileExtension))
+                {
+                    if ((double)fsize / 1048576 > 100)
+                    {
+                        b = false;
+                    }
+                    else
+                    {
+                        FileType = "video";
+                        FileIcon = null;
+                        VideoSource = op.FileName;
+                    }
+                }
+                else
+                {
+                    if ((double)fsize / 1048576 > 10)
+                    {
+                        b = false;
                     }
                     else
                     {
@@ -582,9 +621,11 @@ namespace Venn.Client.MVVM.ViewModels
                               Int32Rect.Empty,
                               BitmapSizeOptions.FromEmptyOptions());
                     }
+                }
 
 
-
+                if (b)
+                {
                     FileName = Path.GetFileName(op.FileName);
 
                     if (fsize >= 1073741824)

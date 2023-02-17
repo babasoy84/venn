@@ -20,9 +20,21 @@ namespace Venn.Client.MVVM.Views
     /// </summary>
     public partial class ChatView : UserControl
     {
+        private bool isPlaying = false;
+
         public ChatView()
         {
             InitializeComponent();
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isPlaying)
+                Player.Play();
+            else
+                Player.Pause();
+
+            isPlaying = !isPlaying;
         }
     }
 }
