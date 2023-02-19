@@ -455,14 +455,13 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
-        <materialDesign:DialogHost 
+        <materialDesign:DialogHost
         CloseOnClickAway="True" 
         IsOpen="{Binding DisplayFilePopupIsOpen, 
         UpdateSourceTrigger=PropertyChanged, 
         Mode=TwoWay}">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel
-                    Width="450"
                     Orientation="Vertical"
                     Background="#2F3136">
                     <Image 
@@ -470,25 +469,26 @@
                         Source="{Binding FileIcon, 
                         UpdateSourceTrigger=PropertyChanged, 
                         Mode=TwoWay}"
-                        Width="310"
-                        Margin="20"/>
+                        MaxWidth="850"
+                        MaxHeight="500"/>
 
                     <Grid
-                        Visibility="{Binding VideoVisibility}"
-                        Width="310"
-                        Margin="20">
+                        Visibility="{Binding VideoVisibility}">
                         <MediaElement 
                         Source="{Binding VideoSource, 
                         UpdateSourceTrigger=PropertyChanged, 
                         Mode=TwoWay}"
+                        MediaOpened="_Player_MediaOpened"
+                        MediaEnded="_Player_MediaEnded"
                         UnloadedBehavior="Stop"
                         LoadedBehavior="Manual"
                         x:Name="_Player"
-                        Width="310"/>
+                        MaxWidth="850"
+                        MaxHeight="600"/>
                         <Grid 
                             Opacity="0.01"
-                            VerticalAlignment="Stretch" 
-                            Width="310">
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch">
                             <Grid.Resources>
                                 <Storyboard x:Key="MakeVisible">
                                     <DoubleAnimation 
@@ -528,6 +528,13 @@
                                 Click="Button_Click">
                                 <materialDesign:PackIcon Foreground="#B13333" Kind="Play" />
                             </Button>
+                            <Slider 
+                                x:Name="TimelineSlider"
+                                Minimum="0"
+                                ValueChanged="Slider_ValueChanged"
+                                MinWidth="400"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"/>
                         </Grid>
                     </Grid>
                 </StackPanel>

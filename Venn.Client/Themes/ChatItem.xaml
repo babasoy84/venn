@@ -73,11 +73,23 @@
 
                         </StackPanel>
 
-                        <Image Height="150"
-                               Margin="10"
+                        <Grid
+                            Margin="10"
+                            HorizontalAlignment="Right">
+                            <Image Height="150"
                                VerticalAlignment="Center"
-                               HorizontalAlignment="Right"
                                Source="{Binding Data}"/>
+                            
+                            <Button
+                                Height="150"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                CommandParameter="{Binding Data}"
+                                Command="{Binding DataContext.DisplayImageCommand, 
+                                RelativeSource={RelativeSource AncestorType=ListView}}"/>
+                        </Grid>
                     </StackPanel>
 
                     <Ellipse 
@@ -130,10 +142,22 @@
                                    VerticalAlignment="Center"/>
                         </StackPanel>
 
-                        <Image Height="150"
-                               Margin="10"
+                        <Grid Margin="10">
+                            
+                            <Image Height="150"
                                VerticalAlignment="Center"
                                Source="{Binding Data}"/>
+                            
+                            <Button
+                                Height="150"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                CommandParameter="{Binding Data}"
+                                Command="{Binding DataContext.DisplayImageCommand, 
+                                RelativeSource={RelativeSource AncestorType=ListView}}"/>
+                        </Grid>
                     </StackPanel>
 
                 </StackPanel>
@@ -169,7 +193,7 @@
                                 Source="{Binding Data}"
                                 LoadedBehavior="Pause"
                                 Height="150"/>
-                            
+
                             <Button 
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
@@ -178,7 +202,10 @@
                                 Binding DataContext.ControlsEnabled, 
                                 RelativeSource={RelativeSource FindAncestor, 
                                 AncestorType=Window}}"
-                                Name="PlayButton">
+                                Name="PlayButton"
+                                CommandParameter="{Binding Data}"
+                                Command="{Binding DataContext.DisplayVideoCommand, 
+                                RelativeSource={RelativeSource AncestorType=ListView}}">
                                 <materialDesign:PackIcon Foreground="#B13333" Kind="Play" />
                             </Button>
                         </Grid>
@@ -250,6 +277,9 @@
                                 Binding DataContext.ControlsEnabled, 
                                 RelativeSource={RelativeSource FindAncestor, 
                                 AncestorType=Window}}"
+                                CommandParameter="{Binding Data}"
+                                Command="{Binding DataContext.DisplayVideoCommand, 
+                                RelativeSource={RelativeSource AncestorType=ListView}}"
                                 Name="PlayButton">
                                 <materialDesign:PackIcon Foreground="#B13333" Kind="Play" />
                             </Button>
@@ -264,7 +294,7 @@
 
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            
+
                             <Label Content="{Binding SendingTime}"
                                    Foreground="#44474D"
                                    FontWeight="SemiBold"
@@ -279,7 +309,7 @@
                                    FontWeight="SemiBold"
                                    VerticalAlignment="Center"
                                    Margin="0, -5, 0, 0"/>
-                            
+
                         </StackPanel>
 
                         <Label Content="{Binding Data}"

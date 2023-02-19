@@ -499,9 +499,6 @@ namespace Venn.Client.MVVM.ViewModels
 
         public async void SendMessage()
         {
-            var txt = Text;
-            Text = "";
-
             if (!string.IsNullOrWhiteSpace(Text) && SelectedContact != null)
             {
                 var msg = new Message();
@@ -510,12 +507,12 @@ namespace Venn.Client.MVVM.ViewModels
                 msg.FromUser = User;
                 msg.ToUserId = SelectedContact.User2Id;
                 msg.ToUser = SelectedContact.User2;
-                msg.Data = txt;
+                msg.Data = Text;
                 msg.SendingTime = DateTime.Now;
                 msg.IsSelf = true;
 
                 if (SelectedLanguage != null)
-                    msg.Data = await Translate(txt);
+                    msg.Data = await Translate(Text);
 
                 User.Messages.Add(msg);
                 Messages.Add(msg);
@@ -524,6 +521,8 @@ namespace Venn.Client.MVVM.ViewModels
 
                 SendCommand(str);
             }
+
+            Text = "";
         }
 
         public void Logout()
@@ -755,6 +754,7 @@ namespace Venn.Client.MVVM.ViewModels
         {
             ImageVisibility = Visibility.Visible;
             VideoVisibility = Visibility.Collapsed;
+            VideoSource = null;
             FileIcon = new BitmapImage(new Uri(imageSource, UriKind.Absolute));
 
             DisplayFilePopupIsOpen = true;
