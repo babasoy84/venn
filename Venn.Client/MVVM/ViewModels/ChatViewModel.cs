@@ -343,12 +343,13 @@ namespace Venn.Client.MVVM.ViewModels
             User = App.Container.GetInstance<User>();
             Server = App.Container.GetInstance<ServerHelper>();
             NavigationService = App.Container.GetInstance<INavigationService>();
-            Languages = new ObservableCollection<Venn.Models.Models.Concretes.Language>();
-            Languages.Add(new Venn.Models.Models.Concretes.Language("az", "Azerbaijani"));
-            Languages.Add(new Venn.Models.Models.Concretes.Language("en", "English"));
-            Languages.Add(new Venn.Models.Models.Concretes.Language("tr", "Turkish"));
-            Languages.Add(new Venn.Models.Models.Concretes.Language("ru", "Russian"));
-            Languages.Add(new Venn.Models.Models.Concretes.Language("es", "Spanish"));
+            Languages = new() {
+                new Language("az", "Azerbaijani"),
+                new Language("en", "English"),
+                new Language("tr", "Turkish"),
+                new Language("ru", "Russian"),
+                new Language("es", "Spanish")
+            };
             Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
             SendMessageCommand = new RelayCommand(SendMessage);
@@ -356,7 +357,7 @@ namespace Venn.Client.MVVM.ViewModels
             SendFriendshipCommand = new RelayCommand<int>(SendFriendship);
             AcceptFriendshipCommand = new RelayCommand<int>(AcceptFriendship);
             OpenFileCommand = new RelayCommand(OpenFile);
-            SendFileCommand = new RelayCommand(SendFile);
+            SendFileCommand = new RelayCommand(() => SendFile());
             DisplayImageCommand = new RelayCommand<string>(DisplayImage);
             DisplayVideoCommand = new RelayCommand<string>(DisplayVideo);
             OpenNotificationsPopupCommand = new RelayCommand(() =>
@@ -697,8 +698,10 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
-        public void SendFile()
+        public async Task SendFile()
         {
+            OpenFilePopupIsOpen = false;
+
             if (SelectedContact != null)
             {
                 var msg = new Message();
@@ -746,8 +749,6 @@ namespace Venn.Client.MVVM.ViewModels
 
                 SendCommand(str);
             }
-
-            OpenFilePopupIsOpen = false;
         }
 
         public void DisplayImage(string imageSource)

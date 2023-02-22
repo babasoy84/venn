@@ -38,7 +38,9 @@
                                    VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <Label Content="{Binding Data}"
+                            <TextBlock Text="{Binding Data}"
+                                   IsEnabled="True"
+                                   TextWrapping="Wrap"
                                    Foreground="White"
                                    FontWeight="SemiBold"
                                    VerticalAlignment="Center"/>
@@ -312,11 +314,13 @@
 
                         </StackPanel>
 
-                        <Label Content="{Binding Data}"
-                               Foreground="White"
-                               FontWeight="SemiBold"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Right"/>
+                        <TextBlock Text="{Binding Data}"
+                                   IsEnabled="True"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"/>
                     </StackPanel>
 
                     <Ellipse 

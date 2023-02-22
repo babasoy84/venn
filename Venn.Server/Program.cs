@@ -208,32 +208,44 @@ namespace Venn.Server
                                     message.IsSelf = false;
                                     var r = $"msg${JsonSerializer.Serialize(message, options)}";
 
-                                    if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                    while (true)
                                     {
-                                        r = $"<{r}>";
-                                        var data = Encoding.UTF8.GetBytes(r);
-                                        var skipCount = 0;
-                                        var bytesLen = data.Length;
-
-                                        while (skipCount + maxValue <= bytesLen)
+                                        try
                                         {
-                                            c.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(maxValue)
-                                                .ToArray());
-                                            skipCount += maxValue;
-                                        }
+                                            if (Encoding.UTF8.GetBytes(r).Length > maxValue)
+                                            {
+                                                r = $"<{r}>";
+                                                var data = Encoding.UTF8.GetBytes(r);
+                                                var skipCount = 0;
+                                                var bytesLen = data.Length;
 
-                                        if (skipCount != bytesLen)
-                                            c.TcpClient.Client.Send(data
-                                                .Skip(skipCount)
-                                                .Take(bytesLen - skipCount)
-                                                .ToArray());
+                                                while (skipCount + maxValue <= bytesLen)
+                                                {
+                                                    c.TcpClient.Client.Send(data
+                                                        .Skip(skipCount)
+                                                        .Take(maxValue)
+                                                        .ToArray());
+                                                    skipCount += maxValue;
+                                                }
+
+                                                if (skipCount != bytesLen)
+                                                    c.TcpClient.Client.Send(data
+                                                        .Skip(skipCount)
+                                                        .Take(bytesLen - skipCount)
+                                                        .ToArray());
+                                            }
+                                            else
+                                            {
+                                                c.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
+                                            }
+                                            break;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine($"[{ip}]: {ex.Message}");
+                                        }
                                     }
-                                    else
-                                    {
-                                        c.TcpClient.Client.Send(Encoding.UTF8.GetBytes(r));
-                                    }
+                                    
                                     break;
                                 }
                             }

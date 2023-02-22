@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\babas\Source\Repos\Venn\Venn.Client\obj\Release\net6.0-windows\
+C:\Users\babas\Desktop\Venn\Venn.Client\obj\Release\net6.0-windows\
 Venn.Client
 none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
-C:\Users\babas\Source\Repos\Venn\Venn.Client\App.xaml
-9733600513
+C:\Users\babas\Desktop\Venn\Venn.Client\App.xaml
+101983739923
 
-17153837128
-2281916772502
-MVVM\Views\ChatView.xaml;MVVM\Views\CreateTeamView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ChatItem.xaml;Themes\ContactCard.xaml;Themes\FriendCard.xaml;Themes\MessageBox.xaml;
+17-1889687457
+2431452438830
+MVVM\Views\ChatView.xaml;MVVM\Views\CreateAccountView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ChatItem.xaml;Themes\ContactCard.xaml;Themes\FriendCard.xaml;Themes\MessageBox.xaml;Themes\NotificationCard.xaml;
 
-True
+False
 
