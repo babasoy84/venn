@@ -357,7 +357,8 @@
                         Source="{Binding FileIcon, 
                         UpdateSourceTrigger=PropertyChanged, 
                         Mode=TwoWay}"
-                        Width="310"
+                        MaxWidth="400"
+                        MaxHeight="500"
                         Margin="20"/>
 
                     <Grid

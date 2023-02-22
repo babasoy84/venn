@@ -352,12 +352,12 @@ namespace Venn.Client.MVVM.ViewModels
             };
             Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
-            SendMessageCommand = new RelayCommand(SendMessage);
+            SendMessageCommand = new RelayCommand(() => Task.Run(() => SendMessage()));
             LogoutCommand = new RelayCommand(Logout);
             SendFriendshipCommand = new RelayCommand<int>(SendFriendship);
             AcceptFriendshipCommand = new RelayCommand<int>(AcceptFriendship);
             OpenFileCommand = new RelayCommand(OpenFile);
-            SendFileCommand = new RelayCommand(() => SendFile());
+            SendFileCommand = new RelayCommand(() => Task.Run(() => SendFile()));
             DisplayImageCommand = new RelayCommand<string>(DisplayImage);
             DisplayVideoCommand = new RelayCommand<string>(DisplayVideo);
             OpenNotificationsPopupCommand = new RelayCommand(() =>
@@ -500,7 +500,9 @@ namespace Venn.Client.MVVM.ViewModels
 
         public async void SendMessage()
         {
-            if (!string.IsNullOrWhiteSpace(Text) && SelectedContact != null)
+            var txt = Text;
+            Text = "";
+            if (!string.IsNullOrWhiteSpace(txt) && SelectedContact != null)
             {
                 var msg = new Message();
                 msg.MessageType = "text";
@@ -508,26 +510,27 @@ namespace Venn.Client.MVVM.ViewModels
                 msg.FromUser = User;
                 msg.ToUserId = SelectedContact.User2Id;
                 msg.ToUser = SelectedContact.User2;
-                msg.Data = Text;
+                msg.Data = txt;
                 msg.SendingTime = DateTime.Now;
                 msg.IsSelf = true;
 
                 if (SelectedLanguage != null)
-                    msg.Data = await Translate(Text);
+                    msg.Data = await Translate(txt);
 
-                User.Messages.Add(msg);
-                Messages.Add(msg);
+                dispatcher.Invoke(() => User.Messages.Add(msg));
+                dispatcher.Invoke(() => Messages.Add(msg));
 
                 var str = $"message${System.Text.Json.JsonSerializer.Serialize(msg, options)}";
 
                 SendCommand(str);
             }
-
-            Text = "";
         }
 
         public void Logout()
         {
+            Username = "";
+            ImageSource = "";
+
             mainEvent.Reset();
 
             Messages.Clear();
@@ -621,7 +624,7 @@ namespace Venn.Client.MVVM.ViewModels
                 using System.Drawing.Icon sysicon = System.Drawing.Icon.ExtractAssociatedIcon(op.FileName);
 
                 string fileExtension = Path.GetExtension(op.FileName).ToLowerInvariant();
-                string[] imageFileExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+                string[] imageFileExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".jfif" };
                 string[] videoExtensions = { ".mp4", ".mov", ".avi", ".wmv", ".mkv" };
 
                 if (imageFileExtensions.Contains(fileExtension))
@@ -698,7 +701,7 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
-        public async Task SendFile()
+        public void SendFile()
         {
             OpenFilePopupIsOpen = false;
 
@@ -742,8 +745,8 @@ namespace Venn.Client.MVVM.ViewModels
 
                 
 
-                User.Messages.Add(msg);
-                Messages.Add(msg);
+                dispatcher.Invoke(() => User.Messages.Add(msg));
+                dispatcher.Invoke(() => Messages.Add(msg));
 
                 var str = $"message${System.Text.Json.JsonSerializer.Serialize(msg, options)}";
 
