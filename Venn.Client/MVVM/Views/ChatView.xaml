@@ -178,6 +178,7 @@
                             SelectedItem="{Binding SelectedLanguage, 
                             UpdateSourceTrigger=PropertyChanged, 
                             Mode=TwoWay}"
+                            SelectedIndex="0"
                             ItemsSource="{Binding Languages}"
                             Grid.Column="1"
                             Margin="15 0"

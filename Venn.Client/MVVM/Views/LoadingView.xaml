@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Venn.Client.MVVM.Views.LoadingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Venn.Client.MVVM.Views"
+             xmlns:viewmodel="clr-namespace:Venn.Client.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodel:LoadingViewModel}"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             Background="#36393F"
+             d:DesignHeight="625" d:DesignWidth="1200">
+    <Grid>
+        <ProgressBar
+            Width="80"
+            Height="80"
+            Style="{StaticResource MaterialDesignCircularProgressBar}"
+            Value="0"
+            IsIndeterminate="True" />
+    </Grid>
+</UserControl>

@@ -11,25 +11,27 @@
              Background="#36393F"
              d:DesignHeight="625" d:DesignWidth="1200">
     <Grid>
-        <StackPanel 
-            Orientation="Vertical">
-            
-            <Button
-                Command="{Binding ToWelcomeViewCommand}"
-                HorizontalAlignment="Left"
-                Background="Transparent"
-                Foreground="#B13333"
-                BorderThickness="0"
-                Padding="0"
-                Margin="20 20 0 30"
-                Width="50"
-                Height="50">
-                <materialDesign:PackIcon 
+        <Button
+            Command="{Binding ToWelcomeViewCommand}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            Foreground="#B13333"
+            BorderThickness="0"
+            Padding="0"
+            Margin="20 20 0 30"
+            Width="50"
+            Height="50">
+            <materialDesign:PackIcon 
                     Kind="ArrowLeft"
                     Width="40"
                     Height="40"/>
-            </Button>
+        </Button>
 
+        <StackPanel 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
             <Label
             Content="Welcome Back!"
             HorizontalAlignment="Center"

@@ -71,6 +71,126 @@
           "lib/netcoreapp1.0/CommonServiceLocator.dll": {}
         }
       },
+      "Google.Api.Gax/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.1/Google.Api.Gax.dll": {
+            "related": ".xml;.pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Google.Api.Gax.dll": {
+            "related": ".xml;.pdb"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.0.0",
+          "Google.Apis.Auth": "[1.57.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/Google.Api.Gax.Rest.dll": {
+            "related": ".xml;.pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Google.Api.Gax.Rest.dll": {
+            "related": ".xml;.pdb"
+          }
+        }
+      },
+      "Google.Apis/1.60.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.60.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.dll": {
+            "related": ".xml;.pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.dll": {
+            "related": ".xml;.pdb"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.60.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.60.0",
+          "Google.Apis.Core": "1.60.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {
+            "related": ".xml;.pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {
+            "related": ".xml;.pdb"
+          }
+        }
+      },
+      "Google.Apis.Core/1.60.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.Core.dll": {
+            "related": ".xml;.pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Core.dll": {
+            "related": ".xml;.pdb"
+          }
+        }
+      },
+      "Google.Apis.Translate.v2/1.60.0.875": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.60.0",
+          "Google.Apis.Auth": "1.60.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.Translate.v2.dll": {
+            "related": ".xml;.pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Translate.v2.dll": {
+            "related": ".xml;.pdb"
+          }
+        }
+      },
+      "Google.Cloud.Translation.V2/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "[4.0.0, 5.0.0)",
+          "Google.Apis.Translate.v2": "[1.57.0.875, 2.0.0)"
+        },
+        "compile": {
+          "lib/netstandard2.1/Google.Cloud.Translation.V2.dll": {
+            "related": ".xml;.pdb"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Google.Cloud.Translation.V2.dll": {
+            "related": ".xml;.pdb"
+          }
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -289,10 +409,12 @@
           "lib/netstandard2.0/Microsoft.Azure.CognitiveServices.Language.TextAnalytics.dll": {}
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
-          "ref/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {}
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
@@ -3373,6 +3495,8 @@
         "dependencies": {
           "Azure.AI.Translation.Document": "1.0.0",
           "CloudinaryDotNet": "1.20.0",
+          "Google.Apis.Translate.v2": "1.60.0.875",
+          "Google.Cloud.Translation.V2": "3.1.0",
           "MaterialDesignColors": "2.0.6",
           "MaterialDesignThemes": "4.5.0",
           "Microsoft.AspNetCore.Components": "6.0.10",
@@ -3400,6 +3524,8 @@
         "dependencies": {
           "Azure.AI.Translation.Document": "1.0.0",
           "CloudinaryDotNet": "1.20.0",
+          "Google.Apis.Translate.v2": "1.60.0.875",
+          "Google.Cloud.Translation.V2": "3.1.0",
           "MaterialDesignColors": "2.0.6",
           "MaterialDesignThemes": "4.5.0",
           "Microsoft.AspNetCore.Components": "6.0.10",
@@ -3426,6 +3552,8 @@
         "dependencies": {
           "Azure.AI.Translation.Document": "1.0.0",
           "CloudinaryDotNet": "1.20.0",
+          "Google.Apis.Translate.v2": "1.60.0.875",
+          "Google.Cloud.Translation.V2": "3.1.0",
           "MaterialDesignColors": "2.0.6",
           "MaterialDesignThemes": "4.5.0",
           "Microsoft.AspNetCore.Components": "6.0.10",
@@ -3522,6 +3650,159 @@
         "lib/netcoreapp1.0/CommonServiceLocator.dll",
         "lib/netstandard1.0/CommonServiceLocator.dll",
         "lib/netstandard2.0/CommonServiceLocator.dll"
+      ]
+    },
+    "Google.Api.Gax/4.0.0": {
+      "sha512": "2Q4RruOjUawrtjTazANpp+MNB1M2E8nj2A1kweU1zF0OoNDKUnAIlMbDXs3d+kgcuj/zUVa89/nYot5UZICBWA==",
+      "type": "package",
+      "path": "google.api.gax/4.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.api.gax.4.0.0.nupkg.sha512",
+        "google.api.gax.nuspec",
+        "lib/net462/Google.Api.Gax.dll",
+        "lib/net462/Google.Api.Gax.pdb",
+        "lib/net462/Google.Api.Gax.xml",
+        "lib/netstandard2.1/Google.Api.Gax.dll",
+        "lib/netstandard2.1/Google.Api.Gax.pdb",
+        "lib/netstandard2.1/Google.Api.Gax.xml"
+      ]
+    },
+    "Google.Api.Gax.Rest/4.0.0": {
+      "sha512": "YFoxv4UNP7Hn8Eask0FqwMbCAfBs5hUlzronJgFGVXcStohtKc0Mi+2YqgGN82nynx75jVWEF7siSLBwkmZsHA==",
+      "type": "package",
+      "path": "google.api.gax.rest/4.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.api.gax.rest.4.0.0.nupkg.sha512",
+        "google.api.gax.rest.nuspec",
+        "lib/net462/Google.Api.Gax.Rest.dll",
+        "lib/net462/Google.Api.Gax.Rest.pdb",
+        "lib/net462/Google.Api.Gax.Rest.xml",
+        "lib/netstandard2.1/Google.Api.Gax.Rest.dll",
+        "lib/netstandard2.1/Google.Api.Gax.Rest.pdb",
+        "lib/netstandard2.1/Google.Api.Gax.Rest.xml"
+      ]
+    },
+    "Google.Apis/1.60.0": {
+      "sha512": "T8ojAsKlsMkt5nZhTQuocqHYzm/knVm8o2/JMm4louEjaKzT4x0FihoCIxCYSTRGWkYC27LPWspyG4p76+bMzA==",
+      "type": "package",
+      "path": "google.apis/1.60.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.1.60.0.nupkg.sha512",
+        "google.apis.nuspec",
+        "lib/net45/Google.Apis.PlatformServices.dll",
+        "lib/net45/Google.Apis.dll",
+        "lib/net45/Google.Apis.pdb",
+        "lib/net45/Google.Apis.xml",
+        "lib/netstandard1.3/Google.Apis.dll",
+        "lib/netstandard1.3/Google.Apis.pdb",
+        "lib/netstandard1.3/Google.Apis.xml",
+        "lib/netstandard2.0/Google.Apis.dll",
+        "lib/netstandard2.0/Google.Apis.pdb",
+        "lib/netstandard2.0/Google.Apis.xml"
+      ]
+    },
+    "Google.Apis.Auth/1.60.0": {
+      "sha512": "AUuWniIf2muns/9hesiF7yCKeQN+PbdTU864Rb2wDzW4xmepO6tEnoqREPeow95qIAgkOlL/byKeU65d3ox5Ng==",
+      "type": "package",
+      "path": "google.apis.auth/1.60.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.auth.1.60.0.nupkg.sha512",
+        "google.apis.auth.nuspec",
+        "lib/net45/Google.Apis.Auth.PlatformServices.dll",
+        "lib/net45/Google.Apis.Auth.dll",
+        "lib/net45/Google.Apis.Auth.pdb",
+        "lib/net45/Google.Apis.Auth.xml",
+        "lib/net461/Google.Apis.Auth.PlatformServices.dll",
+        "lib/net461/Google.Apis.Auth.dll",
+        "lib/net461/Google.Apis.Auth.pdb",
+        "lib/net461/Google.Apis.Auth.xml",
+        "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll",
+        "lib/netstandard1.3/Google.Apis.Auth.dll",
+        "lib/netstandard1.3/Google.Apis.Auth.pdb",
+        "lib/netstandard1.3/Google.Apis.Auth.xml",
+        "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll",
+        "lib/netstandard2.0/Google.Apis.Auth.dll",
+        "lib/netstandard2.0/Google.Apis.Auth.pdb",
+        "lib/netstandard2.0/Google.Apis.Auth.xml"
+      ]
+    },
+    "Google.Apis.Core/1.60.0": {
+      "sha512": "NOkjqMQblYEZXt2OEgshWayveYW11Pi+Uz0I30Kzl9BvL4TZLJzMqtiu1EdV8XkyyjGuAUgANdi4BOqRDlbVEw==",
+      "type": "package",
+      "path": "google.apis.core/1.60.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.core.1.60.0.nupkg.sha512",
+        "google.apis.core.nuspec",
+        "lib/net45/Google.Apis.Core.dll",
+        "lib/net45/Google.Apis.Core.pdb",
+        "lib/net45/Google.Apis.Core.xml",
+        "lib/netstandard1.3/Google.Apis.Core.dll",
+        "lib/netstandard1.3/Google.Apis.Core.pdb",
+        "lib/netstandard1.3/Google.Apis.Core.xml",
+        "lib/netstandard2.0/Google.Apis.Core.dll",
+        "lib/netstandard2.0/Google.Apis.Core.pdb",
+        "lib/netstandard2.0/Google.Apis.Core.xml"
+      ]
+    },
+    "Google.Apis.Translate.v2/1.60.0.875": {
+      "sha512": "wcZNP9kFGhHkrhNGmozA7oKrdhhWYkY9Za9Hihd+4qLAZZ9wU/veicMcrjepNA/r2CDTZLpW+iKzgaFkXIwaZw==",
+      "type": "package",
+      "path": "google.apis.translate.v2/1.60.0.875",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.translate.v2.1.60.0.875.nupkg.sha512",
+        "google.apis.translate.v2.nuspec",
+        "lib/net45/Google.Apis.Translate.v2.dll",
+        "lib/net45/Google.Apis.Translate.v2.pdb",
+        "lib/net45/Google.Apis.Translate.v2.xml",
+        "lib/netstandard1.3/Google.Apis.Translate.v2.dll",
+        "lib/netstandard1.3/Google.Apis.Translate.v2.pdb",
+        "lib/netstandard1.3/Google.Apis.Translate.v2.xml",
+        "lib/netstandard2.0/Google.Apis.Translate.v2.dll",
+        "lib/netstandard2.0/Google.Apis.Translate.v2.pdb",
+        "lib/netstandard2.0/Google.Apis.Translate.v2.xml"
+      ]
+    },
+    "Google.Cloud.Translation.V2/3.1.0": {
+      "sha512": "E76xRnnQjyvUlllww65L/seYIiZJ2UEHDXs2OcyDsJMvpqlCN6Q2+TxJ6PLH2m/1f+lkpeIAeo916N3x+g0EdQ==",
+      "type": "package",
+      "path": "google.cloud.translation.v2/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.cloud.translation.v2.3.1.0.nupkg.sha512",
+        "google.cloud.translation.v2.nuspec",
+        "lib/net462/Google.Cloud.Translation.V2.dll",
+        "lib/net462/Google.Cloud.Translation.V2.pdb",
+        "lib/net462/Google.Cloud.Translation.V2.xml",
+        "lib/netstandard2.1/Google.Cloud.Translation.V2.dll",
+        "lib/netstandard2.1/Google.Cloud.Translation.V2.pdb",
+        "lib/netstandard2.1/Google.Cloud.Translation.V2.xml"
       ]
     },
     "Humanizer.Core/2.8.26": {
@@ -3753,10 +4034,10 @@
         "microsoft.azure.cognitiveservices.language.textanalytics.nuspec"
       ]
     },
-    "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
-      "sha512": "yuvf07qFWFqtK3P/MRkEKLhn5r2UbSpVueRziSqj0yJQIKFwG1pq9mOayK3zE5qZCTs0CbrwL9M6R8VwqyGy2w==",
+    "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+      "sha512": "UcSjPsst+DfAdJGVDsu346FX0ci0ah+lw3WRtn18NUwEqRt70HaOQ7lI72vy3+1LxtqI3T5GWwV39rQSrCzAeg==",
       "type": "package",
-      "path": "microsoft.bcl.asyncinterfaces/1.1.1",
+      "path": "microsoft.bcl.asyncinterfaces/6.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3769,13 +4050,9 @@
         "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.xml",
         "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
         "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml",
-        "microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
+        "microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
         "microsoft.bcl.asyncinterfaces.nuspec",
-        "ref/net461/Microsoft.Bcl.AsyncInterfaces.dll",
-        "ref/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
-        "ref/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
-        "useSharedDesignerContext.txt",
-        "version.txt"
+        "useSharedDesignerContext.txt"
       ]
     },
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
@@ -10035,6 +10312,8 @@
     "net6.0-windows7.0": [
       "Azure.AI.Translation.Document >= 1.0.0",
       "CloudinaryDotNet >= 1.20.0",
+      "Google.Apis.Translate.v2 >= 1.60.0.875",
+      "Google.Cloud.Translation.V2 >= 3.1.0",
       "MaterialDesignColors >= 2.0.6",
       "MaterialDesignThemes >= 4.5.0",
       "Microsoft.AspNetCore.Components >= 6.0.10",
@@ -10054,24 +10333,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Baba_ja84\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\babas\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Client\\Venn.Client.csproj",
+      "projectUniqueName": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Client\\Venn.Client.csproj",
       "projectName": "Venn.Client",
-      "projectPath": "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Client\\Venn.Client.csproj",
-      "packagesPath": "C:\\Users\\Baba_ja84\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Client\\obj\\",
+      "projectPath": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Client\\Venn.Client.csproj",
+      "packagesPath": "C:\\Users\\babas\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Client\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Baba_ja84\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\babas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10085,11 +10359,11 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Data\\Venn.Data.csproj": {
-              "projectPath": "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Data\\Venn.Data.csproj"
+            "C:\\Users\\babas\\Desktop\\Venn\\Venn.Data\\Venn.Data.csproj": {
+              "projectPath": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Data\\Venn.Data.csproj"
             },
-            "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Server\\Venn.Server.csproj": {
-              "projectPath": "C:\\Users\\Baba_ja84\\Desktop\\Venn\\Venn.Server\\Venn.Server.csproj"
+            "C:\\Users\\babas\\Desktop\\Venn\\Venn.Server\\Venn.Server.csproj": {
+              "projectPath": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Server\\Venn.Server.csproj"
             }
           }
         }
@@ -10111,6 +10385,14 @@
           "CloudinaryDotNet": {
             "target": "Package",
             "version": "[1.20.0, )"
+          },
+          "Google.Apis.Translate.v2": {
+            "target": "Package",
+            "version": "[1.60.0.875, )"
+          },
+          "Google.Cloud.Translation.V2": {
+            "target": "Package",
+            "version": "[3.1.0, )"
           },
           "MaterialDesignColors": {
             "target": "Package",
@@ -10182,6 +10464,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.12, 6.0.12]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.12, 6.0.12]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.12, 6.0.12]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.12, 6.0.12]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -10190,7 +10490,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   },

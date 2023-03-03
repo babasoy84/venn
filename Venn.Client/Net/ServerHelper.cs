@@ -25,11 +25,11 @@ namespace Venn.Client.Net
         {
             if (!client.Connected)
             {
-                client.Connect(IPAddress.Parse("10.2.26.66"), 27001);
+                client.Connect(IPAddress.Parse("192.168.100.65"), 27001);
             }
         }
 
-        public string Login(string email, string password)
+        public async Task<string> Login(string email, string password)
         {
             var r = "login$" + email + "$" + password;
             client.Client.Send(Encoding.UTF8.GetBytes(r));
@@ -57,7 +57,7 @@ namespace Venn.Client.Net
             return str;
         }
 
-        public bool CreateTeam(User user)
+        public async Task<bool> CreateAccount(User user)
         {
             if (client.Connected)
             {
@@ -75,6 +75,5 @@ namespace Venn.Client.Net
             return false;
         }
 
-        
     }
 }

@@ -45,6 +45,7 @@ namespace Venn.Client
             Container.RegisterSingleton<WelcomeViewModel>();
             Container.RegisterSingleton<LoginViewModel>();
             Container.RegisterSingleton<CreateAccountViewModel>();
+            Container.RegisterSingleton<LoadingViewModel>();
             Container.RegisterSingleton<ChatViewModel>();
             Container.RegisterSingleton<ServerHelper>();
             Container.RegisterSingleton<User>();

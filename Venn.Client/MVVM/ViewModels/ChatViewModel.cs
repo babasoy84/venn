@@ -35,6 +35,7 @@ using System.Xml.Linq;
 using Azure;
 using System.Collections.Specialized;
 using System.Windows.Controls;
+using Google.Cloud.Translation.V2;
 
 namespace Venn.Client.MVVM.ViewModels
 {
@@ -56,9 +57,7 @@ namespace Venn.Client.MVVM.ViewModels
 
         public SnackbarMessageQueue SnackbarMessageQueue { set; get; } = new(TimeSpan.FromSeconds(1));
 
-        private readonly string key = "785c5eec41e94d2295a7f5bf69cc3abe";
-        private readonly string endpoint = "https://api.cognitive.microsofttranslator.com";
-        private readonly string location = "eastus";
+        private TranslationClient client = TranslationClient.CreateFromApiKey("AIzaSyByGIe2WCSBL-8_b-RHumhajEgyTVALBUY");
 
 
         private ObservableCollection<User> users;
@@ -344,11 +343,13 @@ namespace Venn.Client.MVVM.ViewModels
             Server = App.Container.GetInstance<ServerHelper>();
             NavigationService = App.Container.GetInstance<INavigationService>();
             Languages = new() {
-                new Language("az", "Azerbaijani"),
-                new Language("en", "English"),
-                new Language("tr", "Turkish"),
-                new Language("ru", "Russian"),
-                new Language("es", "Spanish")
+                new Models.Models.Concretes.Language(null, "Original"),
+                new Models.Models.Concretes.Language("az", "Azerbaijani"),
+                new Models.Models.Concretes.Language("en", "English"),
+                new Models.Models.Concretes.Language("tr", "Turkish"),
+                new Models.Models.Concretes.Language("ru", "Russian"),
+                new Models.Models.Concretes.Language("es", "Spanish"),
+                new Models.Models.Concretes.Language("fr", "French")
             };
             Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
@@ -514,7 +515,7 @@ namespace Venn.Client.MVVM.ViewModels
                 msg.SendingTime = DateTime.Now;
                 msg.IsSelf = true;
 
-                if (SelectedLanguage != null)
+                if (SelectedLanguage.Key != null)
                     msg.Data = await Translate(txt);
 
                 dispatcher.Invoke(() => User.Messages.Add(msg));
@@ -812,34 +813,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         public async Task<string> Translate(string txt)
         {
-            string route = $"/translate?api-version=3.0&to={SelectedLanguage.Key}";
-            object[] body = new object[] { new { Text = txt } };
-            var requestBody = JsonConvert.SerializeObject(body);
-
-            using (var client = new HttpClient())
-            using (var request = new HttpRequestMessage())
-            {
-                // Build the request.
-                request.Method = System.Net.Http.HttpMethod.Post;
-                request.RequestUri = new Uri(endpoint + route);
-                request.Content = new StringContent(requestBody, Encoding.UTF8, "application/json");
-                // location required if you're using a multi-service or regional (not global) resource. 
-                request.Headers.Add("Ocp-Apim-Subscription-Key", key);
-                request.Headers.Add("Ocp-Apim-Subscription-Region", location);
-
-                // Send the request and get response.
-                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
-                // Read response as a string.
-                string r = await response.Content.ReadAsStringAsync();
-
-                // Deserialize the response and extract the translated text.
-                var result = JsonConvert.DeserializeObject<JArray>(r);
-
-                var translations = (JArray)result[0]["translations"];
-                var translatedText = ((JObject)translations[0])["text"].ToString();
-
-                return translatedText;
-            }
+            var reponse = client.TranslateText(txt, SelectedLanguage.Key);
+            return reponse.TranslatedText;
         }
 
         public void SnackbarEnqueue(string msg, string btnContent = "", Action btnAction = null, double duration = 1)

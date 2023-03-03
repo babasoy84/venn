@@ -71,7 +71,7 @@ namespace Venn.Client.MVVM.ViewModels
             this.Server = Server;
 
             ToWelcomeViewCommand = new RelayCommand(ToWelcomeView);
-            LoginCommand = new RelayCommand<object>(Login);
+            LoginCommand = new RelayCommand<object>(o => Task.Run(() => Login(o)));
         }
 
         private void NotifyPropertyChanged(string propertyName)
@@ -87,7 +87,7 @@ namespace Venn.Client.MVVM.ViewModels
             NavigationService.NavigateTo<WelcomeViewModel>();
         }
 
-        public void Login(object p)
+        public async void Login(object p)
         {
             var Password = (p as PasswordBox).Password;
 
@@ -95,20 +95,24 @@ namespace Venn.Client.MVVM.ViewModels
 
             if (!new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").IsMatch(Email))
             {
+                EmailErrorText = "Email is not valid!";
                 b = false;
             }
 
             if (b)
             {
-                var str = Server.Login(Email, Password);
+                NavigationService.NavigateTo<LoadingViewModel>();
+                var str = await Server.Login(Email, Password);
                 var errorText = str.Split('$')[1];
                 if (str.Split('$')[0] == "email")
                 {
+                    NavigationService.NavigateTo<LoginViewModel>();
                     PasswordErrorText = null;
                     EmailErrorText = errorText;
                 }
                 else if(str.Split('$')[0] == "password")
                 {
+                    NavigationService.NavigateTo<LoginViewModel>();
                     EmailErrorText = null;
                     PasswordErrorText = errorText;
                 }

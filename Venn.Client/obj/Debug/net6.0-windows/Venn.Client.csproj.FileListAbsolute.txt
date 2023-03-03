@@ -740,3 +740,13 @@ C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\wi
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Interop.Shell32.dll
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\Venn.Client.csproj.ResolveComReference.cache
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Google.Api.Gax.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Google.Api.Gax.Rest.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Google.Apis.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Google.Apis.Auth.PlatformServices.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Google.Apis.Auth.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Google.Apis.Core.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Google.Apis.Translate.v2.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Debug\net6.0-windows\Google.Cloud.Translation.V2.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\LoadingView.g.cs
+C:\Users\babas\Desktop\Venn\Venn.Client\obj\Debug\net6.0-windows\MVVM\Views\LoadingView.baml

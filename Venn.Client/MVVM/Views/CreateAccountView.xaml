@@ -11,11 +11,10 @@
              mc:Ignorable="d" 
              Background="#36393F"
              d:DesignHeight="625" d:DesignWidth="1200">
-    <StackPanel 
-        Orientation="Vertical">
-
+    <Grid>
         <Button
             Command="{Binding ToWelcomeViewCommand}"
+            VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Background="Transparent"
             Foreground="#B13333"
@@ -29,22 +28,27 @@
                 Width="40"
                 Height="40"/>
         </Button>
+        
+        <StackPanel 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
 
-        <Label
-        Content="Create Account"
-        HorizontalAlignment="Center"
-        FontFamily="Microsoft YaHei UI"
-        FontWeight="Bold"
-        FontSize="40"
-        Foreground="#FFFFFF"/>
+            <Label
+                Content="Create Account"
+                HorizontalAlignment="Center"
+                FontFamily="Microsoft YaHei UI"
+                FontWeight="Bold"
+                FontSize="40"
+                Foreground="#FFFFFF"/>
 
-        <Rectangle 
+            <Rectangle 
             Fill="#B13333"
             Height="3"
             Width="800"
             Margin="30 15"/>
 
-        <TextBox
+            <TextBox
             Text="{Binding Email, 
             UpdateSourceTrigger=PropertyChanged, 
             Mode=TwoWay}"
@@ -63,7 +67,7 @@
             FontSize="20"
             Foreground="#FFFFFF"/>
 
-        <TextBox
+            <TextBox
             Text="{Binding Username, 
             UpdateSourceTrigger=PropertyChanged, 
             Mode=TwoWay}"
@@ -82,7 +86,7 @@
             FontSize="20"
             Foreground="#FFFFFF"/>
 
-        <PasswordBox
+            <PasswordBox
             Name="pwdBoxPassword"
             materialDesign:HintAssist.HelperText="{
             Binding PasswordErrorText,
@@ -99,17 +103,17 @@
             FontSize="20"
             Foreground="#FFFFFF"/>
 
-        <Grid 
+            <Grid 
             Margin="50 15"
             Width="400">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-            <ComboBox
+                <ComboBox
                 SelectedItem="{Binding Month, 
                 UpdateSourceTrigger=PropertyChanged, 
                 Mode=TwoWay}"
@@ -123,12 +127,12 @@
                 FontFamily="Microsoft YaHei UI"
                 FontSize="20"
                 Foreground="#FFFFFF">
-                <ComboBox.Resources>
-                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
-                </ComboBox.Resources>
-            </ComboBox>
+                    <ComboBox.Resources>
+                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                    </ComboBox.Resources>
+                </ComboBox>
 
-            <ComboBox
+                <ComboBox
                 SelectedItem="{Binding Day, 
                 UpdateSourceTrigger=PropertyChanged, 
                 Mode=TwoWay}"
@@ -143,12 +147,12 @@
                 FontFamily="Microsoft YaHei UI"
                 FontSize="20"
                 Foreground="#FFFFFF">
-                <ComboBox.Resources>
-                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
-                </ComboBox.Resources>
-            </ComboBox>
+                    <ComboBox.Resources>
+                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                    </ComboBox.Resources>
+                </ComboBox>
 
-            <ComboBox
+                <ComboBox
                 SelectedItem="{Binding Year, 
                 UpdateSourceTrigger=PropertyChanged, 
                 Mode=TwoWay}"
@@ -163,13 +167,13 @@
                 FontFamily="Microsoft YaHei UI"
                 FontSize="20"
                 Foreground="#FFFFFF">
-                <ComboBox.Resources>
-                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
-                </ComboBox.Resources>
-            </ComboBox>
-        </Grid>
+                    <ComboBox.Resources>
+                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                    </ComboBox.Resources>
+                </ComboBox>
+            </Grid>
 
-        <Button
+            <Button
             Command="{Binding CreateCommand}"
             CommandParameter="{Binding ElementName=pwdBoxPassword}"
             materialDesign:ButtonAssist.CornerRadius="10"
@@ -185,4 +189,5 @@
 
 
         </StackPanel>
+    </Grid>
 </UserControl>

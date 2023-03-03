@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="MVVM\Views\logo_venn.gif" />
+    <None Remove="MVVM\Views\venn_logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +39,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.AI.Translation.Document" Version="1.0.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.20.0" />
+    <PackageReference Include="Google.Apis.Translate.v2" Version="1.60.0.875" />
+    <PackageReference Include="Google.Cloud.Translation.V2" Version="3.1.0" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.6" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.10" />
@@ -64,7 +66,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="MVVM\Views\logo_venn.gif" />
+    <Resource Include="MVVM\Views\Logo\venn_logo.png" />
   </ItemGroup>
 
 </Project>

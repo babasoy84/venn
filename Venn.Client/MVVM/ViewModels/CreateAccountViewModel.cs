@@ -138,7 +138,7 @@ namespace Venn.Client.MVVM.ViewModels
             this.NavigationService = NavigationService;
 
             ToWelcomeViewCommand = new RelayCommand(ToWelcomeView);
-            CreateCommand = new RelayCommand<object>(Create);
+            CreateCommand = new RelayCommand<object>(o => Task.Run(() => Create(o)));
 
             InitMonths();
             InitYears();
@@ -244,7 +244,7 @@ namespace Venn.Client.MVVM.ViewModels
             }
         }
 
-        private void Create(object p)
+        private async void Create(object p)
         {
             if (CheckValidate(p))
             {
@@ -254,11 +254,11 @@ namespace Venn.Client.MVVM.ViewModels
                 user.Username = Username;
                 user.Password = Password;
                 user.DateOfBirth = dt;
-                if (Server.CreateTeam(user))
+                NavigationService.NavigateTo<LoadingViewModel>();
+                if (await Server.CreateAccount(user))
                 {
                     Email = null;
                     Username = null;
-                    (p as PasswordBox).Password = null;
                     Day = 0;
                     Year = 0;
                     Month = null;
@@ -266,6 +266,7 @@ namespace Venn.Client.MVVM.ViewModels
                 }
                 else
                 {
+                    NavigationService.NavigateTo<CreateAccountViewModel>();
                     EmailErrorText = "This email has been used, email must be unique!";
                 }
             }

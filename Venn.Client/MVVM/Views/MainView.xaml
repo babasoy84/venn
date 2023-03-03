@@ -15,7 +15,7 @@
         Background="#36393F"
         MinWidth="950"
         MinHeight="550"
-        Height="650" Width="1200" Icon="/MVVM/Views/logo_venn.gif">
+        Height="650" Width="1200" Icon="/MVVM/Views/Logo/venn_logo.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>

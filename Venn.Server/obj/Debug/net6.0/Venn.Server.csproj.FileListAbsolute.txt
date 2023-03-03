@@ -626,3 +626,11 @@ C:\Users\Baba_ja84\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Server\bin\Debug\net6.0\System.Memory.Data.dll
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Server\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Baba_ja84\Desktop\Venn\Venn.Server\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\babas\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Google.Api.Gax.dll
+C:\Users\babas\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Google.Api.Gax.Rest.dll
+C:\Users\babas\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Google.Apis.dll
+C:\Users\babas\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\babas\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Google.Apis.Auth.dll
+C:\Users\babas\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Google.Apis.Core.dll
+C:\Users\babas\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Google.Apis.Translate.v2.dll
+C:\Users\babas\Desktop\Venn\Venn.Server\bin\Debug\net6.0\Google.Cloud.Translation.V2.dll
