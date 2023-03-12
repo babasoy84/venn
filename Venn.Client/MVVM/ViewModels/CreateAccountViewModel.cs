@@ -259,6 +259,7 @@ namespace Venn.Client.MVVM.ViewModels
                 {
                     Email = null;
                     Username = null;
+                    (p as PasswordBox).Password = null;
                     Day = 0;
                     Year = 0;
                     Month = null;

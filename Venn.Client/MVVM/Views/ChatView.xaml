@@ -11,28 +11,86 @@
              Background="#36393F"
              d:DesignHeight="625" d:DesignWidth="1200">
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <materialDesign:DrawerHost>
+            <materialDesign:DrawerHost.RightDrawerContent>
+                <Grid Background="#2F3136">
+                    <Border 
+                        BorderBrush="#B13333"
+                        BorderThickness="1"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                        Background="#292b2f"
+                        CornerRadius="25, 25, 0, 0"
+                        VerticalAlignment="Stretch"
+                        Margin="0, 100, 0, 0"/>
+                    <StackPanel
+                        Orientation="Vertical" 
+                        Width="400">
+                        <Grid>
+                            <Ellipse
+                                Margin="0, 50, 0, 0"
+                                Width="102" 
+                                Height="102"
+                                Fill="#B13333"/>
 
-            <Grid Background="#2F3136">
+                            <Ellipse
+                                Margin="0, 50, 0, 0"
+                                Width="100" 
+                                Height="100">
+                                <Ellipse.Fill>
+                                    <ImageBrush
+                                        ImageSource="{ 
+                                        Binding SelectedContact.User2.ImageSource,
+                                        UpdateSourceTrigger=PropertyChanged,
+                                        Mode=TwoWay}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="60"/>
-                </Grid.RowDefinitions>
 
-                <Label 
+                        <Label 
+                        Content="{Binding SelectedContact.User2.Username,
+                            UpdateSourceTrigger=PropertyChanged,
+                            Mode=TwoWay}"
+                        Foreground="White"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"
+                        Margin="5"/>
+
+                        <Label 
+                        Content="{Binding SelectedContact.User2.Email,
+                            UpdateSourceTrigger=PropertyChanged,
+                            Mode=TwoWay}"
+                        Foreground="#B13333"
+                        FontSize="15"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"/>
+
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DrawerHost.RightDrawerContent>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Background="#2F3136">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+
+                    <Label 
                 Content="Contacts"
                 VerticalAlignment="Center"
                 FontWeight="Medium"
                 Foreground="Gray"
                 Margin="8, 0, 0, 0"/>
 
-                <ListView 
+                    <ListView 
                 ItemsSource="{
                 Binding User.Contacts, 
                 UpdateSourceTrigger=PropertyChanged,
@@ -50,29 +108,29 @@
                 Grid.Row="1"
                 ItemContainerStyle="{StaticResource ContactCard}"/>
 
-                <Grid 
+                    <Grid 
                 Grid.Row="2"
                 Background="#292b2f">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="35"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
 
-                        <Ellipse 
+                            <Ellipse 
                         Margin="18, 0, 0, 0" 
                         Width="30" 
                         Height="30">
-                            <Ellipse.Fill>
-                                <ImageBrush 
+                                <Ellipse.Fill>
+                                    <ImageBrush 
                                     ImageSource="{ Binding ImageSource,
                                     UpdateSourceTrigger=PropertyChanged,
                                     Mode=TwoWay}"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                                </Ellipse.Fill>
+                            </Ellipse>
 
-                        <Label 
+                            <Label 
                         Content="{Binding Username,
                             UpdateSourceTrigger=PropertyChanged,
                             Mode=TwoWay}"
@@ -80,9 +138,9 @@
                         FontWeight="SemiBold"
                         VerticalAlignment="Center"/>
 
-                    </StackPanel>
+                        </StackPanel>
 
-                    <Button
+                        <Button
                     Grid.Column="1"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
@@ -93,153 +151,221 @@
                     Padding="0"
                     Margin="0"
                     Foreground="DarkGray">
-                        <Menu
+                            <Menu
                         Margin="0"
                         Padding="0"
                         IsMainMenu="True">
-                            <MenuItem
+                                <MenuItem
                             VerticalAlignment="Center"
                             Padding="0"
                             Header="{materialDesign:PackIcon Kind=DotsVertical}"
                             Foreground="DarkGray"
                             FontWeight="SemiBold"
                             Background="#292b2f" Width="34">
-                                <MenuItem 
+                                    <MenuItem 
                                     Header="Notifications"
                                     Icon="{materialDesign:PackIcon Kind=Notifications}"
                                     Command="{Binding OpenNotificationsPopupCommand}"/>
-                                <MenuItem 
+                                    <MenuItem 
                                     Header="Find Friend"
                                     Icon="{materialDesign:PackIcon Kind=AccountSearch}"
                                     Command="{Binding OpenFriendsPopupCommand}"/>
-                                <MenuItem 
+                                    <MenuItem 
                                     Header="Upload Photo"
                                     Icon="{materialDesign:PackIcon Kind=Upload}"
                                     Command="{Binding UploadProfilPhotoCommand}"/>
-                                <MenuItem 
+                                    <MenuItem 
                                     Header="Log Out"
                                     Icon="{materialDesign:PackIcon Kind=Logout}"
                                     Command="{Binding LogoutCommand}"/>
-                            </MenuItem>
-                        </Menu>
-                    </Button>
+                                </MenuItem>
+                            </Menu>
+                        </Button>
+
+                    </Grid>
 
                 </Grid>
 
-            </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="70"/>
+                    </Grid.RowDefinitions>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="70"/>
-                </Grid.RowDefinitions>
-
-                <Border 
+                    <Border 
                 BorderBrush="#2F3136"
                 BorderThickness="0, 0, 0, 2">
-                    <Grid 
+                        <Grid 
                     HorizontalAlignment="Stretch"
                     Margin="8">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="200"/>
-                        </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel 
+                            <StackPanel 
                             Orientation="Horizontal">
 
-                            <Ellipse 
-                            Margin="18, 0, 0, 0" 
-                            Width="30" 
-                            Height="30">
-                                <Ellipse.Fill>
-                                    <ImageBrush 
-                                    ImageSource="{ 
-                                        Binding SelectedContact.User2.ImageSource,
-                                        UpdateSourceTrigger=PropertyChanged, 
-                                        Mode=TwoWay}"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
+                                <Grid>
+                                    <Ellipse
+                                    Margin="18, 0, 0, 0" 
+                                    Width="30" 
+                                    Height="30">
+                                        <Ellipse.Fill>
+                                            <ImageBrush
+                                            ImageSource="{ 
+                                                Binding SelectedContact.User2.ImageSource,
+                                                UpdateSourceTrigger=PropertyChanged, 
+                                                Mode=TwoWay}"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
 
-                            <Label
-                            Content="{
-                            Binding SelectedContact.User2.Username,
-                            UpdateSourceTrigger=PropertyChanged,
-                            Mode=TwoWay}"
-                            Foreground="White"
-                            FontWeight="Bold"
-                            Margin="5, 0, 5, 0"
-                            VerticalAlignment="Center"/>
-                        </StackPanel>
+                                    <Button
+                                        Width="30"
+                                        Height="30"
+                                        Margin="18, 0, 0, 0" 
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        materialDesign:ButtonAssist.CornerRadius="25"
+                                        Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"/>
+                                </Grid>
 
-                        <ComboBox
-                            SelectedItem="{Binding SelectedLanguage, 
-                            UpdateSourceTrigger=PropertyChanged, 
-                            Mode=TwoWay}"
-                            SelectedIndex="0"
-                            ItemsSource="{Binding Languages}"
+                                <Label
+                                    Content="{
+                                    Binding SelectedContact.User2.Username,
+                                    UpdateSourceTrigger=PropertyChanged,
+                                    Mode=TwoWay}"
+                                    Foreground="White"
+                                    FontWeight="Bold"
+                                    Margin="5, 0, 5, 0"
+                                    VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <ComboBox
+                                    SelectedItem="{Binding SelectedLanguage, 
+                                    UpdateSourceTrigger=PropertyChanged, 
+                                    Mode=TwoWay}"
+                                    SelectedIndex="0"
+                                    ItemsSource="{Binding Languages}"
+                                    Grid.Column="1"
+                                    Margin="15 0"
+                                    Background="#FF252525"
+                                    materialDesign:HintAssist.Foreground="#B13333"
+                                    materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+                                    materialDesign:HintAssist.Hint="Language"
+                                    Padding="5"
+                                    FontFamily="Microsoft YaHei UI"
+                                    FontSize="15"
+                                    Foreground="#FFFFFF">
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                                </ComboBox.Resources>
+                            </ComboBox>
+
+                        </Grid>
+                    </Border>
+
+                    <ListView
+                        ItemsSource="{
+                        Binding Messages,
+                        UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}"
+                        ItemContainerStyle="{StaticResource ChatItem}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Grid.Row="1"
+                        Margin="8, 0, 0, 0"/>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="180"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            BorderThickness="0"
+                            Style="{StaticResource MessageBox}"
+                            Height="50"
+                            Grid.ColumnSpan="3"/>
+
+                        <Button 
+                            Command="{Binding OpenFileCommand}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Grid.Column="2"
+                            Width="20"
+                            Height="20"
+                            Padding="0"
+                            Margin="0, 0, 25, 0"
+                            Foreground="DarkGray" RenderTransformOrigin="0.5,0.5">
+                            <Button.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="39.806"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Button.RenderTransform>
+                            <materialDesign:PackIcon 
+                                Kind="Paperclip"
+                                Width="20"
+                                Height="20"/>
+                        </Button>
+
+                        <Button
+                            Background="Transparent"
+                            BorderThickness="0"
                             Grid.Column="1"
-                            Margin="15 0"
-                            Background="#FF252525"
-                            materialDesign:HintAssist.Foreground="#B13333"
-                            materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
-                            materialDesign:HintAssist.Hint="Language"
-                            Padding="5"
-                            FontFamily="Microsoft YaHei UI"
-                            FontSize="15"
-                            Foreground="#FFFFFF">
-                            <ComboBox.Resources>
-                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
-                            </ComboBox.Resources>
-                        </ComboBox>
+                            Width="20"
+                            Height="20"
+                            Padding="0"
+                            Margin="10, 0, 0, 0"
+                            Foreground="DarkGray">
+                            <materialDesign:PackIcon 
+                                Kind="Microphone"
+                                Width="20"
+                                Height="20"/>
+                        </Button>
 
+                        <Button 
+                            materialDesign:ButtonAssist.CornerRadius="7"
+                            Grid.Column="3"
+                            Command="{Binding SendMessageCommand}"
+                            Background="#B13333"
+                            BorderThickness="0"
+                            Height="50"
+                            Margin="0, 0, 10, 0"
+                            Foreground="DarkGray">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon 
+                                    Kind="Send"
+                                    VerticalAlignment="Center"
+                                    Width="20"
+                                    Height="20" RenderTransformOrigin="0.5,0.5">
+                                    <materialDesign:PackIcon.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="-35"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </materialDesign:PackIcon.RenderTransform>
+                                </materialDesign:PackIcon>
+
+                                <Label
+                                    Foreground="DarkGray"
+                                    FontWeight="Bold"
+                                    Content="Send"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
-                </Border>
-
-                <ListView
-                ItemsSource="{
-                Binding Messages,
-                UpdateSourceTrigger=PropertyChanged,
-                Mode=TwoWay}"
-                ItemContainerStyle="{StaticResource ChatItem}"
-                Background="Transparent"
-                BorderThickness="0"
-                Grid.Row="1"
-                Margin="8, 0, 0, 0"/>
-
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="90"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBox
-                    BorderThickness="0"
-                    Style="{StaticResource MessageBox}"
-                    Height="50"
-                    Grid.ColumnSpan="2"/>
-
-                    <Button 
-                    Command="{Binding OpenFileCommand}"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Grid.Column="1"
-                    Width="20"
-                    Height="20"
-                    Padding="0"
-                    Foreground="DarkGray"
-                    Margin="5, 5, 16, 0">
-                        <materialDesign:PackIcon 
-                        Kind="Paperclip"
-                        Width="20"
-                        Height="20"/>
-                    </Button>
                 </Grid>
-            </Grid>
 
-            <materialDesign:Snackbar
+                <materialDesign:Snackbar
                 Grid.ColumnSpan="2"
                 Width="550"
                 Margin="4"
@@ -247,7 +373,8 @@
                 VerticalAlignment="Bottom"
                 MessageQueue="{Binding SnackbarMessageQueue}" />
 
-        </Grid>
+            </Grid>
+        </materialDesign:DrawerHost>
         <materialDesign:DialogHost 
         CloseOnClickAway="True" 
         IsOpen="{Binding FriendsPopupIsOpen, 
@@ -540,6 +667,40 @@
                         </Grid>
                     </Grid>
                 </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <materialDesign:DialogHost
+        IsOpen="{Binding LoadingPopupIsOpen, 
+        UpdateSourceTrigger=PropertyChanged, 
+        Mode=TwoWay}">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid
+                    Background="#2F3136"
+                    Width="100"
+                    Height="100">
+                    <ProgressBar
+                        Width="60"
+                        Height="60"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                        Value="0"
+                        IsIndeterminate="True" />
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <materialDesign:DialogHost
+        IsOpen="{Binding SoundPopupIsOpen, 
+        UpdateSourceTrigger=PropertyChanged, 
+        Mode=TwoWay}">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid
+                    Background="#2F3136"
+                    Width="450"
+                    Height="300">
+                    <Slider
+                        Minimum="0"
+                        Maximum="400"
+                        Value="0" />
+                </Grid>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
     </Grid>

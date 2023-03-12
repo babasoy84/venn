@@ -16,5 +16,5 @@ C:\Users\babas\Desktop\Venn\Venn.Client\App.xaml
 251971806508
 MVVM\Views\ChatView.xaml;MVVM\Views\CreateAccountView.xaml;MVVM\Views\LoadingView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ChatItem.xaml;Themes\ContactCard.xaml;Themes\FriendCard.xaml;Themes\MessageBox.xaml;Themes\NotificationCard.xaml;
 
-True
+False
 

@@ -84,7 +84,9 @@ namespace Venn.Client.MVVM.ViewModels
 
         private bool openFilePopupIsOpen = false;
 
-        private bool displayFilePopupIsOpen;
+        private bool displayFilePopupIsOpen = false;
+
+        private bool loadingPopupIsOpen = false;
 
         private BitmapSource fileIcon;
 
@@ -218,6 +220,16 @@ namespace Venn.Client.MVVM.ViewModels
             {
                 displayFilePopupIsOpen = value;
                 NotifyPropertyChanged("DisplayFilePopupIsOpen");
+            }
+        }
+
+        public bool LoadingPopupIsOpen
+        {
+            get { return loadingPopupIsOpen; }
+            set
+            {
+                loadingPopupIsOpen = value;
+                NotifyPropertyChanged("LoadingPopupIsOpen");
             }
         }
 
@@ -708,6 +720,7 @@ namespace Venn.Client.MVVM.ViewModels
 
             if (SelectedContact != null)
             {
+                LoadingPopupIsOpen = true;
                 var msg = new Message();
                 msg.MessageType = FileType;
                 msg.FromUserId = User.Id;
@@ -752,6 +765,7 @@ namespace Venn.Client.MVVM.ViewModels
                 var str = $"message${System.Text.Json.JsonSerializer.Serialize(msg, options)}";
 
                 SendCommand(str);
+                LoadingPopupIsOpen = false;
             }
         }
 

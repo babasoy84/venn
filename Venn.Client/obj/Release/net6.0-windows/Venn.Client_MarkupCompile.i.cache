@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 C:\Users\babas\Desktop\Venn\Venn.Client\App.xaml
-101983739923
+11-905811241
 
-19-748353119
-2431452438830
-MVVM\Views\ChatView.xaml;MVVM\Views\CreateAccountView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ChatItem.xaml;Themes\ContactCard.xaml;Themes\FriendCard.xaml;Themes\MessageBox.xaml;Themes\NotificationCard.xaml;
+21-341933247
+2511579710914
+MVVM\Views\ChatView.xaml;MVVM\Views\CreateAccountView.xaml;MVVM\Views\LoadingView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ChatItem.xaml;Themes\ContactCard.xaml;Themes\FriendCard.xaml;Themes\MessageBox.xaml;Themes\NotificationCard.xaml;
 
 True
 

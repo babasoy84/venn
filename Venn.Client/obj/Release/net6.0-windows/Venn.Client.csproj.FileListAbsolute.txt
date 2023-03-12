@@ -181,3 +181,13 @@ C:\Users\babas\Desktop\Venn\Venn.Client\obj\Release\net6.0-windows\refint\Venn.C
 C:\Users\babas\Desktop\Venn\Venn.Client\obj\Release\net6.0-windows\Venn.Client.pdb
 C:\Users\babas\Desktop\Venn\Venn.Client\obj\Release\net6.0-windows\Venn.Client.genruntimeconfig.cache
 C:\Users\babas\Desktop\Venn\Venn.Client\obj\Release\net6.0-windows\ref\Venn.Client.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Release\net6.0-windows\Google.Api.Gax.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Release\net6.0-windows\Google.Api.Gax.Rest.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Release\net6.0-windows\Google.Apis.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Release\net6.0-windows\Google.Apis.Auth.PlatformServices.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Release\net6.0-windows\Google.Apis.Auth.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Release\net6.0-windows\Google.Apis.Core.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Release\net6.0-windows\Google.Apis.Translate.v2.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\bin\Release\net6.0-windows\Google.Cloud.Translation.V2.dll
+C:\Users\babas\Desktop\Venn\Venn.Client\obj\Release\net6.0-windows\MVVM\Views\LoadingView.g.cs
+C:\Users\babas\Desktop\Venn\Venn.Client\obj\Release\net6.0-windows\MVVM\Views\LoadingView.baml

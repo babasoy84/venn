@@ -10,6 +10,8 @@
         "dependencies": {
           "Azure.AI.Translation.Document": "1.0.0",
           "CloudinaryDotNet": "1.20.0",
+          "Google.Apis.Translate.v2": "1.60.0.875",
+          "Google.Cloud.Translation.V2": "3.1.0",
           "MaterialDesignColors": "2.0.6",
           "MaterialDesignThemes": "4.5.0",
           "Microsoft.AspNetCore.Components": "6.0.10",
@@ -44,7 +46,7 @@
       },
       "Azure.Core/1.24.0": {
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
           "System.Diagnostics.DiagnosticSource": "6.0.0",
           "System.Memory.Data": "1.0.2",
           "System.Numerics.Vectors": "4.5.0",
@@ -80,6 +82,93 @@
           "lib/netcoreapp1.0/CommonServiceLocator.dll": {
             "assemblyVersion": "2.0.2.0",
             "fileVersion": "2.0.2.0"
+          }
+        }
+      },
+      "Google.Api.Gax/4.0.0": {
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Google.Api.Gax.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.0.0": {
+        "dependencies": {
+          "Google.Api.Gax": "4.0.0",
+          "Google.Apis.Auth": "1.60.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Google.Api.Gax.Rest.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "Google.Apis/1.60.0": {
+        "dependencies": {
+          "Google.Apis.Core": "1.60.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.dll": {
+            "assemblyVersion": "1.60.0.0",
+            "fileVersion": "1.60.0.0"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.60.0": {
+        "dependencies": {
+          "Google.Apis": "1.60.0",
+          "Google.Apis.Core": "1.60.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {
+            "assemblyVersion": "1.60.0.0",
+            "fileVersion": "1.60.0.0"
+          },
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {
+            "assemblyVersion": "1.60.0.0",
+            "fileVersion": "1.60.0.0"
+          }
+        }
+      },
+      "Google.Apis.Core/1.60.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Core.dll": {
+            "assemblyVersion": "1.60.0.0",
+            "fileVersion": "1.60.0.0"
+          }
+        }
+      },
+      "Google.Apis.Translate.v2/1.60.0.875": {
+        "dependencies": {
+          "Google.Apis": "1.60.0",
+          "Google.Apis.Auth": "1.60.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Translate.v2.dll": {
+            "assemblyVersion": "1.60.0.875",
+            "fileVersion": "1.60.0.875"
+          }
+        }
+      },
+      "Google.Cloud.Translation.V2/3.1.0": {
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.0.0",
+          "Google.Apis.Translate.v2": "1.60.0.875"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Google.Cloud.Translation.V2.dll": {
+            "assemblyVersion": "3.1.0.0",
+            "fileVersion": "3.1.0.0"
           }
         }
       },
@@ -239,11 +328,11 @@
           }
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "runtime": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "4.700.20.21406"
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
           }
         }
       },
@@ -1980,6 +2069,8 @@
         "dependencies": {
           "Azure.AI.Translation.Document": "1.0.0",
           "CloudinaryDotNet": "1.20.0",
+          "Google.Apis.Translate.v2": "1.60.0.875",
+          "Google.Cloud.Translation.V2": "3.1.0",
           "MaterialDesignColors": "2.0.6",
           "MaterialDesignThemes": "4.5.0",
           "Microsoft.AspNetCore.Components": "6.0.10",
@@ -2002,6 +2093,8 @@
         "dependencies": {
           "Azure.AI.Translation.Document": "1.0.0",
           "CloudinaryDotNet": "1.20.0",
+          "Google.Apis.Translate.v2": "1.60.0.875",
+          "Google.Cloud.Translation.V2": "3.1.0",
           "MaterialDesignColors": "2.0.6",
           "MaterialDesignThemes": "4.5.0",
           "Microsoft.AspNetCore.Components": "6.0.10",
@@ -2054,6 +2147,55 @@
       "sha512": "sha512-OeAz2cDGiQuaxpJ2pUm1xyZyklT2HgP5LHoumI0o/pcXdTweJMjKHu92JKa33pZRCrRI0DdPcE5MGHk6GCpDMQ==",
       "path": "commonservicelocator/2.0.2",
       "hashPath": "commonservicelocator.2.0.2.nupkg.sha512"
+    },
+    "Google.Api.Gax/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2Q4RruOjUawrtjTazANpp+MNB1M2E8nj2A1kweU1zF0OoNDKUnAIlMbDXs3d+kgcuj/zUVa89/nYot5UZICBWA==",
+      "path": "google.api.gax/4.0.0",
+      "hashPath": "google.api.gax.4.0.0.nupkg.sha512"
+    },
+    "Google.Api.Gax.Rest/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YFoxv4UNP7Hn8Eask0FqwMbCAfBs5hUlzronJgFGVXcStohtKc0Mi+2YqgGN82nynx75jVWEF7siSLBwkmZsHA==",
+      "path": "google.api.gax.rest/4.0.0",
+      "hashPath": "google.api.gax.rest.4.0.0.nupkg.sha512"
+    },
+    "Google.Apis/1.60.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T8ojAsKlsMkt5nZhTQuocqHYzm/knVm8o2/JMm4louEjaKzT4x0FihoCIxCYSTRGWkYC27LPWspyG4p76+bMzA==",
+      "path": "google.apis/1.60.0",
+      "hashPath": "google.apis.1.60.0.nupkg.sha512"
+    },
+    "Google.Apis.Auth/1.60.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AUuWniIf2muns/9hesiF7yCKeQN+PbdTU864Rb2wDzW4xmepO6tEnoqREPeow95qIAgkOlL/byKeU65d3ox5Ng==",
+      "path": "google.apis.auth/1.60.0",
+      "hashPath": "google.apis.auth.1.60.0.nupkg.sha512"
+    },
+    "Google.Apis.Core/1.60.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NOkjqMQblYEZXt2OEgshWayveYW11Pi+Uz0I30Kzl9BvL4TZLJzMqtiu1EdV8XkyyjGuAUgANdi4BOqRDlbVEw==",
+      "path": "google.apis.core/1.60.0",
+      "hashPath": "google.apis.core.1.60.0.nupkg.sha512"
+    },
+    "Google.Apis.Translate.v2/1.60.0.875": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wcZNP9kFGhHkrhNGmozA7oKrdhhWYkY9Za9Hihd+4qLAZZ9wU/veicMcrjepNA/r2CDTZLpW+iKzgaFkXIwaZw==",
+      "path": "google.apis.translate.v2/1.60.0.875",
+      "hashPath": "google.apis.translate.v2.1.60.0.875.nupkg.sha512"
+    },
+    "Google.Cloud.Translation.V2/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-E76xRnnQjyvUlllww65L/seYIiZJ2UEHDXs2OcyDsJMvpqlCN6Q2+TxJ6PLH2m/1f+lkpeIAeo916N3x+g0EdQ==",
+      "path": "google.cloud.translation.v2/3.1.0",
+      "hashPath": "google.cloud.translation.v2.3.1.0.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",
@@ -2139,12 +2281,12 @@
       "path": "microsoft.azure.cognitiveservices.language.textanalytics/4.0.0",
       "hashPath": "microsoft.azure.cognitiveservices.language.textanalytics.4.0.0.nupkg.sha512"
     },
-    "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
+    "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-yuvf07qFWFqtK3P/MRkEKLhn5r2UbSpVueRziSqj0yJQIKFwG1pq9mOayK3zE5qZCTs0CbrwL9M6R8VwqyGy2w==",
-      "path": "microsoft.bcl.asyncinterfaces/1.1.1",
-      "hashPath": "microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512"
+      "sha512": "sha512-UcSjPsst+DfAdJGVDsu346FX0ci0ah+lw3WRtn18NUwEqRt70HaOQ7lI72vy3+1LxtqI3T5GWwV39rQSrCzAeg==",
+      "path": "microsoft.bcl.asyncinterfaces/6.0.0",
+      "hashPath": "microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512"
     },
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
       "type": "package",
