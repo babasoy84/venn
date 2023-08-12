@@ -79,12 +79,12 @@
         },
         "compile": {
           "lib/netstandard2.1/Google.Api.Gax.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.1/Google.Api.Gax.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -97,12 +97,12 @@
         },
         "compile": {
           "lib/netstandard2.1/Google.Api.Gax.Rest.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.1/Google.Api.Gax.Rest.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -113,12 +113,12 @@
         },
         "compile": {
           "lib/netstandard2.0/Google.Apis.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -131,13 +131,13 @@
         "compile": {
           "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
           "lib/netstandard2.0/Google.Apis.Auth.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
           "lib/netstandard2.0/Google.Apis.Auth.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -148,12 +148,12 @@
         },
         "compile": {
           "lib/netstandard2.0/Google.Apis.Core.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Core.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -165,12 +165,12 @@
         },
         "compile": {
           "lib/netstandard2.0/Google.Apis.Translate.v2.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Translate.v2.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -182,12 +182,12 @@
         },
         "compile": {
           "lib/netstandard2.1/Google.Cloud.Translation.V2.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.1/Google.Cloud.Translation.V2.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -264,12 +264,12 @@
         },
         "compile": {
           "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "build": {
@@ -521,12 +521,12 @@
         },
         "compile": {
           "ref/netcoreapp3.1/Microsoft.Data.SqlClient.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Data.SqlClient.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtimeTargets": {
@@ -1054,12 +1054,12 @@
         },
         "compile": {
           "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.dll": {
-            "related": ".xml;.runtimeconfig.json"
+            "related": ".runtimeconfig.json;.xml"
           }
         },
         "runtime": {
           "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.dll": {
-            "related": ".xml;.runtimeconfig.json"
+            "related": ".runtimeconfig.json;.xml"
           }
         }
       },
@@ -1161,25 +1161,25 @@
         },
         "compile": {
           "lib/net45/GalaSoft.MvvmLight.Extras.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           },
           "lib/net45/GalaSoft.MvvmLight.Platform.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           },
           "lib/net45/GalaSoft.MvvmLight.dll": {
-            "related": ".Extras.xml;.Extras.pdb;.xml;.pdb;.Platform.xml;.Platform.pdb"
+            "related": ".Extras.pdb;.Extras.xml;.pdb;.Platform.pdb;.Platform.xml;.xml"
           },
           "lib/net45/System.Windows.Interactivity.dll": {}
         },
         "runtime": {
           "lib/net45/GalaSoft.MvvmLight.Extras.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           },
           "lib/net45/GalaSoft.MvvmLight.Platform.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           },
           "lib/net45/GalaSoft.MvvmLight.dll": {
-            "related": ".Extras.xml;.Extras.pdb;.xml;.pdb;.Platform.xml;.Platform.pdb"
+            "related": ".Extras.pdb;.Extras.xml;.pdb;.Platform.pdb;.Platform.xml;.xml"
           },
           "lib/net45/System.Windows.Interactivity.dll": {}
         }
@@ -10237,11 +10237,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Data\\Venn.Data.csproj",
+      "projectUniqueName": "C:\\Users\\babas\\OneDrive\\Documents\\Projects\\Venn\\Venn.Data\\Venn.Data.csproj",
       "projectName": "Venn.Data",
-      "projectPath": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Data\\Venn.Data.csproj",
+      "projectPath": "C:\\Users\\babas\\OneDrive\\Documents\\Projects\\Venn\\Venn.Data\\Venn.Data.csproj",
       "packagesPath": "C:\\Users\\babas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Data\\obj\\",
+      "outputPath": "C:\\Users\\babas\\OneDrive\\Documents\\Projects\\Venn\\Venn.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\babas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -10258,8 +10258,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\babas\\Desktop\\Venn\\Venn.Models\\Venn.Models.csproj": {
-              "projectPath": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Models\\Venn.Models.csproj"
+            "C:\\Users\\babas\\OneDrive\\Documents\\Projects\\Venn\\Venn.Models\\Venn.Models.csproj": {
+              "projectPath": "C:\\Users\\babas\\OneDrive\\Documents\\Projects\\Venn\\Venn.Models\\Venn.Models.csproj"
             }
           }
         }
@@ -10356,26 +10356,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.12, 6.0.12]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   },

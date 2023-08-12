@@ -11,11 +11,11 @@
         WindowStyle="None"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
-        Title="Venn" 
-        Background="#36393F"
+        Title="Venn"
+        Background="#E7ECEF"
         MinWidth="950"
         MinHeight="550"
-        Height="650" Width="1200" Icon="/MVVM/Views/Logo/venn_logo.png">
+        Height="925" Width="1440" Icon="/MVVM/Views/Images/venn_logo.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -24,13 +24,13 @@
 
         <Border 
             Name="header"
-            Background="#252525"
+            Background="#274C77"
             MouseDown="Border_MouseDown">
             <Grid 
                 HorizontalAlignment="Stretch"
                 Margin="5, 0">
                 <Label
-                    Foreground="Gray"
+                    Foreground="#E7ECEF"
                     Content="Venn"
                     FontWeight="SemiBold"/>
 
@@ -45,12 +45,12 @@
                         Height="20"
                         Background="Transparent"
                         BorderThickness="0"
-                        Foreground="Gray"
+                        Foreground="#E7ECEF"
                         FontWeight="Bold"
                         Content="_"
                         Margin="0,0,0,6"
                         Click="btnWindowMinimize_Click"/>
-                    
+
                     <Button
                         Name="btnWindowMaximize"
                         Padding="0"
@@ -58,12 +58,12 @@
                         Height="20"
                         Background="Transparent"
                         BorderThickness="0"
-                        Foreground="Gray"
+                        Foreground="#E7ECEF"
                         FontWeight="Bold"
                         Content="□"
                         Margin="0,0,0,2"
                         Click="btnWindowMaximize_Click"/>
-                    
+
                     <Button
                         Name="btnWindowClose"
                         Padding="0"
@@ -71,7 +71,7 @@
                         Height="20"
                         Background="Transparent"
                         BorderThickness="0"
-                        Foreground="Gray"
+                        Foreground="#E7ECEF"
                         FontWeight="Bold"
                         Content="🞨"
                         Click="btnWindowClose_Click"/>

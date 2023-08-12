@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Pmcqm/H476ewN2/nHd0M5qSKv/zDw+qvaXz91OdYZhsv79rEDDbKHY95Nyo2xUqvMQm9uOSkusXsiHiGrJkgTQ==",
+  "dgSpecHash": "9K4xEueeip+8353l4hWvhMjot/46ssJnV24zaW+3kWnvHQUcmiUcHe0xdQfaoi4rTmCTfkLCQ0ME9F5/B4WxIg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\babas\\Desktop\\Venn\\Venn.Data\\Venn.Data.csproj",
+  "projectFilePath": "C:\\Users\\babas\\OneDrive\\Documents\\Projects\\Venn\\Venn.Data\\Venn.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\babas\\.nuget\\packages\\azure.ai.translation.document\\1.0.0\\azure.ai.translation.document.1.0.0.nupkg.sha512",
     "C:\\Users\\babas\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
@@ -191,10 +191,7 @@
     "C:\\Users\\babas\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\babas\\.nuget\\packages\\system.xml.xmldocument\\4.0.1\\system.xml.xmldocument.4.0.1.nupkg.sha512",
     "C:\\Users\\babas\\.nuget\\packages\\system.xml.xpath\\4.0.1\\system.xml.xpath.4.0.1.nupkg.sha512",
-    "C:\\Users\\babas\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512",
-    "C:\\Users\\babas\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.12\\microsoft.windowsdesktop.app.ref.6.0.12.nupkg.sha512",
-    "C:\\Users\\babas\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.12\\microsoft.netcore.app.ref.6.0.12.nupkg.sha512",
-    "C:\\Users\\babas\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.12\\microsoft.aspnetcore.app.ref.6.0.12.nupkg.sha512"
+    "C:\\Users\\babas\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512"
   ],
   "logs": [
     {

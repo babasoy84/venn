@@ -13,7 +13,7 @@ namespace Venn.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=VennDb;Integrated Security=True;");
+            optionsBuilder.UseSqlServer("Data Source=LEO\\SQLEXPRESS;Initial Catalog=VennDb;Integrated Security=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 

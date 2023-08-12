@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="MVVM\Views\google_icon.png" />
     <None Remove="MVVM\Views\venn_logo.png" />
   </ItemGroup>
 
@@ -66,7 +67,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="MVVM\Views\Logo\venn_logo.png" />
+    <Resource Include="MVVM\Views\Images\google_icon.png" />
+    <Resource Include="MVVM\Views\Images\venn_logo.png" />
   </ItemGroup>
 
 </Project>

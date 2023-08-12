@@ -9,24 +9,25 @@
              xmlns:services="clr-namespace:Venn.Client.Services"
              xmlns:local="clr-namespace:Venn.Client.MVVM.Views"
              mc:Ignorable="d" 
-             Background="#36393F"
-             d:DesignHeight="625" d:DesignWidth="1200">
+             Background="#E7ECEF"
+             d:DesignHeight="900" d:DesignWidth="1440">
     <Grid>
         <Button
             Command="{Binding ToWelcomeViewCommand}"
-            VerticalAlignment="Top"
+            materialDesign:ButtonAssist.CornerRadius="10"
             HorizontalAlignment="Left"
-            Background="Transparent"
-            Foreground="#B13333"
+            VerticalAlignment="Top"
+            Background="#E7ECEF"
+            Foreground="#274C77"
             BorderThickness="0"
             Padding="0"
-            Margin="20 20 0 0"
-            Width="50"
-            Height="50">
+            Margin="20 20 0 30"
+            Width="46"
+            Height="46">
             <materialDesign:PackIcon 
-                Kind="ArrowLeft"
-                Width="40"
-                Height="40"/>
+                    Kind="ChevronLeft"
+                    Width="40"
+                    Height="40"/>
         </Button>
         
         <StackPanel 
@@ -34,21 +35,23 @@
             HorizontalAlignment="Center"
             Orientation="Vertical">
 
+            <Image 
+                Width="89" 
+                Height="89" 
+                Source="/MVVM/Views/Images/venn_logo.png"/>
+
+
             <Label
-                Content="Create Account"
+                Content="Sign Up"
                 HorizontalAlignment="Center"
                 FontFamily="Microsoft YaHei UI"
                 FontWeight="Bold"
-                FontSize="40"
-                Foreground="#FFFFFF"/>
-
-            <Rectangle 
-            Fill="#B13333"
-            Height="3"
-            Width="800"
-            Margin="30 15"/>
+                FontSize="48"
+                Margin="0 0 0 10"
+                Foreground="#274C77"/>
 
             <TextBox
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
             Text="{Binding Email, 
             UpdateSourceTrigger=PropertyChanged, 
             Mode=TwoWay}"
@@ -56,18 +59,23 @@
             Binding EmailErrorText,
             UpdateSourceTrigger=PropertyChanged,
             Mode=TwoWay}"
-            Background="#FF252525"
-            materialDesign:HintAssist.Foreground="#B13333"
-            materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+            materialDesign:TextFieldAssist.TextFieldCornerRadius="10"
+            BorderThickness="1"
+            BorderBrush="#6096BA"
+            Background="Transparent"
+            materialDesign:HintAssist.Foreground="#6096BA"
+            materialDesign:TextFieldAssist.UnderlineBrush="#6096BA"
             materialDesign:HintAssist.Hint="Email"
             Margin="50 15"
             Width="400"
+            Height="54"
             Padding="15"
             FontFamily="Microsoft YaHei UI"
-            FontSize="20"
-            Foreground="#FFFFFF"/>
+            FontSize="16"
+            Foreground="#6096BA"/>
 
             <TextBox
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
             Text="{Binding Username, 
             UpdateSourceTrigger=PropertyChanged, 
             Mode=TwoWay}"
@@ -75,33 +83,42 @@
             Binding UsernameErrorText,
             UpdateSourceTrigger=PropertyChanged,
             Mode=TwoWay}"
-            Background="#FF252525"
-            materialDesign:HintAssist.Foreground="#B13333"
-            materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+            materialDesign:TextFieldAssist.TextFieldCornerRadius="10"
+            BorderThickness="1"
+            BorderBrush="#6096BA"
+            Background="Transparent"
+            materialDesign:HintAssist.Foreground="#6096BA"
+            materialDesign:TextFieldAssist.UnderlineBrush="#6096BA"
             materialDesign:HintAssist.Hint="Username"
             Margin="50 15"
             Width="400"
+            Height="54"
             Padding="15"
             FontFamily="Microsoft YaHei UI"
-            FontSize="20"
-            Foreground="#FFFFFF"/>
+            FontSize="16"
+            Foreground="#6096BA"/>
 
             <PasswordBox
+            Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
             Name="pwdBoxPassword"
             materialDesign:HintAssist.HelperText="{
             Binding PasswordErrorText,
             UpdateSourceTrigger=PropertyChanged,
             Mode=TwoWay}"
-            Background="#FF252525"
-            materialDesign:HintAssist.Foreground="#B13333"
-            materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+            materialDesign:TextFieldAssist.TextFieldCornerRadius="10"
+            BorderThickness="1"
+            BorderBrush="#6096BA"
+            Background="Transparent"
+            materialDesign:HintAssist.Foreground="#6096BA"
+            materialDesign:TextFieldAssist.UnderlineBrush="#6096BA"
             materialDesign:HintAssist.Hint="Password"
             Margin="50 15"
             Width="400"
+            Height="54"
             Padding="15"
             FontFamily="Microsoft YaHei UI"
-            FontSize="20"
-            Foreground="#FFFFFF"/>
+            FontSize="16"
+            Foreground="#6096BA"/>
 
             <Grid 
             Margin="50 15"
@@ -114,79 +131,114 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox
+                Style="{StaticResource MaterialDesignOutlinedComboBox}"
                 SelectedItem="{Binding Month, 
                 UpdateSourceTrigger=PropertyChanged, 
                 Mode=TwoWay}"
                 ItemsSource="{Binding Months}"
-                Margin="5 0"
-                Background="#FF252525"
-                materialDesign:HintAssist.Foreground="#B13333"
-                materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+                Margin="0 0 5 0"
+                materialDesign:TextFieldAssist.TextFieldCornerRadius="10"
+                BorderThickness="1"
+                BorderBrush="#6096BA"
+                Background="Transparent"
+                materialDesign:HintAssist.Foreground="#6096BA"
                 materialDesign:HintAssist.Hint="Month"
+                Height="54"
                 Padding="15"
                 FontFamily="Microsoft YaHei UI"
-                FontSize="20"
-                Foreground="#FFFFFF">
+                FontSize="16"
+                Foreground="#6096BA">
                     <ComboBox.Resources>
-                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#E7ECEF"/>
                     </ComboBox.Resources>
                 </ComboBox>
 
                 <ComboBox
+                Style="{StaticResource MaterialDesignOutlinedComboBox}"
                 SelectedItem="{Binding Day, 
                 UpdateSourceTrigger=PropertyChanged, 
                 Mode=TwoWay}"
                 ItemsSource="{Binding Days}"
                 Grid.Column="1"
                 Margin="5 0"
-                Background="#FF252525"
-                materialDesign:HintAssist.Foreground="#B13333"
-                materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+                materialDesign:TextFieldAssist.TextFieldCornerRadius="10"
+                BorderThickness="1"
+                BorderBrush="#6096BA"
+                Background="Transparent"
+                materialDesign:HintAssist.Foreground="#6096BA"
                 materialDesign:HintAssist.Hint="Day"
+                Height="54"
                 Padding="15"
                 FontFamily="Microsoft YaHei UI"
-                FontSize="20"
-                Foreground="#FFFFFF">
+                FontSize="16"
+                Foreground="#6096BA">
                     <ComboBox.Resources>
-                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#E7ECEF"/>
                     </ComboBox.Resources>
                 </ComboBox>
 
                 <ComboBox
+                Style="{StaticResource MaterialDesignOutlinedComboBox}"
                 SelectedItem="{Binding Year, 
                 UpdateSourceTrigger=PropertyChanged, 
                 Mode=TwoWay}"
                 ItemsSource="{Binding Years}"
                 Grid.Column="2"
-                Margin="5 0"
-                Background="#FF252525"
-                materialDesign:HintAssist.Foreground="#B13333"
-                materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+                Margin="5 0 0 0"
+                materialDesign:TextFieldAssist.TextFieldCornerRadius="10"
+                BorderThickness="1"
+                BorderBrush="#6096BA"
+                Background="Transparent"
+                materialDesign:HintAssist.Foreground="#6096BA"
                 materialDesign:HintAssist.Hint="Year"
+                Height="54"
                 Padding="15"
                 FontFamily="Microsoft YaHei UI"
-                FontSize="20"
-                Foreground="#FFFFFF">
+                FontSize="16"
+                Foreground="#6096BA">
                     <ComboBox.Resources>
-                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#FF252525"/>
+                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#E7ECEF"/>
                     </ComboBox.Resources>
                 </ComboBox>
             </Grid>
 
+            <StackPanel
+                Width="400"
+                Orientation="Horizontal" RenderTransformOrigin="0.582,0.512">
+
+                <CheckBox/>
+
+                <Label
+                    Content="Remeber me"
+                    Foreground="#274C77"
+                    FontWeight="Medium"
+                    FontFamily="Microsoft YaHei UI"
+                    FontSize="16"/>
+            </StackPanel>
+
             <Button
             Command="{Binding CreateCommand}"
             CommandParameter="{Binding ElementName=pwdBoxPassword}"
-            materialDesign:ButtonAssist.CornerRadius="10"
-            Content="Create"
+            materialDesign:ButtonAssist.CornerRadius="20"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Content="Sign Up"
             FontFamily="Microsoft YaHei UI"
-            FontSize="20"
-            Margin="50 20"
-            Width="400"
-            Foreground="#FFFFFF"
-            Background="#B13333"
-            BorderThickness="0" Height="55"/>
+            FontSize="14"
+            Padding="10"
+            Margin="50 25 50 10"
+            Width="401"
+            Height="40"
+            Foreground="#E7ECEF"
+            Background="#274C77"
+            BorderThickness="0"/>
 
-
+            <Label
+                HorizontalContentAlignment="Center"
+                Content="I have already an account?"
+                Foreground="#6096BA"
+                FontWeight="Medium"
+                FontFamily="Microsoft YaHei UI"
+                FontSize="14"/>
 
         </StackPanel>
     </Grid>

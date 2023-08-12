@@ -25,7 +25,7 @@ namespace Venn.Client.Net
         {
             if (!client.Connected)
             {
-                client.Connect(IPAddress.Parse("192.168.100.65"), 27001);
+                client.Connect(IPAddress.Parse("192.168.1.120"), 49350);
             }
         }
 

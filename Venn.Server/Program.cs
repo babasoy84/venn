@@ -47,7 +47,7 @@ namespace Venn.Server
             notificationRepo = container.GetInstance<IRepository<Notification>>();
             friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.100.65"), 27001);
+            listener = new TcpListener(IPAddress.Parse("192.168.1.120"), 49350);
 
             JsonSerializerOptions options = new()
             {
