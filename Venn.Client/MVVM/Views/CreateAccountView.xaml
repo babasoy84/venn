@@ -202,20 +202,6 @@
                 </ComboBox>
             </Grid>
 
-            <StackPanel
-                Width="400"
-                Orientation="Horizontal" RenderTransformOrigin="0.582,0.512">
-
-                <CheckBox/>
-
-                <Label
-                    Content="Remeber me"
-                    Foreground="#274C77"
-                    FontWeight="Medium"
-                    FontFamily="Microsoft YaHei UI"
-                    FontSize="16"/>
-            </StackPanel>
-
             <Button
             Command="{Binding CreateCommand}"
             CommandParameter="{Binding ElementName=pwdBoxPassword}"
@@ -233,12 +219,14 @@
             BorderThickness="0"/>
 
             <Label
-                HorizontalContentAlignment="Center"
-                Content="I have already an account?"
+                HorizontalContentAlignment="Center">
+                <Hyperlink 
+                Command="{Binding ToLoginViewCommand}"
                 Foreground="#6096BA"
                 FontWeight="Medium"
                 FontFamily="Microsoft YaHei UI"
-                FontSize="14"/>
+                FontSize="14">I have already an account?</Hyperlink>
+            </Label>
 
         </StackPanel>
     </Grid>

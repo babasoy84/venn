@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using Venn.Models.Models.Concretes;
 
 namespace Venn.Client.Net
@@ -25,7 +26,7 @@ namespace Venn.Client.Net
         {
             if (!client.Connected)
             {
-                client.Connect(IPAddress.Parse("192.168.1.120"), 49350);
+                client.Connect(IPAddress.Parse("192.168.100.92"), 49350);
             }
         }
 
@@ -75,5 +76,51 @@ namespace Venn.Client.Net
             return false;
         }
 
+        public async Task<bool> CheckEmail(string email)
+        {
+            var r = "checkEmail$" + email;
+            client.Client.Send(Encoding.UTF8.GetBytes(r));
+            var ns = client.GetStream();
+            var bytes = new byte[ushort.MaxValue - 28];
+            var length = ns.Read(bytes, 0, bytes.Length);
+            var str = Encoding.Default.GetString(bytes, 0, length);
+            if (str[0] == '<')
+            {
+                while (true)
+                {
+                    ns = client.GetStream();
+                    bytes = new byte[ushort.MaxValue - 28];
+                    length = ns.Read(bytes, 0, bytes.Length);
+                    var s = Encoding.Default.GetString(bytes, 0, length);
+                    str += s;
+                    if (s.Last() == '>')
+                    {
+                        str = str.Remove(0, 1);
+                        str = str.Remove(str.Length - 1, 1);
+                        break;
+                    }
+                }
+            }
+
+            return str == "true";
+        }
+
+        public async Task<bool> ResetPassword(string email, string newPassword)
+        {
+            if (client.Connected)
+            {
+                var str = $"resetPassword${email}${newPassword}";
+                client.Client.Send(Encoding.Default.GetBytes(str));
+                var ns = client.GetStream();
+                var bytes = new byte[4096];
+                var length = ns.Read(bytes, 0, bytes.Length);
+                var r = Encoding.Default.GetString(bytes, 0, length);
+                if (r == "true")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

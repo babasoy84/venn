@@ -13,6 +13,12 @@
     <Compile Update="MVVM\Views\CreateAccountView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MVVM\Views\EmailVerificationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="MVVM\Views\ForgotPasswordView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="MVVM\Views\LoadingView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -20,6 +26,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="MVVM\Views\MainView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="MVVM\Views\ResetPasswordView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="MVVM\Views\WelcomeView.xaml.cs">
@@ -33,6 +42,12 @@
     <Page Update="MVVM\Views\CreateAccountView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="MVVM\Views\EmailVerificationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MVVM\Views\ForgotPasswordView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MVVM\Views\LoadingView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -40,6 +55,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MVVM\Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MVVM\Views\ResetPasswordView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MVVM\Views\WelcomeView.xaml">

@@ -13,6 +13,7 @@
     <Grid>
         <Button
             Command="{Binding ToWelcomeViewCommand}"
+            CommandParameter="{Binding ElementName=pwdBoxPassword}"
             materialDesign:ButtonAssist.CornerRadius="10"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -106,12 +107,15 @@
                     FontSize="16"/>
 
                 <Label
-                    Margin="140 0 0 0"
-                    Content="Forgot Password"
-                    Foreground="#6096BA"
-                    FontWeight="Medium"
-                    FontFamily="Microsoft YaHei UI"
-                    FontSize="16"/>
+                    Margin="140 0 0 0">
+                    <Hyperlink 
+                        TextDecorations="None"
+                        Command="{Binding ToForgotPasswordViewCommand}"
+                        Foreground="#6096BA"
+                        FontWeight="Medium"
+                        FontFamily="Microsoft YaHei UI"
+                        FontSize="16">Forgot Password</Hyperlink>
+                </Label>
 
             </StackPanel>
 
@@ -132,13 +136,25 @@
                 BorderThickness="0"/>
 
             <Label
-                HorizontalContentAlignment="Center"
-                Content="I don't have an account?"
-                Foreground="#6096BA"
-                FontWeight="Medium"
-                FontFamily="Microsoft YaHei UI"
-                FontSize="14"/>
+                HorizontalContentAlignment="Center">
+                <Hyperlink 
+                    Command="{Binding ToSignupViewCommand}"
+                    CommandParameter="{Binding ElementName=pwdBoxPassword}"
+                    Foreground="#6096BA"
+                    FontWeight="Medium"
+                    FontFamily="Microsoft YaHei UI"
+                    FontSize="14">
+                    I don't have an account?
+                </Hyperlink>
+            </Label>
 
         </StackPanel>
+
+        <materialDesign:Snackbar
+                Width="550"
+                Margin="4"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding SnackbarMessageQueue}" />
     </Grid>
 </UserControl>

@@ -38,6 +38,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         private string passwordErrorText;
 
+        public User User { get; set; } = new User();
+
         public string Email
         {
             get { return email; }
@@ -130,6 +132,8 @@ namespace Venn.Client.MVVM.ViewModels
 
         public RelayCommand ToWelcomeViewCommand { get; set; }
 
+        public RelayCommand ToLoginViewCommand { get; set; }
+
         public RelayCommand<object> CreateCommand { get; set; }
 
         public CreateAccountViewModel(INavigationService NavigationService, ServerHelper Server)
@@ -138,6 +142,7 @@ namespace Venn.Client.MVVM.ViewModels
             this.NavigationService = NavigationService;
 
             ToWelcomeViewCommand = new RelayCommand(ToWelcomeView);
+            ToLoginViewCommand = new RelayCommand(ToLoginView);
             CreateCommand = new RelayCommand<object>(o => Task.Run(() => Create(o)));
 
             InitMonths();
@@ -175,7 +180,7 @@ namespace Venn.Client.MVVM.ViewModels
         public void InitYears()
         {
             Years = new List<int>();
-            for (int i = 1870; i <= DateTime.Now.Year - 3; i++)
+            for (int i = DateTime.Now.Year - 153; i <= DateTime.Now.Year - 3; i++)
             {
                 Years.Add(i);
             }
@@ -186,7 +191,12 @@ namespace Venn.Client.MVVM.ViewModels
             NavigationService.NavigateTo<WelcomeViewModel>();
         }
 
-        private bool CheckValidate(object p)
+        public void ToLoginView()
+        {
+            NavigationService.NavigateTo<LoginViewModel>();
+        }
+
+        private async Task<bool> CheckValidate(object p)
         {
             Password = (p as PasswordBox).Password;
             bool b = true;
@@ -225,45 +235,33 @@ namespace Venn.Client.MVVM.ViewModels
             return b;
         }
 
-        private void SendMail(string email)
+        private async Task Create(object p)
         {
-            using (SmtpClient smtpClient = new SmtpClient())
+            if (await CheckValidate(p))
             {
-                smtpClient.Host = "smtp.example.com";
-                smtpClient.Port = 587;
-                smtpClient.EnableSsl = true;
-                smtpClient.Credentials = new NetworkCredential("dma.venn@gmail.com", "Venn2023");
 
-                MailMessage message = new MailMessage();
-                message.From = new MailAddress("dma.venn@gmail.com");
-                message.To.Add(email);
-                message.Subject = "Venn";
-                message.Body = "An account has been created in Venn messenger with your email";
-
-                smtpClient.Send(message);
-            }
-        }
-
-        private async void Create(object p)
-        {
-            if (CheckValidate(p))
-            {
-                var dt = new DateTime(Year, Months.FindIndex(m => m == Month) + 1, Day);
-                var user = new User();
-                user.Email = Email;
-                user.Username = Username;
-                user.Password = Password;
-                user.DateOfBirth = dt;
                 NavigationService.NavigateTo<LoadingViewModel>();
-                if (await Server.CreateAccount(user))
+
+                var dt = new DateTime(Year, Months.FindIndex(m => m == Month) + 1, Day);
+                User.Email = Email;
+                User.Username = Username;
+                User.Password = Password;
+                User.DateOfBirth = dt;
+
+                if (!await Server.CheckEmail(Email))
                 {
+                    NavigationService.NavigateTo<EmailVerificationViewModel>();
+                    App.Container.GetInstance<EmailVerificationViewModel>().Type = "Create Account";
+                    App.Container.GetInstance<EmailVerificationViewModel>().Email = Email;
+                    App.Container.GetInstance<EmailVerificationViewModel>().SendVertificationCode();
+
+
                     Email = null;
                     Username = null;
                     (p as PasswordBox).Password = null;
                     Day = 0;
                     Year = 0;
                     Month = null;
-                    NavigationService.NavigateTo<WelcomeViewModel>();
                 }
                 else
                 {
@@ -271,6 +269,11 @@ namespace Venn.Client.MVVM.ViewModels
                     EmailErrorText = "This email has been used, email must be unique!";
                 }
             }
+        }
+
+        public async void CreateAccount()
+        {
+            await Server.CreateAccount(User);
         }
     }
 }

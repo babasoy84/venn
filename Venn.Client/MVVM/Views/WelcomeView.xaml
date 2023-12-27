@@ -25,9 +25,9 @@
             <Image Width="179" Height="179" Source="/MVVM/Views/Images/venn_logo.png"/>
 
             <Label
+            FontFamily="Microsoft YaHei UI"
             Content="Welcome To Venn"
             HorizontalAlignment="Center"
-            FontFamily="Microsoft YaHei UI"
             FontWeight="Bold"
             FontSize="64"
             Foreground="#274C77"/>
@@ -142,6 +142,15 @@
             FontWeight="Bold"
             FontSize="14"
             Foreground="#274C77"/>
+
+        <materialDesign:Snackbar
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Width="550"
+            Margin="4"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            MessageQueue="{Binding SnackbarMessageQueue}" />
 
     </Grid>
 </UserControl>

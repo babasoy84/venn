@@ -13,8 +13,8 @@
         ResizeMode="CanResizeWithGrip"
         Title="Venn"
         Background="#E7ECEF"
-        MinWidth="950"
-        MinHeight="550"
+        MinWidth="750"
+        MinHeight="650"
         Height="925" Width="1440" Icon="/MVVM/Views/Images/venn_logo.png">
     <Grid>
         <Grid.RowDefinitions>
@@ -22,13 +22,14 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Border 
+        <Border
             Name="header"
             Background="#274C77"
             MouseDown="Border_MouseDown">
-            <Grid 
+            <Grid
                 HorizontalAlignment="Stretch"
                 Margin="5, 0">
+
                 <Label
                     Foreground="#E7ECEF"
                     Content="Venn"

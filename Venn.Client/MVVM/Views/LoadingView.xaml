@@ -8,8 +8,8 @@
              d:DataContext="{d:DesignInstance Type=viewmodel:LoadingViewModel}"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Background="#36393F"
-             d:DesignHeight="625" d:DesignWidth="1200">
+             Background="#E7ECEF"
+             d:DesignHeight="900" d:DesignWidth="1440">
     <Grid>
         <ProgressBar
             Width="80"

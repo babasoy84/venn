@@ -5,6 +5,7 @@
              xmlns:viewmodel="clr-namespace:Venn.Client.MVVM.ViewModels"
              xmlns:view="clr-namespace:Venn.Client.MVVM.Views">
     <Application.Resources>
+
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type viewmodel:MainViewModel}">
                 <view:MainView></view:MainView>
@@ -28,6 +29,18 @@
 
             <DataTemplate DataType="{x:Type viewmodel:LoadingViewModel}">
                 <view:LoadingView></view:LoadingView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:ForgotPasswordViewModel}">
+                <view:ForgotPasswordView></view:ForgotPasswordView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:EmailVerificationViewModel}">
+                <view:EmailVerificationView></view:EmailVerificationView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:ResetPasswordViewModel}">
+                <view:ResetPasswordView></view:ResetPasswordView>
             </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>

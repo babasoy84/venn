@@ -47,7 +47,7 @@ namespace Venn.Server
             notificationRepo = container.GetInstance<IRepository<Notification>>();
             friendshipRepo = container.GetInstance<IRepository<Friendship>>();
             clients = new List<Client>();
-            listener = new TcpListener(IPAddress.Parse("192.168.1.120"), 49350);
+            listener = new TcpListener(IPAddress.Parse("192.168.100.92"), 49350);
 
             JsonSerializerOptions options = new()
             {
@@ -176,7 +176,7 @@ namespace Venn.Server
                             }
                             if (b)
                             {
-                                lock (new object())
+                                lock (new object()) 
                                 {
                                     userRepo.Add(user);
                                     userRepo.SaveChanges();
@@ -501,6 +501,31 @@ namespace Venn.Server
                         {
                             client.TcpClient.Client.Send(Encoding.UTF8.GetBytes("logout"));
                             Console.WriteLine($"[{ip}]: Client has logouted");
+                        }
+                        else if (command == "checkEmail")
+                        {
+                            var email = str.Split('$')[1];
+
+                            var user = userRepo.GetAll().FirstOrDefault(u => u.Email == email);
+
+                            client.TcpClient.Client.Send(Encoding.UTF8.GetBytes(user == null ? "false" : "true"));
+                        }
+                        else if (command == "resetPassword")
+                        {
+                            var email = str.Split('$')[1];
+                            var password = str.Split('$')[2];
+
+                            var user = userRepo.GetAll().FirstOrDefault(u => u.Email == email);
+                            user.Password = password;
+
+                            lock (new object())
+                            {
+                                userRepo.Update(user);
+                                userRepo.SaveChanges();
+                            }
+
+                            client.TcpClient.Client.Send(Encoding.UTF8.GetBytes("true"));
+                            Console.WriteLine($"[{ip}]: Password of client's acount has changed");
                         }
                     }
                 });

@@ -320,3 +320,10 @@ C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-w
 C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\Venn.Client.genruntimeconfig.cache
 C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\ref\Venn.Client.dll
 C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\Themes\CustomTextBox.baml
+C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\MVVM\Views\ForgotPasswordView.g.cs
+C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\MVVM\Views\ForgotPasswordView.baml
+C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\MVVM\Views\EmailVerificationView.g.cs
+C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\MVVM\Views\EmailVerificationView.baml
+C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\MVVM\Views\ResetPasswordView.g.cs
+C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\MVVM\Views\ResetPasswordView.baml
+C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\obj\Release\net6.0-windows\Themes\CustomFont.baml

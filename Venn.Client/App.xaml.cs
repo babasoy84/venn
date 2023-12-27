@@ -22,6 +22,7 @@ namespace Venn.Client
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    /// 
     public partial class App : Application
     {
         public static Container Container;
@@ -45,6 +46,9 @@ namespace Venn.Client
             Container.RegisterSingleton<WelcomeViewModel>();
             Container.RegisterSingleton<LoginViewModel>();
             Container.RegisterSingleton<CreateAccountViewModel>();
+            Container.RegisterSingleton<ResetPasswordViewModel>();
+            Container.RegisterSingleton<ForgotPasswordViewModel>();
+            Container.RegisterSingleton<EmailVerificationViewModel>();
             Container.RegisterSingleton<LoadingViewModel>();
             Container.RegisterSingleton<ChatViewModel>();
             Container.RegisterSingleton<ServerHelper>();
