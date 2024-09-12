@@ -36,6 +36,8 @@ using Azure;
 using System.Collections.Specialized;
 using System.Windows.Controls;
 using Google.Cloud.Translation.V2;
+using Haley.Abstractions;
+using Haley.Services;
 
 namespace Venn.Client.MVVM.ViewModels
 {
@@ -57,7 +59,9 @@ namespace Venn.Client.MVVM.ViewModels
 
         public SnackbarMessageQueue SnackbarMessageQueue { set; get; } = new(TimeSpan.FromSeconds(1));
 
-        private TranslationClient client = TranslationClient.CreateFromApiKey("AIzaSyByGIe2WCSBL-8_b-RHumhajEgyTVALBUY");
+        private TranslationClient client = TranslationClient.CreateFromApiKey("AIzaSyApuoMkkiWC_ZbAzIHg_eF64fFeJ42OJDw");
+
+        private IDialogService _ds;
 
 
         private ObservableCollection<User> users;
@@ -100,7 +104,7 @@ namespace Venn.Client.MVVM.ViewModels
 
         private Visibility imageVisibility;
 
-
+        
         public ObservableCollection<User> Users
         {
             get { return users; }
@@ -349,6 +353,7 @@ namespace Venn.Client.MVVM.ViewModels
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
                 WriteIndented = true
             };
+            _ds = new DialogService();
             Account account = new Account("dv9hubcxy", "956258466281318", "wG5We44Sc-9SThiN68YKgZ8HPbY");
             Cloudinary = new Cloudinary(account);
             User = App.Container.GetInstance<User>();
@@ -441,6 +446,12 @@ namespace Venn.Client.MVVM.ViewModels
                         var msg = System.Text.Json.JsonSerializer.Deserialize<Message>(str.Split("$")[1], options);
                         dispatcher.Invoke(() => Messages.Add(msg));
                         dispatcher.Invoke(() => SelectedContact.User2.Messages.Add(msg));
+                        bool b = true;
+                        dispatcher.Invoke(() => b = Application.Current.MainWindow.IsActive);
+                        if (!b)
+                        {
+                            dispatcher.Invoke(() => _ds.SendToast(msg.FromUser.Username, msg.Data, Haley.Enums.NotificationIcon.Info, false, true, 3));
+                        }
                     }
                     else if (command == "update")
                     {

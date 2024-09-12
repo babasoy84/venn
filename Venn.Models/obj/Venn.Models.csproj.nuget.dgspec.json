@@ -56,6 +56,10 @@
               "target": "Package",
               "version": "[3.1.0, )"
             },
+            "Haley.MVVM": {
+              "target": "Package",
+              "version": "[6.4.3.1, )"
+            },
             "MaterialDesignColors": {
               "target": "Package",
               "version": "[2.0.6, )"

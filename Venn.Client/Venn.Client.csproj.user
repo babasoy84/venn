@@ -66,6 +66,9 @@
     <Page Update="Themes\ChatItem.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\ChatItemTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\ContactCard.xaml">
       <SubType>Designer</SubType>
     </Page>

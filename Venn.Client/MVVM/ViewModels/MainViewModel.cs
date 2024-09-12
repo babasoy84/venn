@@ -29,7 +29,7 @@ namespace Venn.Client.MVVM.ViewModels
             set => Set(ref currentViewModel, value);    
         }
 
-
+        
         public MainViewModel(IMessenger messenger, INavigationService navigationService)
         {
             this.navigationService = navigationService;

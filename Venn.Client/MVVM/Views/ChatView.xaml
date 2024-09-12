@@ -15,7 +15,7 @@
             <materialDesign:DrawerHost.RightDrawerContent>
                 <Grid Background="#2F3136">
                     <Border 
-                        BorderBrush="#B13333"
+                        BorderBrush="#274C77"
                         BorderThickness="1"
                         materialDesign:ShadowAssist.ShadowDepth="Depth3"
                         Background="#292b2f"
@@ -30,7 +30,7 @@
                                 Margin="0, 50, 0, 0"
                                 Width="102" 
                                 Height="102"
-                                Fill="#B13333"/>
+                                Fill="#274C77"/>
 
                             <Ellipse
                                 Margin="0, 50, 0, 0"
@@ -61,7 +61,7 @@
                         Content="{Binding SelectedContact.User2.Email,
                             UpdateSourceTrigger=PropertyChanged,
                             Mode=TwoWay}"
-                        Foreground="#B13333"
+                        Foreground="#274C77"
                         FontSize="15"
                         FontWeight="SemiBold"
                         HorizontalAlignment="Center"/>
@@ -252,8 +252,8 @@
                                     Grid.Column="1"
                                     Margin="15 0"
                                     Background="#FF252525"
-                                    materialDesign:HintAssist.Foreground="#B13333"
-                                    materialDesign:TextFieldAssist.UnderlineBrush="#B13333"
+                                    materialDesign:HintAssist.Foreground="#274C77"
+                                    materialDesign:TextFieldAssist.UnderlineBrush="#274C77"
                                     materialDesign:HintAssist.Hint="Language"
                                     Padding="5"
                                     FontFamily="Microsoft YaHei UI"
@@ -272,7 +272,7 @@
                         Binding Messages,
                         UpdateSourceTrigger=PropertyChanged,
                         Mode=TwoWay}"
-                        ItemContainerStyle="{StaticResource ChatItem}"
+                        ItemContainerStyle="{StaticResource ChatItemTemplate}"
                         Background="Transparent"
                         BorderThickness="0"
                         Grid.Row="1"
@@ -335,7 +335,7 @@
                             materialDesign:ButtonAssist.CornerRadius="7"
                             Grid.Column="3"
                             Command="{Binding SendMessageCommand}"
-                            Background="#B13333"
+                            Background="#274C77"
                             BorderThickness="0"
                             Height="50"
                             Margin="0, 0, 10, 0"
@@ -542,7 +542,7 @@
                                 AncestorType=Window}}"
                                 Name="PlayButton" 
                                 Click="PlayButton_Click">
-                                <materialDesign:PackIcon Foreground="#B13333" Kind="Play" />
+                                <materialDesign:PackIcon Foreground="#274C77" Kind="Play" />
                             </Button>
                         </Grid>
                     </Grid>
@@ -571,7 +571,7 @@
                         Width="45"
                         BorderThickness="0"
                         Foreground="DarkGray"
-                        Background="#B13333"
+                        Background="#274C77"
                         Margin="10"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
@@ -655,7 +655,7 @@
                                 RelativeSource={RelativeSource FindAncestor, 
                                 AncestorType=Window}}"
                                 Click="Button_Click">
-                                <materialDesign:PackIcon Foreground="#B13333" Kind="Play" />
+                                <materialDesign:PackIcon Foreground="#274C77" Kind="Play" />
                             </Button>
                             <Slider 
                                 x:Name="TimelineSlider"

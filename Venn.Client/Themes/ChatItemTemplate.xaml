@@ -1,0 +1,236 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Style TargetType="ListViewItem" x:Key="ChatItemTemplate">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Margin="50 5" Background="#292b2f" CornerRadius="0 10 10 10" Padding="10 7" BorderThickness="0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Vertical" Margin="0">
+                            <TextBlock Text="{Binding Data}"
+                                   IsEnabled="True"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   FontWeight="SemiBold"
+                                   FontSize="14"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0">
+                                <Label Content="{Binding SendingTime}"
+                                   Foreground="#6096BA"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Resources>
+            <ControlTemplate x:Key="SelfTextRow">
+                <Border Margin="50 5" Background="#274C77" CornerRadius="10 0 10 10" Padding="10 7" BorderThickness="0" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Vertical" Margin="0">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal" Margin="0">
+                            <Label Content="{Binding SendingTime}"
+                                   Foreground="#6096BA"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding Data}"
+                                   IsEnabled="True"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   FontWeight="SemiBold"
+                                   FontSize="14"/>
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+            
+            <ControlTemplate x:Key="SelfImageRow">
+                <Border Margin="50 5" Background="#274C77" CornerRadius="10 0 10 10" Padding="10 7" BorderThickness="0" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Vertical" Margin="0">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Label Content="{Binding SendingTime}"
+                                   Foreground="#6096BA"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
+
+                        <Grid
+                            Margin="10"
+                            HorizontalAlignment="Right">
+                            <Image Height="150"
+                               VerticalAlignment="Center"
+                               Source="{Binding Data}"/>
+
+                            <Button
+                                Height="150"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                CommandParameter="{Binding Data}"
+                                Command="{Binding DataContext.DisplayImageCommand, 
+                                RelativeSource={RelativeSource AncestorType=ListView}}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ImageRow">
+                <Border Margin="50 5" Background="#292b2f" CornerRadius="0 10 10 10" Padding="10 7" BorderThickness="0" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Vertical" Margin="0">
+                        
+                        <Grid
+                            Margin="10"
+                            HorizontalAlignment="Left">
+                            <Image Height="150"
+                               VerticalAlignment="Center"
+                               Source="{Binding Data}"/>
+
+                            <Button
+                                Height="150"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                CommandParameter="{Binding Data}"
+                                Command="{Binding DataContext.DisplayImageCommand, 
+                                RelativeSource={RelativeSource AncestorType=ListView}}"/>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Label Content="{Binding SendingTime}"
+                                   Foreground="#6096BA"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="SelfVideoRow">
+                <Border Margin="50 5" Background="#274C77" CornerRadius="10 0 10 10" Padding="10 7" BorderThickness="0" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Vertical" Margin="0">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Label Content="{Binding SendingTime}"
+                                   Foreground="#6096BA"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
+
+                        <Grid
+                            Height="150"
+                            Margin="10">
+                            <MediaElement 
+                                Source="{Binding Data}"
+                                LoadedBehavior="Pause"
+                                Height="150"/>
+
+                            <Button 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                IsEnabled="{
+                                Binding DataContext.ControlsEnabled, 
+                                RelativeSource={RelativeSource FindAncestor, 
+                                AncestorType=Window}}"
+                                Name="PlayButton"
+                                CommandParameter="{Binding Data}"
+                                Command="{Binding DataContext.DisplayVideoCommand, 
+                                RelativeSource={RelativeSource AncestorType=ListView}}">
+                                <materialDesign:PackIcon Foreground="#274C77" Kind="Play" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="VideoRow">
+                <Border Margin="5 50" Background="#292b2f" CornerRadius="10 0 10 10" Padding="10 7" BorderThickness="0" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Vertical" Margin="0">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Label Content="{Binding SendingTime}"
+                                   Foreground="#6096BA"
+                                   FontWeight="SemiBold"
+                                   FontSize="8"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
+
+                        <Grid
+                            Height="150"
+                            Margin="10">
+                            <MediaElement 
+                                Source="{Binding Data}"
+                                LoadedBehavior="Pause"
+                                Height="150"/>
+
+                            <Button 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                IsEnabled="{
+                                Binding DataContext.ControlsEnabled, 
+                                RelativeSource={RelativeSource FindAncestor, 
+                                AncestorType=Window}}"
+                                Name="PlayButton"
+                                CommandParameter="{Binding Data}"
+                                Command="{Binding DataContext.DisplayVideoCommand, 
+                                RelativeSource={RelativeSource AncestorType=ListView}}">
+                                <materialDesign:PackIcon Foreground="#274C77" Kind="Play" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Style.Resources>
+
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelf}" Value="True"/>
+                    <Condition Binding="{Binding MessageType}" Value="image"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource SelfImageRow}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelf}" Value="False"/>
+                    <Condition Binding="{Binding MessageType}" Value="image"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource ImageRow}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelf}" Value="True"/>
+                    <Condition Binding="{Binding MessageType}" Value="video"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource SelfVideoRow}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelf}" Value="False"/>
+                    <Condition Binding="{Binding MessageType}" Value="video"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource VideoRow}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSelf}" Value="True"/>
+                    <Condition Binding="{Binding MessageType}" Value="text"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource SelfTextRow}"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

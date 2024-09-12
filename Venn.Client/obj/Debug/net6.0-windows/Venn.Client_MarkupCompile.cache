@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\babas\OneDrive\Documents\Projects\Venn\Venn.Client\App.xaml
-15-1520053691
-
-26-171753260
-2511799885173
-MVVM\Views\ChatView.xaml;MVVM\Views\CreateAccountView.xaml;MVVM\Views\EmailVerificationView.xaml;MVVM\Views\ForgotPasswordView.xaml;MVVM\Views\LoadingView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\ResetPasswordView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ChatItem.xaml;Themes\ContactCard.xaml;Themes\CustomTextBox.xaml;Themes\FriendCard.xaml;Themes\MessageBox.xaml;Themes\NotificationCard.xaml;
+162078859408
+1-877654475
+27-2043342505
+260-1309018276
+MVVM\Views\ChatView.xaml;MVVM\Views\CreateAccountView.xaml;MVVM\Views\EmailVerificationView.xaml;MVVM\Views\ForgotPasswordView.xaml;MVVM\Views\LoadingView.xaml;MVVM\Views\LoginView.xaml;MVVM\Views\MainView.xaml;MVVM\Views\ResetPasswordView.xaml;MVVM\Views\WelcomeView.xaml;Themes\ChatItem.xaml;Themes\ChatItemTemplate.xaml;Themes\ContactCard.xaml;Themes\CustomTextBox.xaml;Themes\FriendCard.xaml;Themes\MessageBox.xaml;Themes\NotificationCard.xaml;
 
 False
 
